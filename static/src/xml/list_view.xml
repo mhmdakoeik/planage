@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.ListView">
+        <div class="list-view-container">
+
+            <!-- Toolbar Group By selector -->
+            <div class="list-view-toolbar">
+                <div class="groupby-wrapper">
+                    <span class="groupby-label">Group by:</span>
+                    <button class="groupby-tab-btn" t-att-class="{ active: state.groupBy === 'stage' }" t-on-click="() => this.setGroupBy('stage')">
+                        Stage
+                    </button>
+                    <button class="groupby-tab-btn" t-att-class="{ active: state.groupBy === 'priority' }" t-on-click="() => this.setGroupBy('priority')">
+                        Priority
+                    </button>
+                </div>
+            </div>
+
+            <!-- Task Groups Grid Layout -->
+            <div class="list-groups-wrapper">
+                <t t-foreach="groupedTasks" t-as="group" t-key="group.id or 'none'">
+                    <div class="list-group-section" t-att-class="{ empty: group.tasks.length === 0 }">
+
+                        <!-- Accordion Group Header -->
+                        <div class="list-group-header" t-on-click="() => this.toggleGroup(group.id)">
+                            <span class="group-chevron-icon">
+                                <t t-if="isGroupExpanded(group.id)"><i class="fa fa-caret-down"></i></t>
+                                <t t-else=""><i class="fa fa-caret-right"></i></t>
+                            </span>
+                            <span class="group-color-tag" t-att-style="`background: ${group.color}`"/>
+                            <span class="group-title" t-esc="group.name"/>
+                            <span class="group-badge-count" t-esc="group.tasks.length"/>
+                        </div>
+
+                        <!-- Task Rows spreadsheet grid if expanded -->
+                        <div t-if="isGroupExpanded(group.id)" class="group-tasks-spreadsheet">
+
+                            <!-- Header Columns Row -->
+                            <div class="spreadsheet-row header-row">
+                                <div class="cell col-num">#</div>
+                                <div class="cell col-check"><i class="fa fa-check"></i></div>
+                                <div class="cell col-task-name">Task</div>
+                                <div class="cell col-task-stage">Stage</div>
+                                <div class="cell col-task-due">Start Date</div>
+                                <div class="cell col-task-remaining">End Date</div>
+                                <div class="cell col-task-note">Note</div>
+                            </div>
+
+                            <!-- Task Rows Iteration -->
+                            <t t-foreach="getGroupPagedTasks(group)" t-as="task" t-key="task.id">
+
+                                <!-- Main Task Row -->
+                                <div class="spreadsheet-row task-data-row"
+                                     t-att-class="{ 'subtasks-open': isSubtasksExpanded(task.id) }"
+                                     t-on-click="() => this.openTask(task.id)">
+
+                                    <!-- # index cell -->
+                                    <div class="cell col-num" t-esc="getTaskAbsoluteIndex(group, task_index)"/>
+
+                                    <!-- Checkbox checkmark cell -->
+                                    <div class="cell col-check" t-on-click.stop="">
+                                        <input type="checkbox"
+                                               t-att-checked="task.state === 'done'"
+                                               t-on-click.stop="() => this.props.onWriteTask(task.id, { state: task.state === 'done' ? 'open' : 'done' })"
+                                               class="task-row-checkbox"/>
+                                    </div>
+
+                                    <!-- Task Name cell -->
+                                    <div class="cell col-task-name">
+                                        <span class="task-title-label" t-att-class="{ completed: task.state === 'done' }" t-esc="task.name"/>
+                                        <!-- Clickable subtask counter pill -->
+                                        <t t-set="subs" t-value="getSubtasks(task.id)"/>
+                                        <span t-if="subs.length > 0"
+                                              class="task-subtask-pill"
+                                              t-att-class="{ expanded: isSubtasksExpanded(task.id) }"
+                                              t-on-click="(ev) => this.toggleSubtasks(ev, task.id)"
+                                              t-att-title="isSubtasksExpanded(task.id) ? 'Hide subtasks' : 'Show subtasks'">
+                                            <span class="subtask-pill-chevron">
+                                                <t t-if="isSubtasksExpanded(task.id)"><i class="fa fa-caret-down"></i></t>
+                                                <t t-else=""><i class="fa fa-caret-right"></i></t>
+                                            </span>
+                                            <t t-esc="subs.length"/> subtask<t t-if="subs.length !== 1">s</t>
+                                        </span>
+                                    </div>
+
+                                    <!-- Stage status pill cell -->
+                                    <div class="cell col-task-stage">
+                                        <span class="spreadsheet-stage-pill" t-att-style="task.stage_color ? `background: ${task.stage_color}` : 'background: #3b82f6'" t-esc="(task.stage_name || 'NEW').toUpperCase()"/>
+                                    </div>
+
+                                    <!-- Start Date cell -->
+                                    <div class="cell col-task-due">
+                                        <span class="due-date-text" t-esc="formatDate(task.date_start)"/>
+                                    </div>
+
+                                    <!-- End Date cell -->
+                                    <div class="cell col-task-remaining">
+                                        <span class="remaining-hours-text" t-esc="formatDate(task.date_end)"/>
+                                    </div>
+
+                                    <!-- Note / description details cell -->
+                                    <div class="cell col-task-note">
+                                        <span class="task-excerpt-note" t-esc="getNote(task)"/>
+                                    </div>
+
+                                </div>
+
+                                <!-- Inline Subtask Rows (shown when pill is clicked) -->
+                                <t t-if="isSubtasksExpanded(task.id)">
+                                    <t t-set="subs" t-value="getSubtasks(task.id)"/>
+                                    <t t-foreach="subs" t-as="sub" t-key="sub.id">
+                                        <div class="spreadsheet-row subtask-inline-row"
+                                             t-on-click="() => this.openTask(sub.id)">
+
+                                            <!-- indent + arrow -->
+                                            <div class="cell col-num subtask-indent-cell"><i class="fa fa-level-down fa-rotate-90"></i></div>
+
+                                            <!-- Checkbox -->
+                                            <div class="cell col-check" t-on-click.stop="">
+                                                <input type="checkbox"
+                                                       t-att-checked="sub.state === 'done'"
+                                                       t-on-click.stop="() => this.props.onWriteTask(sub.id, { state: sub.state === 'done' ? 'open' : 'done' })"
+                                                       class="task-row-checkbox"/>
+                                            </div>
+
+                                            <!-- Subtask name -->
+                                            <div class="cell col-task-name subtask-name-cell">
+                                                <span class="task-title-label subtask-title"
+                                                      t-att-class="{ completed: sub.state === 'done' }"
+                                                      t-esc="sub.name"/>
+                                            </div>
+
+                                            <!-- Stage -->
+                                            <div class="cell col-task-stage">
+                                                <span class="spreadsheet-stage-pill" t-att-style="sub.stage_color ? `background: ${sub.stage_color}` : 'background: #94a3b8'" t-esc="(sub.stage_name || 'NEW').toUpperCase()"/>
+                                            </div>
+
+                                            <!-- Start Date -->
+                                            <div class="cell col-task-due">
+                                                <span class="due-date-text" t-esc="formatDate(sub.date_start)"/>
+                                            </div>
+
+                                            <!-- End Date -->
+                                            <div class="cell col-task-remaining">
+                                                <span class="remaining-hours-text" t-esc="formatDate(sub.date_end)"/>
+                                            </div>
+
+                                            <!-- Note -->
+                                            <div class="cell col-task-note">
+                                                <span class="task-excerpt-note" t-esc="getNote(sub)"/>
+                                            </div>
+
+                                        </div>
+                                    </t>
+                                </t>
+
+                            </t>
+
+                            <!-- Pagination Controls Row -->
+                            <t t-set="totalPages" t-value="getGroupTotalPages(group)"/>
+                            <div t-if="totalPages > 1" class="spreadsheet-row pagination-row">
+                                <div class="cell pagination-cell">
+                                    <div class="pagination-controls">
+                                        <button class="pagination-btn prev-btn" 
+                                                t-att-disabled="(state.groupPages[group.id || 'none'] || 1) === 1"
+                                                t-on-click="() => this.changePage(group.id || 'none', -1)"
+                                                aria-label="Previous Page">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="pagination-arrow" style="width: 12px; height: 12px; stroke-width: 2.5; display: inline-block; vertical-align: middle;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                            </svg>
+                                            <span style="margin-left: 2px;">Prev</span>
+                                        </button>
+                                        <span class="pagination-info">
+                                            Page <strong t-esc="state.groupPages[group.id || 'none'] || 1"/> of <strong t-esc="totalPages"/>
+                                            <span class="pagination-total-tasks">(<t t-esc="group.tasks.length"/> tasks)</span>
+                                        </span>
+                                        <button class="pagination-btn next-btn"
+                                                t-att-disabled="(state.groupPages[group.id || 'none'] || 1) >= totalPages"
+                                                t-on-click="() => this.changePage(group.id || 'none', 1)"
+                                                aria-label="Next Page">
+                                            <span style="margin-right: 2px;">Next</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="pagination-arrow" style="width: 12px; height: 12px; stroke-width: 2.5; display: inline-block; vertical-align: middle;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Add Task Row -->
+                            <div t-if="props.activeView !== 'my_tasks'" class="spreadsheet-row quick-add-spreadsheet-row">
+                                <div class="cell col-num"><i class="fa fa-plus"></i></div>
+                                <div class="cell col-check"/>
+                                <div class="cell col-task-name">
+                                    <input type="text" 
+                                           class="quick-add-spreadsheet-input"
+                                           placeholder="Add new task inline..."
+                                           t-model="state.newTaskNames[group.id or 'none']"
+                                           t-on-keydown="(ev) => this.onQuickAddKeydown(ev, group.id or 'none', group.id)"/>
+                                </div>
+                                <div class="cell col-task-stage"/>
+                                <div class="cell col-task-due"/>
+                                <div class="cell col-task-remaining"/>
+                                <div class="cell col-task-note"/>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </t>
+            </div>
+
+        </div>
+    </t>
+
+</templates>

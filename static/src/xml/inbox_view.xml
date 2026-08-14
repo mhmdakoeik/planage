@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.InboxView">
+        <div class="inbox-view-container">
+
+            <!-- 1. Inbox Left Sidebar Navigation -->
+            <div class="inbox-sidebar">
+                
+                <!-- Search bar -->
+                <div class="inbox-sidebar-search-wrap">
+                    <div class="inbox-search-box">
+                        <i class="fa fa-search search-box-icon"></i>
+                        <input type="text" 
+                               class="inbox-search-input" 
+                               placeholder="Search conversations..." 
+                               t-model="state.searchQuery"/>
+                    </div>
+                </div>
+
+                <!-- Starred Messages (Static design indicator for UI polish) -->
+                <div class="inbox-sidebar-static-links" style="display: none;">
+                    <div class="inbox-sidebar-item static-link">
+                        <span class="sidebar-item-icon"><i class="fa fa-star-o"></i></span>
+                        <span class="sidebar-item-text">Starred messages</span>
+                    </div>
+                </div>
+
+                <!-- Scrollable list wrapper -->
+                <div class="inbox-sidebar-scrollable">
+                    
+                    <!-- Channels Group Header -->
+                    <div class="inbox-category-group">
+                        <div class="inbox-group-header">
+                            <span class="group-title"><i class="fa fa-caret-down group-caret"></i>Channels</span>
+                            <button class="inbox-add-btn" t-on-click="openCreateChannelModal" title="Create a Channel">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Channels List -->
+                        <div class="inbox-group-items">
+                            <t t-if="!filteredChannels.length">
+                                <div class="inbox-empty-category">No channels found</div>
+                            </t>
+                            <t t-else="">
+                                <t t-foreach="filteredChannels" t-as="c" t-key="c.id">
+                                    <div class="inbox-sidebar-item" 
+                                         t-att-class="{ active: props.activeChannelId === c.id }" 
+                                         t-on-click="() => this.selectChannel(c.id)">
+                                        <span class="sidebar-item-icon channel-hash-icon">
+                                            <t t-if="c.channel_type === 'private'">
+                                                <i class="fa fa-lock" style="font-size: 0.85rem;"></i>
+                                            </t>
+                                            <t t-else="">
+                                                #
+                                            </t>
+                                        </span>
+                                        <span class="sidebar-item-text" t-esc="c.name"/>
+                                    </div>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+
+                    <!-- Direct Messages Group Header -->
+                    <div class="inbox-category-group" style="margin-top: 20px;">
+                        <div class="inbox-group-header">
+                            <span class="group-title"><i class="fa fa-caret-down group-caret"></i>Direct messages</span>
+                            <button class="inbox-add-btn" t-on-click="openStartDmModal" title="Start a Direct Message">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+
+                        <!-- Direct Messages List -->
+                        <div class="inbox-group-items">
+                            <t t-if="!filteredDms.length">
+                                <div class="inbox-empty-category">No direct messages</div>
+                            </t>
+                            <t t-else="">
+                                <t t-foreach="filteredDms" t-as="c" t-key="c.id">
+                                    <div class="inbox-sidebar-item dm-sidebar-item" 
+                                         t-att-class="{ active: props.activeChannelId === c.id }" 
+                                         t-on-click="() => this.selectChannel(c.id)">
+                                        <div class="dm-avatar-wrap">
+                                            <img class="dm-user-avatar" t-att-src="c.avatar || '/web/image/res.users/1/avatar_128'"/>
+                                            <span class="dm-status-dot online"/>
+                                        </div>
+                                        <span class="sidebar-item-text" t-esc="c.name"/>
+                                    </div>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- 2. Inbox Right Chat Window View Area -->
+            <div class="inbox-chat-area">
+                <t t-if="activeChannel">
+                    
+                    <!-- Chat Subheader -->
+                    <div class="chat-subheader" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <div class="chat-header-info">
+                            <span class="chat-view-title">
+                                <t t-if="activeChannel.channel_type === 'dm'">
+                                    <img class="chat-title-avatar" t-att-src="activeChannel.avatar || '/web/image/res.users/1/avatar_128'" style="width: 24px; height: 24px; border-radius: 4px; margin-right: 8px; vertical-align: middle;"/>
+                                    <t t-esc="activeChannel.name"/>
+                                </t>
+                                <t t-elif="activeChannel.channel_type === 'private'">
+                                    <i class="fa fa-lock" style="margin-right: 8px; color: var(--planage-text-secondary);"></i>
+                                    <t t-esc="activeChannel.name"/>
+                                </t>
+                                <t t-else="">
+                                    <span style="color: var(--planage-text-muted); margin-right: 4px; font-weight: 600;">#</span>
+                                    <t t-esc="activeChannel.name"/>
+                                </t>
+                            </span>
+                            <span class="chat-header-metadata">
+                                <t t-if="activeChannel.channel_type === 'dm'">
+                                    Direct Message
+                                </t>
+                                <t t-elif="activeChannel.channel_type === 'private'">
+                                    Private Channel • <t t-esc="activeChannel.member_ids.length"/> members
+                                </t>
+                                <t t-else="">
+                                    Public Channel • Open to everyone
+                                </t>
+                            </span>
+                        </div>
+                        
+                        <div class="chat-header-actions" style="display: flex; gap: 8px; align-items: center;">
+                            <!-- Leave Button: Shown for DMs and Private Channels -->
+                            <button t-if="activeChannel.channel_type === 'private' || activeChannel.channel_type === 'dm'"
+                                    class="btn-leave-channel"
+                                    style="font-size: 0.75rem; font-weight: 600; color: var(--planage-text-secondary); background: var(--planage-bg-card); border: 1px solid var(--planage-border-color); padding: 6px 12px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s ease;"
+                                    t-on-click="leaveChannel">
+                                <i class="fa fa-sign-out"></i>Leave
+                            </button>
+                            
+                            <!-- Delete Button: Shown only if current user is admin (props.state.isAdmin) -->
+                            <button t-if="props.state.isAdmin"
+                                    class="btn-delete-channel"
+                                    style="font-size: 0.75rem; font-weight: 600; color: #ffffff; background: #ef4444; border: 1px solid #ef4444; padding: 6px 12px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s ease;"
+                                    t-on-click="deleteChannel">
+                                <i class="fa fa-trash"></i>Delete Channel
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Messages Stream Area -->
+                    <div class="chat-messages-stream">
+                        <t t-if="!props.messages.length">
+                            <div class="chat-empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--planage-text-muted); padding: 40px 20px;">
+                                <i class="fa fa-comments-o" style="font-size: 3rem; margin-bottom: 12px; opacity: 0.5;"></i>
+                                <h4 style="font-weight: 600; margin-bottom: 4px;">This is the start of the conversation</h4>
+                                <p style="font-size: 0.8rem; max-width: 320px; margin: 0;">Say hello to start the discussion in this channel!</p>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <t t-foreach="props.messages" t-as="msg" t-key="msg.id">
+                                <div class="chat-message-row">
+                                    <div class="message-author-avatar-col">
+                                        <img class="chat-user-avatar" t-att-src="msg.author_avatar"/>
+                                    </div>
+                                    <div class="chat-message-card">
+                                        <div class="card-message-meta">
+                                            <span class="meta-author" t-esc="msg.author_name"/>
+                                            <span class="meta-time">on <t t-esc="msg.create_date"/></span>
+                                        </div>
+                                        <div class="card-message-body">
+                                            <p t-esc="msg.body"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+
+                    <!-- Chat Bottom Form Control -->
+                    <div class="chat-footer-composer">
+                        
+                        <!-- Mentions Autocomplete Dropdown overlay -->
+                        <t t-if="state.showMentionsDropdown &amp;&amp; matchingMembers.length">
+                            <div class="mentions-autocomplete-dropdown">
+                                <t t-foreach="matchingMembers" t-as="u" t-key="u.id">
+                                    <div class="mention-autocomplete-item" 
+                                         t-att-class="{ active: state.mentionSelectedIndex === u_index }"
+                                         t-on-click="() => this.insertMention(u)">
+                                        <img class="mention-avatar" t-att-src="u.avatar"/>
+                                        <span class="mention-name" t-esc="u.name"/>
+                                    </div>
+                                </t>
+                            </div>
+                        </t>
+
+                        <div class="composer-input-wrapper">
+                            <textarea class="composer-textarea"
+                                       t-att-placeholder="activeChannel.channel_type === 'dm' ? 'Send a direct message...' : ('Message #' + activeChannel.name + '... (type @ to mention)')"
+                                       t-model="state.newMessage"
+                                       t-on-input="onInput"
+                                       t-on-keydown="onKeyDown"/>
+                            <button class="composer-submit-btn" t-on-click="postMessage">
+                                <span class="submit-bubble-icon"><i class="fa fa-paper-plane-o"></i></span>
+                            </button>
+                        </div>
+                    </div>
+
+                </t>
+                <t t-else="">
+                    <!-- Chat Empty State Area -->
+                    <div class="inbox-no-chat-selected">
+                        <div class="empty-inbox-content">
+                            <div class="chat-icon-bubble"><i class="fa fa-comments"></i></div>
+                            <h3>No conversation selected</h3>
+                            <p>Choose a channel or direct message from the sidebar, or create a new one to start collaborating.</p>
+                            <div class="empty-state-buttons">
+                                <button class="btn btn-primary" t-on-click="openCreateChannelModal"><i class="fa fa-plus-square-o" style="margin-right: 6px;"></i>Create a Channel</button>
+                                <button class="btn btn-secondary" t-on-click="openStartDmModal" style="margin-left: 12px;"><i class="fa fa-comment-o" style="margin-right: 6px;"></i>Start Direct Message</button>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+
+            <!-- ─── Modals ─────────────────────────────────────────── -->
+
+            <!-- A. Create Channel Modal -->
+            <t t-if="state.showCreateChannelModal">
+                <div class="planage-modal-overlay">
+                    <div class="planage-modal-card channel-modal-card">
+                        
+                        <!-- Header -->
+                        <div class="planage-modal-header">
+                            <h5 class="modal-title-text"><i class="fa fa-slack" style="margin-right: 8px; color: var(--planage-primary);"></i>Create a Channel</h5>
+                            <button class="modal-close-btn" t-on-click="closeCreateChannelModal"><i class="fa fa-times"></i></button>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="planage-modal-body">
+                            
+                            <!-- Name Field -->
+                            <div class="planage-form-group">
+                                <label class="planage-form-label">Channel Name</label>
+                                <input type="text" 
+                                       class="planage-form-control" 
+                                       placeholder="e.g. marketing-campaign"
+                                       t-model="state.newChannelName"/>
+                                <span class="form-help-text">Names must be lowercase, without spaces or periods.</span>
+                            </div>
+
+                            <!-- Type Field (Public / Private) -->
+                            <div class="planage-form-group" style="margin-top: 16px;">
+                                <label class="planage-form-label">Privacy Type</label>
+                                <div class="privacy-type-selectors">
+                                    
+                                    <!-- Public Selection -->
+                                    <div class="privacy-selector-card" 
+                                         t-att-class="{ active: state.newChannelType === 'public' }"
+                                         t-on-click="() => { this.state.newChannelType = 'public'; }">
+                                        <div class="privacy-card-icon"><i class="fa fa-globe"></i></div>
+                                        <div class="privacy-card-text">
+                                            <span class="privacy-title">Public Channel</span>
+                                            <span class="privacy-desc">Anyone in the workspace can view and join.</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Private Selection -->
+                                    <div class="privacy-selector-card" 
+                                         t-att-class="{ active: state.newChannelType === 'private' }"
+                                         t-on-click="() => { this.state.newChannelType = 'private'; }">
+                                        <div class="privacy-card-icon"><i class="fa fa-lock"></i></div>
+                                        <div class="privacy-card-text">
+                                            <span class="privacy-title">Private Channel</span>
+                                            <span class="privacy-desc">Only invited members can view and join.</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Private Members Selection -->
+                            <t t-if="state.newChannelType === 'private'">
+                                <div class="planage-form-group" style="margin-top: 16px;">
+                                    <label class="planage-form-label">Select Members to Invite</label>
+                                    <div class="invite-members-scrollable">
+                                        <t t-foreach="props.users" t-as="u" t-key="u.id">
+                                            <!-- Exclude current user from list since they are added automatically -->
+                                            <t t-if="u.id !== props.state.currentUserId">
+                                                <div class="member-invite-row" t-on-click="() => this.toggleMemberSelection(u.id)">
+                                                    <div class="member-info-col">
+                                                        <img class="invite-avatar" t-att-src="u.avatar"/>
+                                                        <span class="invite-name" t-esc="u.name"/>
+                                                    </div>
+                                                    <div class="member-checkbox-col">
+                                                        <input type="checkbox" 
+                                                               t-att-checked="state.selectedMembers[u.id]"
+                                                               style="pointer-events: none;"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </div>
+                            </t>
+
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="planage-modal-footer">
+                            <button class="btn btn-secondary" t-on-click="closeCreateChannelModal">Cancel</button>
+                            <button class="btn btn-primary" t-on-click="submitCreateChannel" style="margin-left: 8px;">Create Channel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </t>
+
+            <!-- B. Start Direct Message Modal -->
+            <t t-if="state.showStartDmModal">
+                <div class="planage-modal-overlay">
+                    <div class="planage-modal-card dm-modal-card">
+                        
+                        <!-- Header -->
+                        <div class="planage-modal-header">
+                            <h5 class="modal-title-text"><i class="fa fa-commenting" style="margin-right: 8px; color: var(--planage-primary);"></i>Start Direct Message</h5>
+                            <button class="modal-close-btn" t-on-click="closeStartDmModal"><i class="fa fa-times"></i></button>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="planage-modal-body">
+                            
+                            <div class="planage-form-group">
+                                <label class="planage-form-label">Select a User</label>
+                                <div class="dm-users-grid-scroll">
+                                    <t t-foreach="props.users" t-as="u" t-key="u.id">
+                                        <!-- Do not start DM with self if other users exist, otherwise allow -->
+                                        <div class="dm-user-grid-item" 
+                                             t-att-class="{ selected: state.selectedDmUserId === u.id.toString() }"
+                                             t-on-click="() => { this.state.selectedDmUserId = u.id.toString(); }">
+                                            <img class="grid-avatar" t-att-src="u.avatar"/>
+                                            <span class="grid-name" t-esc="u.name"/>
+                                            <span class="grid-check-badge"><i class="fa fa-check"></i></span>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="planage-modal-footer">
+                            <button class="btn btn-secondary" t-on-click="closeStartDmModal">Cancel</button>
+                            <button class="btn btn-primary" t-on-click="submitStartDm" style="margin-left: 8px;">Start Chat</button>
+                        </div>
+
+                    </div>
+                </div>
+            </t>
+
+        </div>
+    </t>
+
+</templates>

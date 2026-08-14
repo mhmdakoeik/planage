@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.DashboardView">
+        <div class="dashboard-page-container">
+
+            <!-- ── Premium Gradient Header ── -->
+            <div class="dashboard-hero-header">
+                <div class="dashboard-hero-left">
+                    <div class="dashboard-hero-icon">
+                        <i class="fa fa-line-chart"/>
+                    </div>
+                    <div class="dashboard-hero-text">
+                        <h1 class="dashboard-hero-title">Workspace Overview</h1>
+                        <p class="dashboard-hero-subtitle">
+                            <i class="fa fa-clock-o" style="margin-right:5px;"/>
+                            <t t-esc="state.currentTime"/>
+                        </p>
+                    </div>
+                </div>
+                <div class="dashboard-hero-right">
+                    <div class="dashboard-filters" t-if="!state.loading" style="display: flex; gap: 10px; margin-right: 15px;">
+                        <select class="dashboard-filter-select" t-on-change="onProjectChange">
+                            <option value="">All Projects</option>
+                            <t t-foreach="state.filters.projects" t-as="p" t-key="p.id">
+                                <option t-att-value="p.id" t-att-selected="state.selectedProjectId == p.id"><t t-esc="p.name"/></option>
+                            </t>
+                        </select>
+                        <select class="dashboard-filter-select" t-on-change="onSprintChange" t-if="state.selectedProjectId">
+                            <option value="">All Sprints</option>
+                            <t t-foreach="availableSprints" t-as="s" t-key="s.id">
+                                <option t-att-value="s.id" t-att-selected="state.selectedSprintId == s.id"><t t-esc="s.name"/></option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="dashboard-completion-badge" t-if="!state.loading">
+                        <span class="completion-pct" t-esc="`${completionRate}%`"/>
+                        <span class="completion-label">completion rate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Main Content ── -->
+            <div class="dashboard-grid-viewport" t-if="!state.loading">
+
+                <!-- 1. KPI Cards -->
+                <div class="dashboard-kpi-grid">
+
+                    <!-- Total Tasks -->
+                    <div class="kpi-card total-tasks-kpi">
+                        <div class="kpi-icon-wrap">
+                            <i class="fa fa-tasks"/>
+                        </div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Total Tasks</span>
+                            <h2 class="kpi-number" t-esc="state.stats.total_tasks"/>
+                            <span class="kpi-trend">All workspace tasks</span>
+                        </div>
+                        <div class="kpi-accent-bar"/>
+                    </div>
+
+                    <!-- Dynamic Stage Cards -->
+                    <t t-foreach="state.stats.stage_stats" t-as="stage" t-key="stage.name">
+                        <div class="kpi-card dynamic-stage-kpi">
+                            <div class="kpi-icon-wrap" t-attf-style="color: {{stage.color}}; background: {{stage.color}}15;">
+                                <i class="fa fa-circle-o"/>
+                            </div>
+                            <div class="kpi-content">
+                                <span class="kpi-label" t-esc="stage.name"/>
+                                <h2 class="kpi-number" t-esc="stage.count"/>
+                                <span class="kpi-trend">Tasks in this stage</span>
+                            </div>
+                            <div class="kpi-accent-bar" t-attf-style="background-color: {{stage.color}};"/>
+                        </div>
+                    </t>
+
+                    <!-- Documents -->
+                    <div class="kpi-card documents-kpi">
+                        <div class="kpi-icon-wrap">
+                            <i class="fa fa-folder-open"/>
+                        </div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Uploaded Docs</span>
+                            <h2 class="kpi-number" t-esc="state.stats.total_docs"/>
+                            <span class="kpi-trend">Files &amp; attachments</span>
+                        </div>
+                        <div class="kpi-accent-bar"/>
+                    </div>
+
+                </div>
+
+                <!-- 2. Charts Grid (Row 1) -->
+                <div class="dashboard-charts-grid dashboard-charts-row1">
+
+                    <!-- Chart A: Donut — Task Status Breakdown -->
+                    <div class="dashboard-chart-card donut-card">
+                        <div class="chart-card-header">
+                            <div class="chart-card-header-icon donut-icon">
+                                <i class="fa fa-pie-chart"/>
+                            </div>
+                            <div>
+                                <h4 class="chart-card-title">Task Status</h4>
+                                <span class="chart-card-desc">Completion breakdown across all tasks.</span>
+                            </div>
+                        </div>
+                        <div class="chart-card-body donut-body">
+                            <div class="donut-canvas-wrap">
+                                <canvas id="donut-canvas" t-ref="donutCanvas" width="160" height="160"/>
+                            </div>
+                            <div class="donut-legend">
+                                <t t-foreach="state.stats.stage_stats" t-as="stage" t-key="stage.name">
+                                    <div class="donut-legend-item">
+                                        <span class="donut-legend-dot"
+                                            t-att-style="stage.count > 0 ? `background:${stage.color};` : 'background:rgba(148,163,184,0.3);'"/>
+                                        <span class="donut-legend-label"
+                                            t-att-class="stage.count > 0 ? '' : 'legend-empty'" t-esc="stage.name"/>
+                                        <span class="donut-legend-val"
+                                            t-att-class="stage.count > 0 ? '' : 'legend-empty'"
+                                            t-esc="stage.count"/>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart B: Priority Distribution -->
+                    <div class="dashboard-chart-card priority-card">
+                        <div class="chart-card-header">
+                            <div class="chart-card-header-icon priority-icon">
+                                <i class="fa fa-flag"/>
+                            </div>
+                            <div>
+                                <h4 class="chart-card-title">Priority Distribution</h4>
+                                <span class="chart-card-desc">Tasks sliced by urgency level.</span>
+                            </div>
+                        </div>
+                        <div class="chart-card-body priority-bars-list">
+
+                            <!-- Urgent -->
+                            <div class="priority-bar-item">
+                                <div class="priority-item-meta">
+                                    <span t-att-class="state.stats.priorities.urgent > 0 ? 'priority-badge urgent-badge' : 'priority-badge empty-badge'">🔴 Urgent</span>
+                                    <span t-att-class="state.stats.priorities.urgent > 0 ? 'priority-count-label urgent-count' : 'priority-count-label empty-count'" t-esc="state.stats.priorities.urgent"/>
+                                </div>
+                                <div t-att-class="state.stats.priorities.urgent > 0 ? 'priority-track-bg urgent-track' : 'priority-track-bg empty-track'">
+                                    <div t-att-class="state.stats.priorities.urgent > 0 ? 'priority-fill-bar urgent-fill' : 'priority-fill-bar'"
+                                        t-att-style="`width: ${(state.stats.priorities.urgent / Math.max(state.stats.total_tasks, 1) * 100).toFixed(1)}%`"/>
+                                </div>
+                                <span class="priority-pct"
+                                    t-esc="state.stats.priorities.urgent > 0 ? `${(state.stats.priorities.urgent / Math.max(state.stats.total_tasks, 1) * 100).toFixed(0)}%` : ''"/>
+                            </div>
+
+                            <!-- High -->
+                            <div class="priority-bar-item">
+                                <div class="priority-item-meta">
+                                    <span t-att-class="state.stats.priorities.high > 0 ? 'priority-badge high-badge' : 'priority-badge empty-badge'">🟠 High</span>
+                                    <span t-att-class="state.stats.priorities.high > 0 ? 'priority-count-label high-count' : 'priority-count-label empty-count'" t-esc="state.stats.priorities.high"/>
+                                </div>
+                                <div t-att-class="state.stats.priorities.high > 0 ? 'priority-track-bg high-track' : 'priority-track-bg empty-track'">
+                                    <div t-att-class="state.stats.priorities.high > 0 ? 'priority-fill-bar high-fill' : 'priority-fill-bar'"
+                                        t-att-style="`width: ${(state.stats.priorities.high / Math.max(state.stats.total_tasks, 1) * 100).toFixed(1)}%`"/>
+                                </div>
+                                <span class="priority-pct"
+                                    t-esc="state.stats.priorities.high > 0 ? `${(state.stats.priorities.high / Math.max(state.stats.total_tasks, 1) * 100).toFixed(0)}%` : ''"/>
+                            </div>
+
+                            <!-- Normal -->
+                            <div class="priority-bar-item">
+                                <div class="priority-item-meta">
+                                    <span t-att-class="state.stats.priorities.normal > 0 ? 'priority-badge normal-badge' : 'priority-badge empty-badge'">🔵 Normal</span>
+                                    <span t-att-class="state.stats.priorities.normal > 0 ? 'priority-count-label normal-count' : 'priority-count-label empty-count'" t-esc="state.stats.priorities.normal"/>
+                                </div>
+                                <div t-att-class="state.stats.priorities.normal > 0 ? 'priority-track-bg normal-track' : 'priority-track-bg empty-track'">
+                                    <div t-att-class="state.stats.priorities.normal > 0 ? 'priority-fill-bar normal-fill' : 'priority-fill-bar'"
+                                        t-att-style="`width: ${(state.stats.priorities.normal / Math.max(state.stats.total_tasks, 1) * 100).toFixed(1)}%`"/>
+                                </div>
+                                <span class="priority-pct"
+                                    t-esc="state.stats.priorities.normal > 0 ? `${(state.stats.priorities.normal / Math.max(state.stats.total_tasks, 1) * 100).toFixed(0)}%` : ''"/>
+                            </div>
+
+                            <!-- Low -->
+                            <div class="priority-bar-item">
+                                <div class="priority-item-meta">
+                                    <span t-att-class="state.stats.priorities.low > 0 ? 'priority-badge low-badge' : 'priority-badge empty-badge'">⚪ Low</span>
+                                    <span t-att-class="state.stats.priorities.low > 0 ? 'priority-count-label low-count' : 'priority-count-label empty-count'" t-esc="state.stats.priorities.low"/>
+                                </div>
+                                <div t-att-class="state.stats.priorities.low > 0 ? 'priority-track-bg low-track' : 'priority-track-bg empty-track'">
+                                    <div t-att-class="state.stats.priorities.low > 0 ? 'priority-fill-bar low-fill' : 'priority-fill-bar'"
+                                        t-att-style="`width: ${(state.stats.priorities.low / Math.max(state.stats.total_tasks, 1) * 100).toFixed(1)}%`"/>
+                                </div>
+                                <span class="priority-pct"
+                                    t-esc="state.stats.priorities.low > 0 ? `${(state.stats.priorities.low / Math.max(state.stats.total_tasks, 1) * 100).toFixed(0)}%` : ''"/>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 3. Charts Grid (Row 2) -->
+                <div class="dashboard-charts-grid dashboard-charts-row2">
+
+                    <!-- Chart C: 7-Day Sparkline -->
+                    <div class="dashboard-chart-card sparkline-card">
+                        <div class="chart-card-header">
+                            <div class="chart-card-header-icon sparkline-icon">
+                                <i class="fa fa-area-chart"/>
+                            </div>
+                            <div>
+                                <h4 class="chart-card-title">Task Activity (7 Days)</h4>
+                                <span class="chart-card-desc">Tasks created per day, last 7 days.</span>
+                            </div>
+                        </div>
+                        <div class="chart-card-body sparkline-body">
+                            <canvas id="sparkline-canvas" t-ref="sparklineCanvas" width="480" height="140" style="width:100%;"/>
+                        </div>
+                    </div>
+
+                    <!-- Chart D: Project Breakdown -->
+                    <div class="dashboard-chart-card projects-card">
+                        <div class="chart-card-header">
+                            <div class="chart-card-header-icon projects-icon">
+                                <i class="fa fa-sitemap"/>
+                            </div>
+                            <div>
+                                <h4 class="chart-card-title">Projects Breakdown</h4>
+                                <span class="chart-card-desc">Completion rates across projects.</span>
+                            </div>
+                        </div>
+                        <div class="chart-card-body list-progress-container">
+
+                            <t t-if="state.stats.list_stats.length">
+                                <t t-foreach="state.stats.list_stats" t-as="l" t-key="l.id">
+                                    <div class="list-progress-item">
+                                        <div class="list-item-meta">
+                                            <span class="list-color-square" t-att-style="`background: ${l.color}`"/>
+                                            <span class="list-name-label" t-esc="l.name"/>
+                                            <span class="list-task-ratio">
+                                                <t t-esc="l.done_count"/> / <t t-esc="l.task_count"/>
+                                            </span>
+                                        </div>
+                                        <div class="list-progress-track" t-att-style="l.color ? `background: ${l.color}18` : ''">
+                                            <div class="list-progress-fill" t-att-style="`width: ${l.progress}%; background: linear-gradient(90deg, ${l.color}cc, ${l.color})`"/>
+                                            <span class="progress-pct-badge" t-esc="`${l.progress}%`"/>
+                                        </div>
+                                    </div>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <div class="no-lists-fallback">
+                                    <i class="fa fa-inbox" style="font-size:2rem;opacity:0.3;display:block;margin-bottom:8px;"/>
+                                    No projects yet. Create one from the sidebar!
+                                </div>
+                            </t>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Loader -->
+            <div class="dashboard-loading-screen" t-else="">
+                <div class="spinner-bubble"/>
+                <p>Compiling workspace analytics...</p>
+            </div>
+
+        </div>
+    </t>
+
+</templates>

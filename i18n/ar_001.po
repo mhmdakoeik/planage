@@ -1,0 +1,3198 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* planage
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-14 20:11+0000\n"
+"PO-Revision-Date: 2026-08-14 20:11+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "+ Add new subtask inline..."
+msgstr "+ إضافة مهمة فرعية جديدة مباشرة..."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "+ Create new stage..."
+msgstr "+ إنشاء مرحلة جديدة..."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "-- Choose Project --"
+msgstr "-- اختر المشروع --"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "-- No Client --"
+msgstr "-- بدون عميل --"
+
+#. module: planage
+#: model_terms:ir.ui.view,arch_db:planage.view_planage_project_billing_form
+msgid "<span class=\"o_stat_text\">Invoices</span>"
+msgstr "<span class=\"o_stat_text\">الفواتير</span>"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Access: All"
+msgstr "وصول: للكل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Access: Public"
+msgstr "وصول: عام"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Access: Restricted"
+msgstr "وصول: مقيد"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_space__active
+#: model:ir.model.fields,field_description:planage.field_planage_task__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+msgid "Active workspace"
+msgstr "مساحة العمل النشطة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Add"
+msgstr "إضافة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Add New Stage"
+msgstr "إضافة مرحلة جديدة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Add Stage"
+msgstr "إضافة مرحلة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/board_view.xml:0
+msgid "Add Task"
+msgstr "إضافة مهمة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/list_view.xml:0
+msgid "Add new task inline..."
+msgstr "إضافة مهمة جديدة مباشرة..."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/board_view.xml:0
+msgid "Add task"
+msgstr "إضافة مهمة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+#: model:res.groups,name:planage.group_planage_admin
+msgid "Administrator"
+msgstr "مدير"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "All Projects"
+msgstr "جميع المشاريع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "All Spaces"
+msgstr "كل المساحات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "All Sprints"
+msgstr "جميع السبرينتات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_systray.xml:0
+msgid "All caught up!"
+msgstr "أنت على اطلاع تام!"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "All files and sheets compiled across active chat channels."
+msgstr "جميع الملفات والأوراق المجمعة عبر قنوات الدردشة النشطة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "All time"
+msgstr "كل الأوقات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "All workspace tasks"
+msgstr "جميع مهام مساحة العمل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Allowed"
+msgstr "مسموح"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/config_view.js:0
+msgid "An error occurred while resetting the system."
+msgstr "حدث خطأ أثناء إعادة تعيين النظام."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Anyone in the workspace can view and join."
+msgstr "يمكن لأي شخص في مساحة العمل العرض والانضمام."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Appearance Mode"
+msgstr "وضع المظهر"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/inbox_view.js:0
+msgid ""
+"Are you sure you want to delete this channel? This will permanently delete "
+"the channel and all of its messages."
+msgstr ""
+"هل أنت متأكد أنك تريد حذف هذه القناة؟ سيؤدي هذا إلى حذف القناة وجميع رسائلها"
+" نهائيًا."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/inbox_view.js:0
+msgid "Are you sure you want to leave this conversation?"
+msgstr "هل أنت متأكد أنك تريد مغادرة هذه المحادثة؟"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Assign"
+msgstr "تعيين"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Assign Members"
+msgstr "تعيين أعضاء"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Assigned"
+msgstr "مُعين"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_space__user_ids
+msgid "Assigned Employees/Users"
+msgstr "الموظفون/المستخدمون المعينون"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_project__user_ids
+msgid "Assigned Members"
+msgstr "الأعضاء المعينون"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Assigned to Me"
+msgstr "معين لي"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Assignee"
+msgstr "المكلف"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Assignee Workload"
+msgstr "عبء عمل المكلف"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_task__assignee_ids
+msgid "Assignees"
+msgstr "المكلفون"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Assigning an employee to a project will send them an instant"
+msgstr "تعيين موظف في مشروع سيرسل له إشعاراً فورياً"
+
+#. module: planage
+#: model:ir.model.fields.selection,name:planage.selection__planage_notification__type__assignment
+msgid "Assignment"
+msgstr "تعيين"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_chat_message__attachment_name
+msgid "Attachment Name"
+msgstr "اسم المرفق"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Attachments & Photos"
+msgstr "المرفقات والصور"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_chat_message__author_id
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_message__author_id
+msgid "Author"
+msgstr "الكاتب"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Automatically calculated based on task stage status"
+msgstr "يُحسب تلقائيًا بناءً على حالة مرحلة المهمة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Awesome! There are no late tasks at the moment."
+msgstr "رائع! لا توجد مهام متأخرة في الوقت الحالي."
+
+#. module: planage
+#: model:ir.ui.menu,name:planage.menu_planage_billing_projects
+msgid "Billable Projects"
+msgstr "المشاريع القابلة للفوترة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Board"
+msgstr "اللوحة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Board View"
+msgstr "عرض اللوحة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Calendar"
+msgstr "التقويم"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Calendar View"
+msgstr "عرض التقويم"
+
+#. module: planage
+#: model:res.groups,comment:planage.group_planage_manager
+msgid "Can create and manage spaces, projects, and sprints."
+msgstr "يمكنه إنشاء وإدارة المساحات والمشاريع والسبرنتات."
+
+#. module: planage
+#: model:res.groups,comment:planage.group_planage_user
+msgid "Can view projects and work on tasks."
+msgstr "يمكنه عرض المشاريع والعمل على المهام."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: planage
+#: model:ir.model.fields.selection,name:planage.selection__planage_task__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_message__channel_id
+msgid "Channel"
+msgstr "القناة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Channel \"%(name)s\" created."
+msgstr "تم إنشاء القناة \"%(name)s\"."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Channel Name"
+msgstr "اسم القناة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Channel deleted."
+msgstr "تم حذف القناة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Channels"
+msgstr "القنوات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Chat"
+msgstr "الدردشة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_document__chat_message_id
+msgid "Chat Message"
+msgstr "رسالة الدردشة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Chat View"
+msgstr "عرض الدردشة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Chat started!"
+msgstr "تم بدء الدردشة!"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid ""
+"Choose a channel or direct message from the sidebar, or create a new one to "
+"start collaborating."
+msgstr ""
+"اختر قناة أو رسالة مباشرة من الشريط الجانبي، أو أنشئ واحدة جديدة للبدء في "
+"التعاون."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid ""
+"Choose a project from the sidebar to view and manage tasks, chats, and "
+"timelined milestones."
+msgstr ""
+"اختر مشروعاً من الشريط الجانبي لعرض وإدارة المهام والدردشات والمراحل "
+"الزمنية."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Click to remove"
+msgstr "انقر للإزالة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Click to write a detailed description..."
+msgstr "انقر لكتابة وصف مفصل..."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_project__partner_id
+msgid "Client"
+msgstr "العميل"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_stage__is_closed
+msgid "Closing Stage"
+msgstr "المرحلة النهائية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_document_tag__color
+msgid "Color"
+msgstr "اللون"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_folder__color
+#: model:ir.model.fields,field_description:planage.field_planage_project__color
+#: model:ir.model.fields,field_description:planage.field_planage_space__color
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__color
+#: model:ir.model.fields,field_description:planage.field_planage_stage__color
+#: model:ir.model.fields,field_description:planage.field_planage_task__color
+msgid "Color (Hex)"
+msgstr "اللون (Hex)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/board_view.xml:0
+msgid "Column Options"
+msgstr "خيارات العمود"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Compiling workspace analytics..."
+msgstr "تجميع تحليلات مساحة العمل..."
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__date_done
+msgid "Completion Date"
+msgstr "تاريخ الإنجاز"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Completion breakdown across all tasks."
+msgstr "تفصيل الإنجاز عبر جميع المهام."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Completion rates across projects."
+msgstr "معدلات الإنجاز عبر المشاريع."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+msgid "Configuration"
+msgstr "التهيئة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Configure process pipeline stages for your workspace projects."
+msgstr "تكوين مراحل مسار العمل لمشاريع مساحة العمل."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid ""
+"Configure which employees are assigned to each project. Assigned employees "
+"receive notifications."
+msgstr "تكوين الموظفين المعينين لكل مشروع. يتلقى الموظفون المعينون إشعارات."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Configure which employees can see and access this space."
+msgstr "تكوين الموظفين الذين يمكنهم رؤية والوصول إلى هذه المساحة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Create Channel"
+msgstr "إنشاء قناة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Create Folder"
+msgstr "إنشاء مجلد"
+
+#. module: planage
+#: model_terms:ir.ui.view,arch_db:planage.view_planage_project_billing_form
+msgid "Create Invoice"
+msgstr "إنشاء فاتورة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Create New Sprint"
+msgstr "إنشاء سبرينت جديد"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Create Project"
+msgstr "إنشاء مشروع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Create Space"
+msgstr "إنشاء مساحة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Create Sprint"
+msgstr "إنشاء سبرينت"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Create Task"
+msgstr "إنشاء مهمة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Create a Channel"
+msgstr "إنشاء قناة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Create a project or adjust your search filters to get started."
+msgstr "أنشئ مشروعاً أو اضبط فلاتر البحث للبدء."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid ""
+"Create your first timed sprint to organize and schedule your project tasks."
+msgstr "أنشئ أول سبرينت محدد بوقت لتنظيم وجدولة مهام مشروعك."
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_chat_message__create_uid
+#: model:ir.model.fields,field_description:planage.field_planage_document__create_uid
+#: model:ir.model.fields,field_description:planage.field_planage_document_tag__create_uid
+#: model:ir.model.fields,field_description:planage.field_planage_folder__create_uid
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_channel__create_uid
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_message__create_uid
+#: model:ir.model.fields,field_description:planage.field_planage_notification__create_uid
+#: model:ir.model.fields,field_description:planage.field_planage_project__create_uid
+#: model:ir.model.fields,field_description:planage.field_planage_space__create_uid
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__create_uid
+#: model:ir.model.fields,field_description:planage.field_planage_stage__create_uid
+#: model:ir.model.fields,field_description:planage.field_planage_task__create_uid
+#: model:ir.model.fields,field_description:planage.field_planage_timesheet__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_chat_message__create_date
+#: model:ir.model.fields,field_description:planage.field_planage_document__create_date
+#: model:ir.model.fields,field_description:planage.field_planage_document_tag__create_date
+#: model:ir.model.fields,field_description:planage.field_planage_folder__create_date
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_channel__create_date
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_message__create_date
+#: model:ir.model.fields,field_description:planage.field_planage_notification__create_date
+#: model:ir.model.fields,field_description:planage.field_planage_project__create_date
+#: model:ir.model.fields,field_description:planage.field_planage_space__create_date
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__create_date
+#: model:ir.model.fields,field_description:planage.field_planage_stage__create_date
+#: model:ir.model.fields,field_description:planage.field_planage_task__create_date
+#: model:ir.model.fields,field_description:planage.field_planage_timesheet__create_date
+msgid "Created on"
+msgstr "تاريخ الإنشاء"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Current Stages"
+msgstr "المراحل الحالية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid ""
+"Customize your workspace experience, themes, and workflow stage pipelines."
+msgstr "خصص تجربة مساحة عملك والسمات ومراحل مسار سير العمل."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Dark Theme"
+msgstr "الوضع الداكن"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+msgid "Dashboard"
+msgstr "لوحة التحكم"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_timesheet__date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Days Late"
+msgstr "أيام التأخير"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Deadline"
+msgstr "الموعد النهائي"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/inbox_view.js:0
+#: code:addons/planage/static/src/xml/config_view.xml:0
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Delete"
+msgstr "حذف"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/inbox_view.js:0
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Delete Channel"
+msgstr "حذف القناة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Delete Stage"
+msgstr "حذف المرحلة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Describe this task in detail..."
+msgstr "وصف هذه المهمة بالتفصيل..."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_task__description
+#: model:ir.model.fields,field_description:planage.field_planage_timesheet__name
+msgid "Description"
+msgstr "الوصف"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+#: model:ir.model.fields.selection,name:planage.selection__planage_inbox_channel__channel_type__dm
+msgid "Direct Message"
+msgstr "رسالة مباشرة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Direct messages"
+msgstr "الرسائل المباشرة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/chat_view.xml:0
+msgid "Discussion with project team members"
+msgstr "نقاش مع أعضاء فريق المشروع"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_account_move__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_chat_message__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_document__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_document_tag__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_folder__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_channel__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_message__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_notification__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_project__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_space__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_stage__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_task__display_name
+#: model:ir.model.fields,field_description:planage.field_planage_timesheet__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+msgid "Docs"
+msgstr "المستندات"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_document__name
+msgid "Document Name"
+msgstr "اسم المستند"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/chat_view.xml:0
+msgid "Document • Attached"
+msgstr "مستند • مرفق"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__document_ids
+msgid "Documents"
+msgstr "المستندات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+#: model:ir.model.fields.selection,name:planage.selection__planage_task__state__done
+msgid "Done"
+msgstr "تم"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Download"
+msgstr "تنزيل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "Download Document"
+msgstr "تنزيل المستند"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Download Excel CSV"
+msgstr "تنزيل Excel CSV"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Download PDF Report"
+msgstr "تنزيل تقرير PDF"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_timesheet__duration
+msgid "Duration (Hours)"
+msgstr "المدة (ساعات)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Edit"
+msgstr "تعديل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+msgid "Edit Sprint"
+msgstr "تعديل السبرينت"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Employee"
+msgstr "الموظف"
+
+#. module: planage
+#: model:res.groups,name:planage.group_planage_user
+msgid "Employee (User)"
+msgstr "موظف (مستخدم)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Employee Access Permissions"
+msgstr "صلاحيات وصول الموظفين"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/list_view.xml:0
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__date_to
+#: model:ir.model.fields,field_description:planage.field_planage_task__date_end
+msgid "End Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "End Date (Optional)"
+msgstr "تاريخ الانتهاء (اختياري)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "End Date *"
+msgstr "تاريخ الانتهاء *"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+msgid "Everything"
+msgstr "كل شيء"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Excel"
+msgstr "إكسل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/config_view.js:0
+msgid "Failed to add stage."
+msgstr "فشل إضافة المرحلة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to create conversation."
+msgstr "فشل إنشاء المحادثة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to create folder."
+msgstr "فشل إنشاء المجلد."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to create project."
+msgstr "فشل إنشاء المشروع."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to create space."
+msgstr "فشل إنشاء المساحة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to create sprint."
+msgstr "فشل إنشاء السبرنت."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/components/right_drawer.js:0
+msgid "Failed to create stage."
+msgstr "فشل إنشاء المرحلة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/components/right_drawer.js:0
+msgid "Failed to create subtask."
+msgstr "فشل إنشاء المهمة الفرعية."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to create task."
+msgstr "فشل إنشاء المهمة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to delete channel."
+msgstr "فشل حذف القناة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/components/right_drawer.js:0
+msgid "Failed to delete document."
+msgstr "فشل حذف المستند."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/config_view.js:0
+msgid "Failed to delete stage."
+msgstr "فشل حذف المرحلة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to delete task."
+msgstr "فشل حذف المهمة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to leave conversation."
+msgstr "فشلت مغادرة المحادثة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/dashboard_view.js:0
+msgid "Failed to load dashboard filters."
+msgstr "فشل تحميل عوامل تصفية لوحة المعلومات."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/dashboard_view.js:0
+msgid "Failed to load dashboard statistics."
+msgstr "فشل تحميل إحصائيات لوحة المعلومات."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to load personal tasks."
+msgstr "فشل تحميل المهام الشخصية."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/reporting_view.js:0
+msgid "Failed to load report filters."
+msgstr "فشل تحميل عوامل تصفية التقرير."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/reporting_view.js:0
+msgid "Failed to load reports."
+msgstr "فشل تحميل التقارير."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/config_view.js:0
+msgid "Failed to load stages."
+msgstr "فشل تحميل المراحل."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to load tasks."
+msgstr "فشل تحميل المهام."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to load workspaces. Please refresh."
+msgstr "فشل تحميل مساحات العمل. يرجى التحديث."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to load your permissions. Some features may be hidden."
+msgstr "فشل تحميل صلاحياتك. قد تكون بعض الميزات مخفية."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/components/sidebar.js:0
+msgid "Failed to move sprint. Please try again."
+msgstr "فشل نقل السبرنت. يرجى المحاولة مرة أخرى."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to post message to inbox."
+msgstr "فشل نشر الرسالة إلى صندوق الوارد."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to post message."
+msgstr "فشل نشر الرسالة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/config_view.js:0
+msgid "Failed to reorder stages."
+msgstr "فشل إعادة ترتيب المراحل."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/config_view.js:0
+msgid "Failed to save stage."
+msgstr "فشل حفظ المرحلة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to update project access settings."
+msgstr "فشل تحديث إعدادات الوصول للمشروع."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to update space access settings."
+msgstr "فشل تحديث إعدادات الوصول للمساحة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Failed to update sprint."
+msgstr "فشل تحديث السبرنت."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/components/right_drawer.js:0
+msgid "Failed to upload file."
+msgstr "فشل رفع الملف."
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_document__datas
+msgid "File Content"
+msgstr "محتوى الملف"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Files & attachments"
+msgstr "الملفات والمرفقات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Filter by specific Month/Year"
+msgstr "تصفية حسب شهر/سنة معينة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Filter by specific Week"
+msgstr "تصفية حسب أسبوع معين"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__folder_id
+msgid "Folder"
+msgstr "مجلد"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Folder \"%(name)s\" created!"
+msgstr "تم إنشاء المجلد \"%(name)s\"!"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Folder (Optional)"
+msgstr "مجلد (اختياري)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_folder__name
+msgid "Folder Name"
+msgstr "اسم المجلد"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_project__folder_ids
+#: model:ir.model.fields,field_description:planage.field_planage_space__folder_ids
+msgid "Folders"
+msgstr "المجلدات"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: planage
+#: model:ir.model.fields,help:planage.field_planage_task__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font awesome مثال: fa-tasks"
+
+#. module: planage
+#: model:res.groups,comment:planage.group_planage_admin
+msgid "Full access to Planage configuration and all records."
+msgstr "وصول كامل إلى إعدادات Planage وجميع السجلات."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Gantt"
+msgstr "جانت"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Gantt View"
+msgstr "عرض جانت"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Generating Reports..."
+msgstr "جاري إنشاء التقارير..."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/list_view.xml:0
+msgid "Group by:"
+msgstr "تجميع حسب:"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_project__has_draft_invoice
+msgid "Has Draft Invoice"
+msgstr "لديه فاتورة غير مرحّلة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: planage
+#: model:ir.module.category,description:planage.module_category_planage
+msgid "Helps you manage your projects and workspaces."
+msgstr "يساعدك على إدارة مشاريعك ومساحات عملك."
+
+#. module: planage
+#: model:ir.model.fields.selection,name:planage.selection__planage_task__priority__2
+msgid "High"
+msgstr "مرتفع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_project__hourly_rate
+msgid "Hourly Rate"
+msgstr "معدل الساعة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Hours"
+msgstr "ساعات"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_account_move__id
+#: model:ir.model.fields,field_description:planage.field_planage_chat_message__id
+#: model:ir.model.fields,field_description:planage.field_planage_document__id
+#: model:ir.model.fields,field_description:planage.field_planage_document_tag__id
+#: model:ir.model.fields,field_description:planage.field_planage_folder__id
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_channel__id
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_message__id
+#: model:ir.model.fields,field_description:planage.field_planage_notification__id
+#: model:ir.model.fields,field_description:planage.field_planage_project__id
+#: model:ir.model.fields,field_description:planage.field_planage_space__id
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__id
+#: model:ir.model.fields,field_description:planage.field_planage_stage__id
+#: model:ir.model.fields,field_description:planage.field_planage_task__id
+#: model:ir.model.fields,field_description:planage.field_planage_timesheet__id
+msgid "ID"
+msgstr "المُعرف"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__activity_exception_icon
+msgid "Icon"
+msgstr "أيقونة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_space__icon
+msgid "Icon (emoji or class)"
+msgstr "أيقونة (إيموجي أو فئة)"
+
+#. module: planage
+#: model:ir.model.fields,help:planage.field_planage_task__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثناء."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "If NO employees are allowed access, this space acts as a"
+msgstr "إذا لم يتم السماح لأي موظف بالوصول، فهذه المساحة تعتبر"
+
+#. module: planage
+#: model:ir.model.fields,help:planage.field_planage_task__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا تم التحديد، فالرسائل الجديدة تتطلب انتباهك."
+
+#. module: planage
+#: model:ir.model.fields,help:planage.field_planage_task__message_has_error
+#: model:ir.model.fields,help:planage.field_planage_task__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا تم التحديد، فهناك خطأ في تسليم بعض الرسائل."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "If no members are assigned, the space will be visible to everyone."
+msgstr "إذا لم يتم تعيين أعضاء، ستكون المساحة مرئية للجميع."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Image preview"
+msgstr "معاينة الصورة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/board_view.xml:0
+msgid "In"
+msgstr "في"
+
+#. module: planage
+#: model:ir.model.fields.selection,name:planage.selection__planage_task__state__in_progress
+msgid "In Progress"
+msgstr "قيد التنفيذ"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+#: model:ir.model.fields.selection,name:planage.selection__planage_notification__type__inbox
+msgid "Inbox"
+msgstr "صندوق الوارد"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_project__invoice_ids
+msgid "Invoices"
+msgstr "الفواتير"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_chat_message__is_assigned
+msgid "Is Assigned"
+msgstr "مُعين"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_project__is_billable
+msgid "Is Billable"
+msgstr "قابل للفوترة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: planage
+#: model:ir.model,name:planage.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_chat_message__write_uid
+#: model:ir.model.fields,field_description:planage.field_planage_document__write_uid
+#: model:ir.model.fields,field_description:planage.field_planage_document_tag__write_uid
+#: model:ir.model.fields,field_description:planage.field_planage_folder__write_uid
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_channel__write_uid
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_message__write_uid
+#: model:ir.model.fields,field_description:planage.field_planage_notification__write_uid
+#: model:ir.model.fields,field_description:planage.field_planage_project__write_uid
+#: model:ir.model.fields,field_description:planage.field_planage_space__write_uid
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__write_uid
+#: model:ir.model.fields,field_description:planage.field_planage_stage__write_uid
+#: model:ir.model.fields,field_description:planage.field_planage_task__write_uid
+#: model:ir.model.fields,field_description:planage.field_planage_timesheet__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_chat_message__write_date
+#: model:ir.model.fields,field_description:planage.field_planage_document__write_date
+#: model:ir.model.fields,field_description:planage.field_planage_document_tag__write_date
+#: model:ir.model.fields,field_description:planage.field_planage_folder__write_date
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_channel__write_date
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_message__write_date
+#: model:ir.model.fields,field_description:planage.field_planage_notification__write_date
+#: model:ir.model.fields,field_description:planage.field_planage_project__write_date
+#: model:ir.model.fields,field_description:planage.field_planage_space__write_date
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__write_date
+#: model:ir.model.fields,field_description:planage.field_planage_stage__write_date
+#: model:ir.model.fields,field_description:planage.field_planage_task__write_date
+#: model:ir.model.fields,field_description:planage.field_planage_timesheet__write_date
+msgid "Last Updated on"
+msgstr "تاريخ آخر تحديث"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Late Tasks"
+msgstr "المهام المتأخرة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Late Tasks ("
+msgstr "المهام المتأخرة ("
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/inbox_view.js:0
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Leave"
+msgstr "مغادرة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/inbox_view.js:0
+msgid "Leave Conversation"
+msgstr "مغادرة المحادثة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Left conversation."
+msgstr "تمت مغادرة المحادثة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Light Theme"
+msgstr "الوضع الفاتح"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Loading Planage..."
+msgstr "جاري تحميل Planage..."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Log"
+msgstr "السجل"
+
+#. module: planage
+#: model:ir.model.fields.selection,name:planage.selection__planage_task__priority__0
+msgid "Low"
+msgstr "منخفض"
+
+#. module: planage
+#: model:res.groups,name:planage.group_planage_manager
+msgid "Manager"
+msgstr "مدير"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Managerial Reports"
+msgstr "تقارير إدارية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_systray.xml:0
+msgid "Mark All as Read"
+msgstr "تحديد الكل كمقروء"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid ""
+"Mark a project as billable and set its client and hourly rate for invoicing."
+msgstr "حدد المشروع كقابل للفوترة واضبط عميله وسعر الساعة لإصدار الفواتير."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/notifications_view.xml:0
+msgid "Mark all as read"
+msgstr "تحديد الكل كمقروء"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/notifications_view.xml:0
+msgid "Mark as read"
+msgstr "تحديد كمقروء"
+
+#. module: planage
+#: model:ir.model.fields.selection,name:planage.selection__planage_task__priority__1
+msgid "Medium"
+msgstr "متوسط"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_channel__member_ids
+msgid "Members"
+msgstr "الأعضاء"
+
+#. module: planage
+#: model:ir.model.fields.selection,name:planage.selection__planage_notification__type__mention
+msgid "Mention"
+msgstr "إشارة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_notification__message
+msgid "Message"
+msgstr "رسالة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_chat_message__body
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_message__body
+msgid "Message Body"
+msgstr "نص الرسالة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/chat_view.xml:0
+msgid "Message teammates (type @ to mention)..."
+msgstr "راسل الزملاء (اكتب @ للإشارة)..."
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_channel__message_ids
+#: model:ir.model.fields,field_description:planage.field_planage_task__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: planage
+#: model:ir.model.fields.selection,name:planage.selection__planage_notification__type__milestone
+msgid "Milestone"
+msgstr "معلم رئيسي"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_document__mimetype
+msgid "Mime Type"
+msgstr "نوع الملف (Mime)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Move Down"
+msgstr "تحريك لأسفل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Move Up"
+msgstr "تحريك لأعلى"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "الموعد النهائي لنشاطي"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+msgid "My Tasks"
+msgstr "مهامي"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_document_tag__name
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_channel__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Names must be lowercase, without spaces or periods."
+msgstr "يجب أن تكون الأسماء بأحرف صغيرة، بدون مسافات أو نقاط."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "New"
+msgstr "جديد"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "New Folder"
+msgstr "مجلد جديد"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "New Project"
+msgstr "مشروع جديد"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "New Space"
+msgstr "مساحة جديدة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "New Sprint"
+msgstr "سبرينت جديد"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "New Task"
+msgstr "مهمة جديدة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+#: code:addons/planage/static/src/xml/list_view.xml:0
+#: code:addons/planage/static/src/xml/notifications_view.xml:0
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Next"
+msgstr "التالي"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/calendar_view.xml:0
+msgid "Next Month"
+msgstr "الشهر القادم"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: code:addons/planage/static/src/xml/list_view.xml:0
+msgid "Next Page"
+msgstr "الصفحة التالية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/gantt_view.xml:0
+msgid "Next Period"
+msgstr "الفترة التالية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "No Folder (Direct Project Sprint)"
+msgstr "بدون مجلد (سبرينت مشروع مباشر)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "No Projects Found"
+msgstr "لم يتم العثور على مشاريع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "No Spaces Found"
+msgstr "لم يتم العثور على مساحات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "No Sprint (Direct Project Task)"
+msgstr "بدون سبرينت (مهمة مشروع مباشرة)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "No Sprints Created"
+msgstr "لم يتم إنشاء سبرينتات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "No attachments uploaded yet."
+msgstr "لم يتم رفع أي مرفقات بعد."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "No channels found"
+msgstr "لم يتم العثور على قنوات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "No conversation selected"
+msgstr "لم يتم تحديد محادثة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "No dates defined"
+msgstr "لم يتم تحديد تواريخ"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "No direct messages"
+msgstr "لا توجد رسائل مباشرة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/chat_view.xml:0
+msgid "No discussion yet"
+msgstr "لا يوجد نقاش بعد"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "No documents found"
+msgstr "لم يتم العثور على مستندات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "No members"
+msgstr "لا يوجد أعضاء"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/notifications_view.xml:0
+msgid "No notifications active in your workspace right now."
+msgstr "لا توجد إشعارات نشطة في مساحة عملك حالياً."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "No projects created yet"
+msgstr "لم يتم إنشاء مشاريع بعد"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "No projects yet. Create one from the sidebar!"
+msgstr "لا توجد مشاريع بعد. أنشئ واحداً من الشريط الجانبي!"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid ""
+"No stages set up for this project. Please add stages to build a custom "
+"workflow."
+msgstr ""
+"لم يتم إعداد مراحل لهذا المشروع. يرجى إضافة مراحل لبناء مسار عمل مخصص."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/gantt_view.xml:0
+msgid ""
+"No tasks with start or due dates. Assign dates to see the Gantt timeline."
+msgstr ""
+"لا توجد مهام بتاريخ بدء أو استحقاق. قم بتعيين تواريخ لرؤية المخطط الزمني "
+"لجانت."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "No time logged yet."
+msgstr "لم يتم تسجيل أي وقت بعد."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/list_view.xml:0
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+msgid "Notifications"
+msgstr "الإشعارات"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: planage
+#: model:ir.model.fields,help:planage.field_planage_task__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: planage
+#: model:ir.model.fields,help:planage.field_planage_task__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل مع خطأ في التسليم"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Only invited members can view and join."
+msgstr "يمكن فقط للأعضاء المدعوين العرض والانضمام."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+#: model:ir.model.fields.selection,name:planage.selection__planage_task__state__open
+msgid "Open"
+msgstr "فتح"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_systray.xml:0
+msgid "Open Planage"
+msgstr "فتح Planage"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Open Project"
+msgstr "فتح المشروع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Open view"
+msgstr "فتح العرض"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Overview of workloads, pipeline, and deadlines."
+msgstr "نظرة عامة على أعباء العمل، مسار العمل، والمواعيد النهائية."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "PDF"
+msgstr "PDF"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+#: code:addons/planage/static/src/xml/list_view.xml:0
+#: code:addons/planage/static/src/xml/notifications_view.xml:0
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Page"
+msgstr "الصفحة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__parent_id
+msgid "Parent Task"
+msgstr "المهمة الأساسية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+#: model:ir.actions.client,name:planage.action_planage_app
+#: model:ir.module.category,name:planage.module_category_planage
+#: model:ir.ui.menu,name:planage.menu_planage_root
+msgid "Planage"
+msgstr "Planage"
+
+#. module: planage
+#: model:ir.actions.act_window,name:planage.action_planage_billing
+#: model:ir.ui.menu,name:planage.menu_planage_billing_root
+#: model_terms:ir.ui.view,arch_db:planage.view_planage_project_billing_form
+#: model_terms:ir.ui.view,arch_db:planage.view_planage_project_billing_tree
+msgid "Planage Billing"
+msgstr "فوترة Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_chat_message
+msgid "Planage Chat Message"
+msgstr "رسالة دردشة Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_document_tag
+msgid "Planage Document Tag"
+msgstr "وسم مستند Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_folder
+msgid "Planage Folder"
+msgstr "مجلد Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_inbox_message
+msgid "Planage Global Inbox Message"
+msgstr "رسالة صندوق الوارد العام لـ Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_inbox_channel
+msgid "Planage Inbox Channel / Conversation"
+msgstr "قناة/محادثة صندوق الوارد لـ Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_notification
+msgid "Planage Notification"
+msgstr "إشعار Planage"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_systray.xml:0
+msgid "Planage Notifications"
+msgstr "إشعارات Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_project
+#: model:ir.model.fields,field_description:planage.field_account_bank_statement_line__planage_project_id
+#: model:ir.model.fields,field_description:planage.field_account_move__planage_project_id
+msgid "Planage Project"
+msgstr "مشروع Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_space
+msgid "Planage Space"
+msgstr "مساحة Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_sprint
+msgid "Planage Sprint"
+msgstr "سبرنت Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_task
+msgid "Planage Task"
+msgstr "مهمة Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_stage
+msgid "Planage Task Stage"
+msgstr "مرحلة مهمة Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_timesheet
+msgid "Planage Task Timesheet"
+msgstr "جدول زمني لمهمة Planage"
+
+#. module: planage
+#: model:ir.model,name:planage.model_planage_document
+msgid "Planage Uploaded Document"
+msgstr "مستند مرفوع في Planage"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/inbox_view.js:0
+msgid "Please enter a channel name."
+msgstr "يرجى إدخال اسم القناة."
+
+#. module: planage
+#. odoo-python
+#: code:addons/planage/models/planage_space.py:0
+msgid "Please select a Client before generating an invoice."
+msgstr "يرجى اختيار عميل قبل إنشاء فاتورة."
+
+#. module: planage
+#. odoo-python
+#: code:addons/planage/models/planage_space.py:0
+msgid "Please select a Client before updating the invoice."
+msgstr "يرجى اختيار عميل قبل تحديث الفاتورة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/components/right_drawer.js:0
+msgid "Please select a project first."
+msgstr "يرجى اختيار مشروع أولاً."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/inbox_view.js:0
+msgid "Please select a user."
+msgstr "يرجى اختيار مستخدم."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Please select or create a space to configure employee access settings."
+msgstr "يرجى تحديد أو إنشاء مساحة لتكوين إعدادات وصول الموظفين."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+#: code:addons/planage/static/src/xml/list_view.xml:0
+#: code:addons/planage/static/src/xml/notifications_view.xml:0
+msgid "Prev"
+msgstr "السابق"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Previous"
+msgstr "السابق"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/calendar_view.xml:0
+msgid "Previous Month"
+msgstr "الشهر السابق"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: code:addons/planage/static/src/xml/list_view.xml:0
+msgid "Previous Page"
+msgstr "الصفحة السابقة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/gantt_view.xml:0
+msgid "Previous Period"
+msgstr "الفترة السابقة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/list_view.xml:0
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_task__priority
+msgid "Priority"
+msgstr "الأولوية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Priority Distribution"
+msgstr "توزيع الأولوية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Privacy Type"
+msgstr "نوع الخصوصية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+#: model:ir.model.fields.selection,name:planage.selection__planage_inbox_channel__channel_type__private
+msgid "Private Channel"
+msgstr "قناة خاصة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Private Channel •"
+msgstr "قناة خاصة •"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Progress"
+msgstr "التقدم"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__progress
+msgid "Progress (%)"
+msgstr "التقدم (%)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_chat_message__project_id
+#: model:ir.model.fields,field_description:planage.field_planage_document__project_id
+#: model:ir.model.fields,field_description:planage.field_planage_folder__project_id
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__project_id
+#: model:ir.model.fields,field_description:planage.field_planage_stage__project_id
+#: model:ir.model.fields,field_description:planage.field_planage_task__project_id
+#: model:ir.model.fields,field_description:planage.field_planage_timesheet__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Project \"%(name)s\" access settings updated."
+msgstr "تم تحديث إعدادات وصول المشروع \"%(name)s\"."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Project \"%(name)s\" created!"
+msgstr "تم إنشاء المشروع \"%(name)s\"!"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Project Assigned"
+msgstr "مشروع مُعين"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Project Assignees"
+msgstr "المكلفون بالمشروع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Project Billing Settings"
+msgstr "إعدادات فوترة المشروع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Project Member Settings"
+msgstr "إعدادات أعضاء المشروع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_project__name
+msgid "Project Name"
+msgstr "اسم المشروع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Project Workload"
+msgstr "عبء عمل المشروع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_space__project_ids
+msgid "Projects"
+msgstr "المشاريع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Projects Available"
+msgstr "المشاريع المتاحة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Projects Breakdown"
+msgstr "توزيع المشاريع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Public"
+msgstr "عام"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+#: model:ir.model.fields.selection,name:planage.selection__planage_inbox_channel__channel_type__public
+msgid "Public Channel"
+msgstr "قناة عامة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Public Channel • Open to everyone"
+msgstr "قناة عامة • مفتوحة للجميع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Public Space"
+msgstr "مساحة عامة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Quick Create"
+msgstr "إنشاء سريع"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_notification__is_read
+msgid "Read"
+msgstr "مقروء"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_notification__user_id
+msgid "Recipient User"
+msgstr "المستخدم المستلم"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "Refine your search query or adjust the date filter pills."
+msgstr "قم بتحسين استعلام البحث أو ضبط فلاتر التاريخ."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/components/sidebar.js:0
+msgid "Refresh Anyway"
+msgstr "التحديث على أي حال"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+msgid "Refresh System"
+msgstr "تحديث النظام"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Remove"
+msgstr "إزالة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+msgid "Reporting"
+msgstr "التقارير"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/config_view.js:0
+msgid "Reset Everything"
+msgstr "إعادة تعيين كل شيء"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/config_view.js:0
+msgid "Reset System"
+msgstr "إعادة تعيين النظام"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Reset and wipe all system records to start fresh with a clean slate."
+msgstr "إعادة ضبط ومسح جميع سجلات النظام للبدء من جديد بسجل نظيف."
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__user_id
+msgid "Responsible"
+msgstr "المسؤول"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Restricted"
+msgstr "مقيد"
+
+#. module: planage
+#: model:res.groups.privilege,name:planage.privilege_planage_roles
+msgid "Role"
+msgstr "الدور"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في تسليم الرسائل القصيرة (SMS)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Save"
+msgstr "حفظ"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Save Billing Settings"
+msgstr "حفظ إعدادات الفوترة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Save Changes"
+msgstr "حفظ التغييرات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Say hello to start the discussion in this channel!"
+msgstr "قل مرحباً لبدء النقاش في هذه القناة!"
+
+#. module: planage
+#: model:ir.model.fields,help:planage.field_planage_stage__project_id
+msgid "Scope stage to a specific project. If empty, it is a global stage."
+msgstr "حدد المرحلة لمشروع معين. إذا كان فارغاً، فهي مرحلة عامة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Search conversations..."
+msgstr "البحث في المحادثات..."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "Search documents by name..."
+msgstr "البحث عن المستندات بالاسم..."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Search projects..."
+msgstr "البحث في المشاريع..."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Search spaces..."
+msgstr "البحث في المساحات..."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Select Assignees"
+msgstr "حدد المكلفين"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Select Members to Invite"
+msgstr "حدد الأعضاء للدعوة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Select Project"
+msgstr "حدد المشروع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Select Space"
+msgstr "حدد المساحة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Select a Space and Project above to configure billing."
+msgstr "اختر مساحة عمل ومشروعًا أعلاه لتهيئة الفوترة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid ""
+"Select a Space and Project above to configure project-level member "
+"assignments."
+msgstr "حدد مساحة ومشروع أعلاه لتكوين تعيينات الأعضاء على مستوى المشروع."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Select a User"
+msgstr "حدد مستخدم"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Select a project above to customize its pipeline stages."
+msgstr "حدد مشروعاً أعلاه لتخصيص مراحل مسار العمل الخاصة به."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Select a project to get started"
+msgstr "حدد مشروعاً للبدء"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Select a space or project on the left menu"
+msgstr "حدد مساحة أو مشروع من القائمة اليسرى"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_folder__sequence
+#: model:ir.model.fields,field_description:planage.field_planage_project__sequence
+#: model:ir.model.fields,field_description:planage.field_planage_space__sequence
+#: model:ir.model.fields,field_description:planage.field_planage_stage__sequence
+#: model:ir.model.fields,field_description:planage.field_planage_task__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Set Stage"
+msgstr "تحديد المرحلة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Settings & Configuration"
+msgstr "الإعدادات والتهيئة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Shared with All"
+msgstr "مشترك مع الجميع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/board_view.xml:0
+#: code:addons/planage/static/src/xml/gantt_view.xml:0
+msgid "Show"
+msgstr "عرض"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Sort: Alphabetical"
+msgstr "فرز: أبجدي"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Sort: Most Members"
+msgstr "فرز: الأكثر أعضاءً"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Sort: Most Projects"
+msgstr "فرز: الأكثر مشاريعاً"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Sort: Most Tasks"
+msgstr "فرز: الأكثر مهاماً"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_folder__space_id
+#: model:ir.model.fields,field_description:planage.field_planage_project__space_id
+#: model:ir.model.fields,field_description:planage.field_planage_task__space_id
+msgid "Space"
+msgstr "المساحة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Space \"%(name)s\" access settings updated."
+msgstr "تم تحديث إعدادات وصول المساحة \"%(name)s\"."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Space \"%(name)s\" created!"
+msgstr "تم إنشاء المساحة \"%(name)s\"!"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Space Access & Member Settings"
+msgstr "صلاحيات المساحة وإعدادات الأعضاء"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_space__name
+msgid "Space Name"
+msgstr "اسم المساحة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+msgid "Spaces"
+msgstr "المساحات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Spaces Available"
+msgstr "المساحات المتاحة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__sprint_id
+msgid "Sprint"
+msgstr "سبرينت"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Sprint \"%(name)s\" created!"
+msgstr "تم إنشاء السبرنت \"%(name)s\"!"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Sprint (Optional)"
+msgstr "سبرينت (اختياري)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "Sprint Chat"
+msgstr "دردشة السبرينت"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "Sprint Chat Message Attachment"
+msgstr "مرفق رسالة دردشة السبرينت"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/chat_view.xml:0
+msgid "Sprint Discussion"
+msgstr "نقاش السبرينت"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/gantt_view.xml:0
+msgid "Sprint Duration Bracket"
+msgstr "فترة السبرينت"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__name
+msgid "Sprint Name"
+msgstr "اسم السبرينت"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Sprint updated successfully."
+msgstr "تم تحديث السبرنت بنجاح."
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_folder__sprint_ids
+#: model:ir.model.fields,field_description:planage.field_planage_project__sprint_ids
+msgid "Sprints"
+msgstr "السبرينتات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Sprints Overview"
+msgstr "نظرة عامة على السبرنتات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/list_view.xml:0
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_task__stage_id
+msgid "Stage"
+msgstr "المرحلة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_stage__name
+msgid "Stage Name"
+msgstr "اسم المرحلة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Stage Pipeline (Global)"
+msgstr "مسار المراحل (عام)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Stage Status Workflows"
+msgstr "مسارات حالة المرحلة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Starred messages"
+msgstr "الرسائل المميزة بنجمة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Start Chat"
+msgstr "بدء الدردشة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/list_view.xml:0
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__date_from
+#: model:ir.model.fields,field_description:planage.field_planage_task__date_start
+msgid "Start Date"
+msgstr "تاريخ البدء"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Start Date (Optional)"
+msgstr "تاريخ البدء (اختياري)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Start Date *"
+msgstr "تاريخ البدء *"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Start Direct Message"
+msgstr "بدء رسالة مباشرة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "Start a Direct Message"
+msgstr "بدء رسالة مباشرة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Start and end dates are required."
+msgstr "تاريخا البدء والانتهاء مطلوبان."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/chat_view.xml:0
+msgid "Start the conversation with your team members in this sprint."
+msgstr "ابدأ المحادثة مع أعضاء فريقك في هذا السبرينت."
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Status"
+msgstr "الحالة"
+
+#. module: planage
+#: model:ir.model.fields,help:planage.field_planage_task__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخر: تجاوز تاريخ الاستحقاق\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط: أنشطة مستقبلية."
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__subtask_count
+msgid "Subtask Count"
+msgstr "عدد المهام الفرعية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_task__child_ids
+msgid "Subtasks"
+msgstr "المهام الفرعية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Switch between dark and light themes for the application."
+msgstr "التبديل بين الوضع الداكن والفاتح للتطبيق."
+
+#. module: planage
+#: model:ir.model.fields.selection,name:planage.selection__planage_notification__type__system
+msgid "System"
+msgstr "النظام"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "System Reset (Danger Zone)"
+msgstr "إعادة ضبط النظام (منطقة الخطر)"
+
+#. module: planage
+#. odoo-python
+#: code:addons/planage/controllers/main.py:0
+msgid "System reset is only available in development mode."
+msgstr "إعادة ضبط النظام متاحة فقط في وضع التطوير."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/gantt_view.xml:0
+msgid "TODAY"
+msgstr "اليوم"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_document__tag_ids
+msgid "Tags"
+msgstr "العلامات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/list_view.xml:0
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_document__task_id
+#: model:ir.model.fields,field_description:planage.field_planage_timesheet__task_id
+msgid "Task"
+msgstr "المهمة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Task \"%(name)s\" created."
+msgstr "تم إنشاء المهمة \"%(name)s\"."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Task Activity (7 Days)"
+msgstr "نشاط المهمة (7 أيام)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Task Name"
+msgstr "اسم المهمة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Task Status"
+msgstr "حالة المهمة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_task__name
+msgid "Task Title"
+msgstr "عنوان المهمة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/board_view.xml:0
+msgid "Task name..."
+msgstr "اسم المهمة..."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "Task:"
+msgstr "مهمة:"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_project__task_ids
+#: model:ir.model.fields,field_description:planage.field_planage_sprint__task_ids
+msgid "Tasks"
+msgstr "المهام"
+
+#. module: planage
+#: model_terms:ir.ui.view,arch_db:planage.view_planage_project_billing_form
+msgid "Tasks & Hours"
+msgstr "المهام والساعات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "Tasks ("
+msgstr "المهام ("
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Tasks View"
+msgstr "عرض المهام"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Tasks created per day, last 7 days."
+msgstr "المهام المنشأة يومياً، آخر 7 أيام."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Tasks in this stage"
+msgstr "المهام في هذه المرحلة"
+
+#. module: planage
+#: model:ir.model.fields,help:planage.field_planage_stage__is_closed
+msgid "Tasks in this stage are counted as 'done' for progress calculations."
+msgstr "تعتبر المهام في هذه المرحلة 'منتهية' لحسابات التقدم."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Tasks sliced by urgency level."
+msgstr "المهام مقسمة حسب مستوى الاستعجال."
+
+#. module: planage
+#. odoo-python
+#: code:addons/planage/models/planage_space.py:0
+msgid "There are no logged hours on any tasks in this project."
+msgstr "لا توجد ساعات مسجّلة على أي مهمة في هذا المشروع."
+
+#. module: planage
+#. odoo-python
+#: code:addons/planage/models/planage_space.py:0
+msgid "There is no unposted invoice to update. Use 'Create Invoice' first."
+msgstr "لا توجد فاتورة غير مرحّلة لتحديثها. استخدم \"إنشاء فاتورة\" أولاً."
+
+#. module: planage
+#. odoo-python
+#: code:addons/planage/models/account_move.py:0
+msgid ""
+"This invoice was generated from a Planage project and cannot be reset to "
+"draft or edited once posted."
+msgstr "تم إنشاء هذه الفاتورة من مشروع Planage ولا يمكن إعادتها إلى مسودة أو تعديلها بعد ترحيلها."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "This is the start of the conversation"
+msgstr "هذه بداية المحادثة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "This month"
+msgstr "هذا الشهر"
+
+#. module: planage
+#. odoo-python
+#: code:addons/planage/models/planage_space.py:0
+msgid ""
+"This project already has an unposted invoice. Update that invoice instead of"
+" creating a new one."
+msgstr "يحتوي هذا المشروع بالفعل على فاتورة غير مرحّلة. قم بتحديث تلك الفاتورة بدلاً من إنشاء فاتورة جديدة."
+
+#. module: planage
+#: model_terms:ir.ui.view,arch_db:planage.view_planage_project_billing_form
+msgid ""
+"This project has an unposted invoice. Use \"Update Invoice\" to sync it with"
+" the latest logged hours — a new invoice cannot be created until it is "
+"posted."
+msgstr "يحتوي هذا المشروع على فاتورة غير مرحّلة. استخدم \"تحديث الفاتورة\" لمزامنتها مع أحدث الساعات المسجّلة — لا يمكن إنشاء فاتورة جديدة حتى يتم ترحيلها."
+
+#. module: planage
+#. odoo-python
+#: code:addons/planage/models/planage_space.py:0
+msgid "This project is not marked as billable."
+msgstr "هذا المشروع غير محدد كقابل للفوترة."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "This week"
+msgstr "هذا الأسبوع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "Thumbnail"
+msgstr "صورة مصغرة"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_project__timesheet_ids
+#: model:ir.model.fields,field_description:planage.field_planage_task__timesheet_ids
+#: model_terms:ir.ui.view,arch_db:planage.view_planage_project_billing_form
+msgid "Timesheets"
+msgstr "الجداول الزمنية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Timesheets (Hours:"
+msgstr "الجداول الزمنية (ساعات:"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_notification__title
+msgid "Title"
+msgstr "العنوان"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/calendar_view.xml:0
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+#: code:addons/planage/static/src/xml/gantt_view.xml:0
+msgid "Today"
+msgstr "اليوم"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/sidebar.xml:0
+msgid "Toggle Light/Dark Theme"
+msgstr "تبديل الوضع الفاتح/الداكن"
+
+#. module: planage
+#: model_terms:ir.ui.view,arch_db:planage.view_planage_project_billing_form
+msgid "Total"
+msgstr "الإجمالي"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__total_hours
+#: model_terms:ir.ui.view,arch_db:planage.view_planage_project_billing_form
+msgid "Total Hours"
+msgstr "إجمالي الساعات"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+#: model:ir.model.fields,field_description:planage.field_planage_space__task_count
+msgid "Total Tasks"
+msgstr "جميع المهام"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Try adjusting your search query or filters to discover other spaces."
+msgstr "جرب تعديل استعلام البحث أو الفلاتر لاكتشاف مساحات أخرى."
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_inbox_channel__channel_type
+#: model:ir.model.fields,field_description:planage.field_planage_notification__type
+msgid "Type"
+msgstr "النوع"
+
+#. module: planage
+#: model:ir.model.fields,help:planage.field_planage_task__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع نشاط الاستثناء في السجل."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Unassigned"
+msgstr "غير معين"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "Universal Creation Menu"
+msgstr "قائمة الإنشاء الشاملة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/components/sidebar.js:0
+msgid "Unsaved Changes"
+msgstr "تغييرات غير محفوظة"
+
+#. module: planage
+#: model_terms:ir.ui.view,arch_db:planage.view_planage_project_billing_form
+msgid "Update Invoice"
+msgstr "تحديث الفاتورة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/planage_app.js:0
+msgid "Update failed. Changes have been reverted."
+msgstr "فشل التحديث. تم التراجع عن التغييرات."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "Upload"
+msgstr "رفع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Uploaded Docs"
+msgstr "المستندات المرفوعة"
+
+#. module: planage
+#: model:ir.model.fields.selection,name:planage.selection__planage_task__priority__3
+msgid "Urgent"
+msgstr "عاجل"
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_timesheet__user_id
+msgid "User"
+msgstr "المستخدم"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "Visible to everyone"
+msgstr "مرئي للجميع"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/views/config_view.js:0
+msgid ""
+"WARNING: Are you absolutely sure you want to reset the system? This will "
+"permanently delete all Spaces, Folders, Projects, Sprints, Tasks, Chat "
+"Messages, and Documents. This action is IRREVERSIBLE."
+msgstr ""
+"تحذير: هل أنت متأكد تمامًا من رغبتك في إعادة تعيين النظام؟ سيؤدي هذا إلى حذف"
+" جميع المساحات والمجلدات والمشاريع والسبرنتات والمهام ورسائل الدردشة "
+"والمستندات نهائيًا. هذا الإجراء لا رجعة فيه."
+
+#. module: planage
+#: model:ir.model.fields,field_description:planage.field_planage_task__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع"
+
+#. module: planage
+#: model:ir.model.fields,help:planage.field_planage_task__website_message_ids
+msgid "Website communication history"
+msgstr "سجل تواصل الموقع الإلكتروني"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/right_drawer.xml:0
+msgid "What did you do?"
+msgstr "ماذا فعلت؟"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Wipe All Data & Reset Fresh"
+msgstr "مسح كافة البيانات وإعادة الضبط"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid ""
+"Wiping the database deletes all Spaces, Folders, Projects, Sprints, Tasks, "
+"Chat Messages, and Documents permanently. This action is irreversible."
+msgstr ""
+"يؤدي مسح قاعدة البيانات إلى حذف جميع المساحات والمجلدات والمشاريع والسبرنتات"
+" والمهام ورسائل الدردشة والمستندات نهائيًا. هذا الإجراء لا رجعة فيه."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+msgid "Workspace Documents"
+msgstr "مستندات مساحة العمل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/notifications_view.xml:0
+msgid "Workspace Notifications"
+msgstr "إشعارات مساحة العمل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "Workspace Overview"
+msgstr "نظرة عامة على مساحة العمل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "Workspace Space"
+msgstr "مساحة العمل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/js/components/sidebar.js:0
+msgid "You have an unsaved form open. Refreshing will discard it. Continue?"
+msgstr ""
+"لديك نموذج غير محفوظ مفتوح. سيؤدي التحديث إلى تجاهله. هل تريد المتابعة؟"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/notifications_view.xml:0
+msgid "You're all caught up!"
+msgstr "أنت على اطلاع تام!"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid ""
+"and all employees can view it. Once you assign at least one employee, access"
+" becomes restricted exclusively to those who are assigned."
+msgstr ""
+"ويمكن لجميع الموظفين مشاهدته. بمجرد تعيين موظف واحد على الأقل، يصبح الوصول "
+"مقتصراً فقط على المعينين."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "completion rate"
+msgstr "معدل الإنجاز"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "days"
+msgstr "أيام"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "e.g. Backend Engine"
+msgstr "مثال: محرك الواجهة الخلفية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "e.g. Development"
+msgstr "مثال: التطوير"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "e.g. Fix navbar responsive spacing"
+msgstr "مثال: إصلاح تباعد الاستجابة في شريط التنقل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "e.g. In Review"
+msgstr "مثال: قيد المراجعة"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "e.g. Phase 1 Releases"
+msgstr "مثال: إصدارات المرحلة 1"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/planage_app.xml:0
+msgid "e.g. Sprint 1"
+msgstr "مثال: سبرينت 1"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "e.g. marketing-campaign"
+msgstr "مثال: حملة-تسويق"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "members"
+msgstr "أعضاء"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/board_view.xml:0
+msgid "more"
+msgstr "المزيد"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/gantt_view.xml:0
+msgid "more tasks"
+msgstr "مهام إضافية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/config_view.xml:0
+msgid "notification."
+msgstr "إشعار."
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+#: code:addons/planage/static/src/xml/docs_view.xml:0
+#: code:addons/planage/static/src/xml/list_view.xml:0
+#: code:addons/planage/static/src/xml/notifications_view.xml:0
+#: code:addons/planage/static/src/xml/reporting_view.xml:0
+msgid "of"
+msgstr "من"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/chat_view.xml:0
+#: code:addons/planage/static/src/xml/inbox_view.xml:0
+msgid "on"
+msgstr "في"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "projects)"
+msgstr "مشاريع)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "spaces)"
+msgstr "المساحات)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/list_view.xml:0
+msgid "subtask"
+msgstr "مهمة فرعية"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/canvas.xml:0
+msgid "tasks"
+msgstr "مهام"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/list_view.xml:0
+msgid "tasks)"
+msgstr "مهام)"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/board_view.xml:0
+msgid "to"
+msgstr "إلى"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "⚪ Low"
+msgstr "⚪ منخفض"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "🔴 Urgent"
+msgstr "🔴 عاجل"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "🔵 Normal"
+msgstr "🔵 عادي"
+
+#. module: planage
+#. odoo-javascript
+#: code:addons/planage/static/src/xml/dashboard_view.xml:0
+msgid "🟠 High"
+msgstr "🟠 عالي"

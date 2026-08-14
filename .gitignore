@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Logs
+*.log
+
+# Odoo
+.odoo/
+odoo/filestore/
+odoo.conf
+
+# Virtual environments
+venv/
+.env/
+.envrc
+/bin/
+/build/
+/dist/
+/include/
+/lib/
+/man/
+/share/
+/src/
+
+# Node / JS
+node_modules/
+package-lock.json
+package.json
+jsconfig.json
+tsconfig.json
+.husky/
+
+# IDEs / Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Sphinx
+_build/
+
+# Git
+.orig
+status

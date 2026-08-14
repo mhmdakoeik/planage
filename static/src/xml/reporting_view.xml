@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.ReportingView">
+        <div class="reporting-view-container">
+            <div class="reporting-header">
+                <div class="reporting-header-text">
+                    <h2><i class="fa fa-bar-chart"></i> Managerial Reports</h2>
+                    <p class="text-muted">Overview of workloads, pipeline, and deadlines.</p>
+                </div>
+                <div class="reporting-actions">
+                    <div class="dashboard-filters">
+                        <input type="week" class="form-control form-control-sm" style="width: auto;" t-on-change="onWeekChange" t-att-value="state.selectedWeek || ''" title="Filter by specific Week"/>
+                        <input type="month" class="form-control form-control-sm" style="width: auto;" t-on-change="onMonthChange" t-att-value="state.selectedMonth || ''" title="Filter by specific Month/Year"/>
+                        <select class="form-select form-select-sm" t-on-change="onProjectChange" t-att-value="state.selectedProjectId || ''">
+                            <option value="">All Projects</option>
+                            <t t-foreach="state.filters.projects" t-as="proj" t-key="proj.id">
+                                <option t-att-value="proj.id"><t t-esc="proj.name"/></option>
+                            </t>
+                        </select>
+                        <select class="form-select form-select-sm" t-on-change="onSprintChange" t-att-value="state.selectedSprintId || ''" t-if="state.selectedProjectId">
+                            <option value="">All Sprints</option>
+                            <t t-foreach="availableSprints" t-as="sprint" t-key="sprint.id">
+                                <option t-att-value="sprint.id"><t t-esc="sprint.name"/></option>
+                            </t>
+                        </select>
+                    </div>
+                    <button class="btn-export btn-pdf" t-on-click="exportPdf" title="Download PDF Report">
+                        <i class="fa fa-file-pdf-o"></i> PDF
+                    </button>
+                    <button class="btn-export btn-excel" t-on-click="exportExcel" title="Download Excel CSV">
+                        <i class="fa fa-file-excel-o"></i> Excel
+                    </button>
+                </div>
+            </div>
+
+            <div t-if="state.loading" class="reporting-loading">
+                <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+                <p>Generating Reports...</p>
+            </div>
+
+            <div t-else="" class="reporting-content">
+                
+                <!-- Late Tasks Overview -->
+                <div class="report-section highlight-danger" t-if="state.reports.late_tasks.length > 0">
+                    <div class="report-section-header">
+                        <h3><i class="fa fa-exclamation-triangle"></i> Late Tasks (<t t-esc="state.reports.late_tasks.length"/>)</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="reporting-table">
+                            <thead>
+                                <tr>
+                                    <th>Task Name</th>
+                                    <th>Project</th>
+                                    <th>Assignees</th>
+                                    <th>Stage</th>
+                                    <th>Deadline</th>
+                                    <th>Days Late</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="getPaginatedData('late_tasks')" t-as="task" t-key="task.id">
+                                    <tr>
+                                        <td class="font-weight-bold"><t t-esc="task.name"/></td>
+                                        <td><t t-esc="task.project_name"/></td>
+                                        <td><t t-esc="task.assignees"/></td>
+                                        <td>
+                                            <span class="report-stage-badge" t-attf-style="background-color: {{task.stage_color}}22; color: {{task.stage_color}}">
+                                                <t t-esc="task.stage_name"/>
+                                            </span>
+                                        </td>
+                                        <td class="text-danger"><t t-esc="task.date_end"/></td>
+                                        <td class="text-danger font-weight-bold"><t t-esc="task.days_late"/> days</td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <t t-set="lateInfo" t-value="getPaginationInfo('late_tasks')"/>
+                    <div class="pagination-controls report-pagination" t-if="lateInfo.totalPages > 1">
+                        <button class="pagination-btn" t-on-click="() => this.prevPage('late_tasks')" t-att-disabled="!lateInfo.hasPrev">Previous</button>
+                        <span class="pagination-info">Page <strong t-esc="lateInfo.page"/> of <strong t-esc="lateInfo.totalPages"/></span>
+                        <button class="pagination-btn" t-on-click="() => this.nextPage('late_tasks')" t-att-disabled="!lateInfo.hasNext">Next</button>
+                    </div>
+                </div>
+                <div class="report-section highlight-success" t-else="">
+                    <div class="report-section-header">
+                        <h3><i class="fa fa-check-circle"></i> Late Tasks</h3>
+                    </div>
+                    <div class="empty-state-message">
+                        <p>Awesome! There are no late tasks at the moment.</p>
+                    </div>
+                </div>
+
+                <div class="report-grid">
+                    <!-- Assignee Workload -->
+                    <div class="report-card">
+                        <h3>Assignee Workload</h3>
+                        <div class="table-responsive">
+                            <table class="reporting-table">
+                                <thead>
+                                    <tr>
+                                        <th>Assignee</th>
+                                        <th>Total Tasks</th>
+                                        <th>Open</th>
+                                        <th>Done</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="getPaginatedData('assignee_workload')" t-as="assignee" t-key="assignee.id">
+                                        <tr>
+                                            <td>
+                                                <div class="assignee-cell">
+                                                    <t t-esc="assignee.name"/>
+                                                </div>
+                                            </td>
+                                            <td class="font-weight-bold"><t t-esc="assignee.total_tasks"/></td>
+                                            <td><t t-esc="assignee.open_tasks"/></td>
+                                            <td class="text-success"><t t-esc="assignee.done_tasks"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <t t-set="assigneeInfo" t-value="getPaginationInfo('assignee_workload')"/>
+                        <div class="pagination-controls report-pagination" t-if="assigneeInfo.totalPages > 1">
+                            <button class="pagination-btn" t-on-click="() => this.prevPage('assignee_workload')" t-att-disabled="!assigneeInfo.hasPrev">Previous</button>
+                            <span class="pagination-info">Page <strong t-esc="assigneeInfo.page"/> of <strong t-esc="assigneeInfo.totalPages"/></span>
+                            <button class="pagination-btn" t-on-click="() => this.nextPage('assignee_workload')" t-att-disabled="!assigneeInfo.hasNext">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Project Workload -->
+                    <div class="report-card">
+                        <h3>Project Workload</h3>
+                        <div class="table-responsive">
+                            <table class="reporting-table">
+                                <thead>
+                                    <tr>
+                                        <th>Project</th>
+                                        <th>Space</th>
+                                        <th>Total Tasks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="getPaginatedData('project_workload')" t-as="project" t-key="project.id">
+                                        <tr>
+                                            <td class="font-weight-bold"><t t-esc="project.name"/></td>
+                                            <td><t t-esc="project.space_name"/></td>
+                                            <td><t t-esc="project.total_tasks"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <t t-set="projectInfo" t-value="getPaginationInfo('project_workload')"/>
+                        <div class="pagination-controls report-pagination" t-if="projectInfo.totalPages > 1">
+                            <button class="pagination-btn" t-on-click="() => this.prevPage('project_workload')" t-att-disabled="!projectInfo.hasPrev">Previous</button>
+                            <span class="pagination-info">Page <strong t-esc="projectInfo.page"/> of <strong t-esc="projectInfo.totalPages"/></span>
+                            <button class="pagination-btn" t-on-click="() => this.nextPage('project_workload')" t-att-disabled="!projectInfo.hasNext">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage Pipeline -->
+                <div class="report-card full-width mt-4">
+                    <h3>Stage Pipeline (Global)</h3>
+                    <div class="pipeline-bars mt-3">
+                        <t t-foreach="state.reports.stage_pipeline" t-as="stage" t-key="stage.name">
+                            <div class="pipeline-bar-container">
+                                <div class="pipeline-bar-label">
+                                    <span class="font-weight-bold" t-attf-style="color: {{stage.color}}"><t t-esc="stage.name"/></span>
+                                    <span><t t-esc="stage.count"/> Tasks (<t t-esc="stage.percentage"/>%)</span>
+                                </div>
+                                <div class="pipeline-bar-track">
+                                    <div class="pipeline-bar-fill" t-attf-style="width: {{stage.percentage}}%; background-color: {{stage.color}}"></div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </t>
+
+</templates>

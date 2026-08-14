@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.ConfigView">
+        <div class="config-view-container">
+            <div class="config-header">
+                <h2>Settings &amp; Configuration</h2>
+                <p>Customize your workspace experience, themes, and workflow stage pipelines.</p>
+            </div>
+
+            <div class="config-grid">
+                
+                <!-- Theme Preferences Section -->
+                <div class="config-card">
+                    <div class="config-card-header">
+                        <span class="config-card-icon"><i class="fa fa-paint-brush"></i></span>
+                        <div>
+                            <h4>Appearance Mode</h4>
+                            <p>Switch between dark and light themes for the application.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="theme-selector-group">
+                        <!-- Light Mode Card -->
+                        <div class="theme-option-card" 
+                             t-att-class="{ active: !props.state.isDark }"
+                             t-on-click="() => this.setTheme('light')">
+                            <div class="theme-preview light-preview">
+                                <div class="preview-sidebar"/>
+                                <div class="preview-content">
+                                    <div class="preview-line-lg"/>
+                                    <div class="preview-line-md"/>
+                                </div>
+                            </div>
+                            <span class="theme-label"><i class="fa fa-sun-o" style="margin-right: 4px;"></i>Light Theme</span>
+                        </div>
+                        
+                        <!-- Dark Mode Card -->
+                        <div class="theme-option-card" 
+                             t-att-class="{ active: props.state.isDark }"
+                             t-on-click="() => this.setTheme('dark')">
+                            <div class="theme-preview dark-preview">
+                                <div class="preview-sidebar"/>
+                                <div class="preview-content">
+                                    <div class="preview-line-lg"/>
+                                    <div class="preview-line-md"/>
+                                </div>
+                            </div>
+                            <span class="theme-label"><i class="fa fa-moon-o" style="margin-right: 4px;"></i>Dark Theme</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <!-- Space Access & Member Settings Section -->
+                <div class="config-card access-config-card">
+                    <div class="config-card-header">
+                        <span class="config-card-icon" style="background-color: rgba(16, 185, 129, 0.1); color: #10b981;">
+                            <i class="fa fa-shield"></i>
+                        </span>
+                        <div>
+                            <h4>Space Access &amp; Member Settings</h4>
+                            <p>Configure which employees can see and access this space.</p>
+                        </div>
+                    </div>
+
+                    <!-- Selected Space Select Dropdown -->
+                    <div class="filter-field">
+                        <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.85rem; color: var(--planage-text-muted);">Workspace Space</label>
+                        <select class="planage-select" 
+                                t-on-change="(ev) => this.selectSpace(ev.target.value)">
+                            <t t-foreach="spaces" t-as="sp" t-key="sp.id">
+                                <option t-att-value="sp.id" t-att-selected="state.selectedSpaceId === sp.id" t-esc="sp.name"/>
+                            </t>
+                        </select>
+                    </div>
+
+                    <!-- Members List Grid / Table with iOS style switch/button -->
+                    <t t-if="state.selectedSpaceId">
+                        <div class="members-access-section" style="display: flex; flex-direction: column; gap: 12px; margin-top: 8px;">
+                            <h5 style="font-size: 0.9rem; font-weight: 700; margin: 0; color: var(--planage-text-primary);">Employee Access Permissions</h5>
+                            
+                            <div class="members-access-list" style="display: flex; flex-direction: column; gap: 8px; overflow: visible; padding-right: 4px;">
+                                <t t-foreach="users" t-as="user" t-key="user.id">
+                                     <div class="member-access-row" 
+                                          t-att-style="state.openAccessDropdownId === user.id ? 'z-index: 50; position: relative; display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border: 1px solid var(--planage-border-color); border-radius: 12px; background-color: var(--planage-bg-base, rgba(0,0,0,0.015)); transition: all 0.2s ease;' : 'position: relative; display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border: 1px solid var(--planage-border-color); border-radius: 12px; background-color: var(--planage-bg-base, rgba(0,0,0,0.015)); transition: all 0.2s ease;'">
+                                         
+                                         <!-- User Avatar and Info -->
+                                         <div style="display: flex; align-items: center; gap: 10px;">
+                                             <img t-att-src="user.avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid var(--planage-border-color);"/>
+                                             <div style="display: flex; flex-direction: column; text-align: left;">
+                                                 <span style="font-size: 0.85rem; font-weight: 600; color: var(--planage-text-primary);"><t t-esc="user.name"/></span>
+                                                 <span style="font-size: 0.75rem; color: var(--planage-text-muted);">Employee</span>
+                                             </div>
+                                         </div>
+
+                                         <!-- iOS-style / Premium Active Switch or Toggle Button -->
+                                         <div class="access-toggle-action" style="position: relative;">
+                                             <button t-on-click="() => this.toggleDropdown(user.id)"
+                                                     t-att-style="isUserAssignedToSpace(user.id, state.selectedSpaceId) ? 'background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.25); color: #10b981;' : 'background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.25); color: #ef4444;'"
+                                                     style="display: inline-flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 6px !important; padding: 6px 12px !important; border: 1px solid !important; border-radius: 8px !important; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; outline: none; white-space: nowrap !important; height: 30px !important; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+                                                 <t t-if="isUserAssignedToSpace(user.id, state.selectedSpaceId)">
+                                                     <i class="fa fa-unlock" style="font-size: 0.8rem; margin-right: 2px;"></i> Allowed
+                                                 </t>
+                                                 <t t-else="">
+                                                     <i class="fa fa-lock" style="font-size: 0.8rem; margin-right: 2px;"></i> Restricted
+                                                 </t>
+                                                 <i class="fa fa-chevron-down" style="font-size: 0.7rem; opacity: 0.7; transition: transform 0.2s ease; margin-left: 2px;"></i>
+                                             </button>
+                                            
+                                            <!-- Dropdown Menu Options -->
+                                            <div t-if="state.openAccessDropdownId === user.id"
+                                                 style="position: absolute; right: 0; top: calc(100% + 6px); z-index: 1000; background: var(--planage-bg-surface, #fff); border: 1px solid var(--planage-border-color); border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.12); padding: 6px; min-width: 140px; display: flex; flex-direction: column; gap: 4px; animation: slideInUp 0.18s cubic-bezier(0.16, 1, 0.3, 1);">
+                                                 
+                                                <!-- Allowed Option -->
+                                                <div t-on-click="() => this.setAccess(user.id, true)"
+                                                     t-att-style="isUserAssignedToSpace(user.id, state.selectedSpaceId) ? 'background: rgba(16, 185, 129, 0.08); color: #10b981;' : 'color: var(--planage-text-primary);'"
+                                                     style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.15s ease;"
+                                                     class="access-dropdown-item">
+                                                     <i class="fa fa-unlock" style="width: 14px; font-size: 0.85rem;"></i>
+                                                     <span>Allowed</span>
+                                                     <i t-if="isUserAssignedToSpace(user.id, state.selectedSpaceId)" class="fa fa-check" style="margin-left: auto; font-size: 0.75rem;"></i>
+                                                </div>
+                                                
+                                                <!-- Restricted Option -->
+                                                <div t-on-click="() => this.setAccess(user.id, false)"
+                                                     t-att-style="!isUserAssignedToSpace(user.id, state.selectedSpaceId) ? 'background: rgba(239, 68, 68, 0.08); color: #ef4444;' : 'color: var(--planage-text-primary);'"
+                                                     style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.15s ease;"
+                                                     class="access-dropdown-item">
+                                                     <i class="fa fa-lock" style="width: 14px; font-size: 0.85rem;"></i>
+                                                     <span>Restricted</span>
+                                                     <i t-if="!isUserAssignedToSpace(user.id, state.selectedSpaceId)" class="fa fa-check" style="margin-left: auto; font-size: 0.75rem;"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                            
+                            <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 10px; padding: 12px; margin-top: 8px; text-align: left;">
+                                <p style="font-size: 0.78rem; line-height: 1.4; color: #10b981; margin: 0; display: flex; align-items: flex-start; gap: 8px;">
+                                    <i class="fa fa-info-circle" style="margin-top: 2px;"></i>
+                                    <span>If NO employees are allowed access, this space acts as a <strong>Public Space</strong> and all employees can view it. Once you assign at least one employee, access becomes restricted exclusively to those who are assigned.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="no-project-selected-fallback" style="text-align: left; padding: 12px; color: var(--planage-text-secondary);">
+                            Please select or create a space to configure employee access settings.
+                        </div>
+                    </t>
+                </div>
+
+                <!-- Project Member Access Settings Section -->
+                <div class="config-card access-config-card">
+                    <div class="config-card-header">
+                        <span class="config-card-icon" style="background-color: rgba(99, 102, 241, 0.1); color: #6366f1;">
+                            <i class="fa fa-cube"></i>
+                        </span>
+                        <div>
+                            <h4>Project Member Settings</h4>
+                            <p>Configure which employees are assigned to each project. Assigned employees receive notifications.</p>
+                        </div>
+                    </div>
+
+                    <!-- Space selector -->
+                    <div class="filter-field">
+                        <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.85rem; color: var(--planage-text-muted);">Workspace Space</label>
+                        <select class="planage-select"
+                                t-on-change="(ev) => this.selectSpace(ev.target.value)">
+                            <t t-foreach="spaces" t-as="sp" t-key="sp.id">
+                                <option t-att-value="sp.id" t-att-selected="state.selectedSpaceId === sp.id" t-esc="sp.name"/>
+                            </t>
+                        </select>
+                    </div>
+
+                    <!-- Project selector -->
+                    <div class="filter-field" style="margin-top: 10px;" t-if="projects.length">
+                        <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.85rem; color: var(--planage-text-muted);">Project</label>
+                        <select class="planage-select"
+                                t-on-change="(ev) => { state.selectedProjectId = +ev.target.value; }">
+                            <t t-foreach="projects" t-as="proj" t-key="proj.id">
+                                <option t-att-value="proj.id" t-att-selected="state.selectedProjectId === proj.id" t-esc="proj.name"/>
+                            </t>
+                        </select>
+                    </div>
+
+                    <t t-if="state.selectedProjectId">
+                        <div class="members-access-section" style="display: flex; flex-direction: column; gap: 12px; margin-top: 14px;">
+                            <h5 style="font-size: 0.9rem; font-weight: 700; margin: 0; color: var(--planage-text-primary);">Project Assignees</h5>
+                            <div class="members-access-list" style="display: flex; flex-direction: column; gap: 8px;">
+                                <t t-foreach="users" t-as="user" t-key="user.id">
+                                    <div class="member-access-row"
+                                         t-att-style="state.openProjectAccessDropdownId === user.id ? 'z-index: 50; position: relative; display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border: 1px solid var(--planage-border-color); border-radius: 12px; background-color: var(--planage-bg-base, rgba(0,0,0,0.015)); transition: all 0.2s ease;' : 'position: relative; display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border: 1px solid var(--planage-border-color); border-radius: 12px; background-color: var(--planage-bg-base, rgba(0,0,0,0.015)); transition: all 0.2s ease;'">
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <img t-att-src="user.avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid var(--planage-border-color);"/>
+                                            <div style="display: flex; flex-direction: column; text-align: left;">
+                                                <span style="font-size: 0.85rem; font-weight: 600; color: var(--planage-text-primary);"><t t-esc="user.name"/></span>
+                                                <span style="font-size: 0.75rem; color: var(--planage-text-muted);">Employee</span>
+                                            </div>
+                                        </div>
+                                        <div class="access-toggle-action" style="position: relative;">
+                                            <button t-on-click="() => this.toggleProjectDropdown(user.id)"
+                                                    t-att-style="isUserAssignedToProject(user.id, state.selectedProjectId) ? 'background: rgba(99, 102, 241, 0.08); border-color: rgba(99, 102, 241, 0.25); color: #6366f1;' : 'background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.25); color: #ef4444;'"
+                                                    style="display: inline-flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 6px !important; padding: 6px 12px !important; border: 1px solid !important; border-radius: 8px !important; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; outline: none; white-space: nowrap !important; height: 30px !important;">
+                                                <t t-if="isUserAssignedToProject(user.id, state.selectedProjectId)">
+                                                    <i class="fa fa-user-check" style="font-size: 0.8rem; margin-right: 2px;"></i> Assigned
+                                                </t>
+                                                <t t-else="">
+                                                    <i class="fa fa-user-times" style="font-size: 0.8rem; margin-right: 2px;"></i> Unassigned
+                                                </t>
+                                                <i class="fa fa-chevron-down" style="font-size: 0.7rem; opacity: 0.7; margin-left: 2px;"></i>
+                                            </button>
+                                            <div t-if="state.openProjectAccessDropdownId === user.id"
+                                                 style="position: absolute; right: 0; top: calc(100% + 6px); z-index: 1000; background: var(--planage-bg-surface, #fff); border: 1px solid var(--planage-border-color); border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.12); padding: 6px; min-width: 140px; display: flex; flex-direction: column; gap: 4px; animation: slideInUp 0.18s cubic-bezier(0.16, 1, 0.3, 1);">
+                                                <div t-on-click="() => this.setProjectAccess(user.id, true)"
+                                                     t-att-style="isUserAssignedToProject(user.id, state.selectedProjectId) ? 'background: rgba(99,102,241,0.08); color: #6366f1;' : 'color: var(--planage-text-primary);'"
+                                                     style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; cursor: pointer;"
+                                                     class="access-dropdown-item">
+                                                    <i class="fa fa-user-plus" style="width: 14px;"></i>
+                                                    <span>Assign</span>
+                                                    <i t-if="isUserAssignedToProject(user.id, state.selectedProjectId)" class="fa fa-check" style="margin-left: auto; font-size: 0.75rem;"></i>
+                                                </div>
+                                                <div t-on-click="() => this.setProjectAccess(user.id, false)"
+                                                     t-att-style="!isUserAssignedToProject(user.id, state.selectedProjectId) ? 'background: rgba(239,68,68,0.08); color: #ef4444;' : 'color: var(--planage-text-primary);'"
+                                                     style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; cursor: pointer;"
+                                                     class="access-dropdown-item">
+                                                    <i class="fa fa-user-times" style="width: 14px;"></i>
+                                                    <span>Remove</span>
+                                                    <i t-if="!isUserAssignedToProject(user.id, state.selectedProjectId)" class="fa fa-check" style="margin-left: auto; font-size: 0.75rem;"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                            <div style="background: rgba(99,102,241,0.05); border: 1px solid rgba(99,102,241,0.15); border-radius: 10px; padding: 12px; margin-top: 4px;">
+                                <p style="font-size: 0.78rem; line-height: 1.4; color: #6366f1; margin: 0; display: flex; align-items: flex-start; gap: 8px;">
+                                    <i class="fa fa-info-circle" style="margin-top: 2px;"></i>
+                                    <span>Assigning an employee to a project will send them an instant <strong>Project Assigned</strong> notification.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div style="text-align: left; padding: 12px; color: var(--planage-text-secondary); font-size: 0.85rem;">
+                            Select a Space and Project above to configure project-level member assignments.
+                        </div>
+                    </t>
+                </div>
+
+                <!-- Project Billing Settings Section -->
+                <div class="config-card access-config-card" t-if="props.state.isManager">
+                    <div class="config-card-header">
+                        <span class="config-card-icon" style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                            <i class="fa fa-money"></i>
+                        </span>
+                        <div>
+                            <h4>Project Billing Settings</h4>
+                            <p>Mark a project as billable and set its client and hourly rate for invoicing.</p>
+                        </div>
+                    </div>
+
+                    <!-- Space selector -->
+                    <div class="filter-field">
+                        <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.85rem; color: var(--planage-text-muted);">Workspace Space</label>
+                        <select class="planage-select"
+                                t-on-change="(ev) => this.selectSpace(ev.target.value)">
+                            <t t-foreach="spaces" t-as="sp" t-key="sp.id">
+                                <option t-att-value="sp.id" t-att-selected="state.selectedSpaceId === sp.id" t-esc="sp.name"/>
+                            </t>
+                        </select>
+                    </div>
+
+                    <!-- Project selector -->
+                    <div class="filter-field" style="margin-top: 10px;" t-if="projects.length">
+                        <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.85rem; color: var(--planage-text-muted);">Project</label>
+                        <select class="planage-select"
+                                t-on-change="(ev) => this.selectProject(ev.target.value)">
+                            <t t-foreach="projects" t-as="proj" t-key="proj.id">
+                                <option t-att-value="proj.id" t-att-selected="state.selectedProjectId === proj.id" t-esc="proj.name"/>
+                            </t>
+                        </select>
+                    </div>
+
+                    <t t-if="state.selectedProjectId">
+                        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 14px;">
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: var(--planage-text-primary); cursor: pointer;">
+                                <input type="checkbox" t-model="state.billingIsBillable"/>
+                                Is Billable
+                            </label>
+
+                            <div class="filter-field">
+                                <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.85rem; color: var(--planage-text-muted);">Hourly Rate</label>
+                                <input type="number" step="0.01" min="0" class="planage-input" t-model="state.billingHourlyRate"/>
+                            </div>
+
+                            <div class="filter-field">
+                                <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.85rem; color: var(--planage-text-muted);">Client</label>
+                                <select class="planage-select" t-model="state.billingPartnerId">
+                                    <option value="">-- No Client --</option>
+                                    <t t-foreach="partners" t-as="partner" t-key="partner.id">
+                                        <option t-att-value="partner.id" t-esc="partner.name"/>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div>
+                                <button class="btn-add-stage-action" t-on-click="saveBilling">Save Billing Settings</button>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div style="text-align: left; padding: 12px; color: var(--planage-text-secondary); font-size: 0.85rem;">
+                            Select a Space and Project above to configure billing.
+                        </div>
+                    </t>
+                </div>
+
+                <!-- Stages & Status Workflows Section -->
+                <div class="config-card stage-config-card">
+                    <div class="config-card-header">
+                        <span class="config-card-icon"><i class="fa fa-bolt"></i></span>
+                        <div>
+                            <h4>Stage Status Workflows</h4>
+                            <p>Configure process pipeline stages for your workspace projects.</p>
+                        </div>
+                    </div>
+
+                    <!-- List & Space Filters -->
+                    <div class="stage-filter-row">
+                        <div class="filter-field">
+                            <label>Workspace Space</label>
+                            <select class="planage-select" 
+                                    t-on-change="(ev) => this.selectSpace(ev.target.value)">
+                                <t t-foreach="spaces" t-as="sp" t-key="sp.id">
+                                    <option t-att-value="sp.id" t-att-selected="state.selectedSpaceId === sp.id" t-esc="sp.name"/>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <label>Project</label>
+                            <select class="planage-select"
+                                    t-att-disabled="!projects.length"
+                                    t-on-change="(ev) => this.selectProject(ev.target.value)">
+                                <option t-if="!projects.length" value="">No Projects Found</option>
+                                <t t-foreach="projects" t-as="proj" t-key="proj.id">
+                                    <option t-att-value="proj.id" t-att-selected="state.selectedProjectId === proj.id" t-esc="proj.name"/>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+
+                    <t t-if="state.selectedProjectId">
+                        
+                        <!-- Stages Listing & Editing -->
+                        <div class="stages-manager-section">
+                            <h5>Current Stages</h5>
+                            
+                            <div class="stages-grid-list" t-if="state.stages.length">
+                                <t t-foreach="state.stages" t-as="stg" t-key="stg.id">
+                                    
+                                    <!-- Dynamic editing row vs static view row -->
+                                    <div class="stage-item-row" t-att-style="`border-left-color: ${stg.color}`">
+                                        <t t-if="state.editingStageId === stg.id">
+                                            <div class="stage-row-edit-form">
+                                                <input type="text" class="planage-input-sm inline-stage-name-input"
+                                                       t-model="state.editingStageName"/>
+                                                <input type="color" class="planage-color-picker-sm"
+                                                       t-model="state.editingStageColor"/>
+                                                <div class="inline-edit-actions">
+                                                    <button class="btn-save-sm" t-on-click="saveStage">Save</button>
+                                                    <button class="btn-cancel-sm" t-on-click="cancelEditStage">Cancel</button>
+                                                    <button class="btn-delete-sm" t-on-click="() => this.deleteStage(stg.id)">Delete</button>
+                                                </div>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <div class="stage-row-content">
+                                                <span class="stage-indicator-pill" t-att-style="`background: ${stg.color}15; color: ${stg.color}; border: 1px solid ${stg.color}30`">
+                                                    <span class="stage-dot-indicator" t-att-style="`background: ${stg.color}`"/>
+                                                    <t t-esc="stg.name"/>
+                                                </span>
+                                            </div>
+                                            <div class="stage-row-actions">
+                                                <button class="btn-stage-action-move" 
+                                                        t-att-disabled="stg_index === 0"
+                                                        t-on-click="() => this.moveStage(stg, 'up')"
+                                                        title="Move Up">
+                                                    <i class="fa fa-chevron-up"></i>
+                                                </button>
+                                                <button class="btn-stage-action-move" 
+                                                        t-att-disabled="stg_index === state.stages.length - 1"
+                                                        t-on-click="() => this.moveStage(stg, 'down')"
+                                                        title="Move Down">
+                                                    <i class="fa fa-chevron-down"></i>
+                                                </button>
+                                                <button class="btn-stage-action-edit" t-on-click="() => this.startEditStage(stg)">
+                                                    <i class="fa fa-pencil" style="margin-right: 4px;"></i>Edit
+                                                </button>
+                                                <button class="btn-stage-action-delete" t-on-click="() => this.deleteStage(stg.id)" title="Delete Stage" style="background: none; border: none; color: #ef4444; font-size: 0.85rem; padding: 4px 8px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; transition: background 0.2s;">
+                                                    <i class="fa fa-trash-o" style="margin-right: 4px;"></i>Delete
+                                                </button>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    
+                                </t>
+                            </div>
+                            <div class="no-stages-fallback" t-else="">
+                                <i class="fa fa-exclamation-triangle" style="margin-right: 4px; color: #eab308;"></i>No stages set up for this project. Please add stages to build a custom workflow.
+                            </div>
+                        </div>
+
+                        <!-- Add Stage Form -->
+                        <div class="stages-add-section">
+                            <h5><i class="fa fa-plus" style="margin-right: 4px;"></i>Add New Stage</h5>
+                            <div class="add-stage-form-row">
+                                <input type="text" class="planage-input flex-1" 
+                                       placeholder="e.g. In Review"
+                                       t-model="state.newStageName"/>
+                                <div class="color-picker-wrapper">
+                                    <input type="color" class="planage-color-picker"
+                                           t-model="state.newStageColor"/>
+                                </div>
+                                <button class="btn-add-stage-action" t-on-click="addStage">Add Stage</button>
+                            </div>
+                        </div>
+
+                    </t>
+                    <div class="no-project-selected-fallback" t-else="">
+                        Select a project above to customize its pipeline stages.
+                    </div>
+
+                </div>
+
+                <!-- System Reset Card (Danger Zone) - dev environments only -->
+                <div t-if="props.state.devMode" class="config-card danger-zone-card" style="border: 1px solid rgba(239, 68, 68, 0.25); background: rgba(239, 68, 68, 0.02); border-radius: 16px; transition: all 0.3s ease;">
+                    <div class="config-card-header">
+                        <span class="config-card-icon" style="background-color: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </span>
+                        <div>
+                            <h4 style="color: #ef4444; font-weight: 700; margin: 0; font-size: 1rem;">System Reset (Danger Zone)</h4>
+                            <p style="margin: 2px 0 0 0; font-size: 0.8rem;">Reset and wipe all system records to start fresh with a clean slate.</p>
+                        </div>
+                    </div>
+                    <div style="padding: 14px; text-align: left; display: flex; flex-direction: column; gap: 14px;">
+                        <p style="font-size: 0.82rem; color: var(--planage-text-muted); margin: 0; line-height: 1.5;">
+                            Wiping the database deletes all Spaces, Folders, Projects, Sprints, Tasks, Chat Messages, and Documents permanently. This action is irreversible.
+                        </p>
+                        <div>
+                            <button t-on-click="confirmResetSystem" class="btn-primary" style="background: #ef4444 !important; border-color: #ef4444 !important; color: white !important; font-weight: 700; padding: 10px 18px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; font-size: 0.8rem; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15); display: inline-flex; align-items: center; gap: 8px;">
+                                <i class="fa fa-trash"></i> Wipe All Data &amp; Reset Fresh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </t>
+
+</templates>

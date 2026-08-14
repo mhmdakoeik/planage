@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.BoardView">
+        <div class="board-view">
+            <div class="board-columns">
+
+                <t t-foreach="columns" t-as="col" t-key="col.id or 'none'">
+                    <div class="board-column"
+                         t-att-class="{ 'drag-over': state.dragOverStageId === col.id }"
+                         t-att-style="col.color ? `background: ${col.color}08; border-top: 3px solid ${col.color}` : 'border-top: 3px solid #94a3b8; background: rgba(148,163,184,0.04)'"
+                         t-on-dragover="(ev) => this.onDragOver(ev, col.id)"
+                         t-on-dragleave="onDragLeave"
+                         t-on-drop="(ev) => this.onDrop(ev, col.id)">
+
+                        <!-- Column Header -->
+                        <div class="column-header">
+                            <div class="column-header-left">
+                                <span class="column-status-badge" t-att-style="col.color ? `background: ${col.color}; color: #ffffff` : 'background: #94a3b8; color: #ffffff'">
+                                    <span class="badge-dot-inner"><i class="fa fa-dot-circle-o"></i></span>
+                                    <span t-esc="col.name.toUpperCase()"/>
+                                </span>
+                                <span class="column-count" t-esc="col.tasks.length"/>
+                            </div>
+                            <div class="column-actions">
+                                <span class="action-btn" title="Column Options"><i class="fa fa-ellipsis-h"></i></span>
+                                <span class="action-btn" t-on-click="() => this.state.newTaskNames[col.id] = ''" title="Add Task"><i class="fa fa-plus"></i></span>
+                            </div>
+                        </div>
+
+                        <!-- Task Cards Container -->
+                        <div class="column-cards">
+                            <t t-foreach="col.visibleTasks" t-as="task" t-key="task.id">
+                                <div class="kanban-card"
+                                     draggable="true"
+                                     t-on-dragstart="(ev) => this.onDragStart(ev, task.id)"
+                                     t-on-dragend="onDragEnd"
+                                     t-on-click="() => this.openTask(task.id)">
+
+                                    <!-- Card Title -->
+                                    <div class="card-title" t-att-class="{ done: task.state === 'done' }" t-esc="task.name"/>
+
+                                    <!-- Card Breadcrumbs -->
+                                    <div class="card-breadcrumbs">
+                                        In <t t-esc="task.project_name or 'Project'"/> / <t t-esc="task.space_name or 'Space'"/>
+                                    </div>
+
+                                    <!-- Properties list exactly like the mockup -->
+                                    <div class="card-properties">
+                                        <!-- Status -->
+                                        <div class="card-prop-row">
+                                            <span class="prop-icon" t-att-style="task.stage_color ? `color: ${task.stage_color}` : 'color: #94a3b8'"><i class="fa fa-dot-circle-o"></i></span>
+                                            <span class="prop-text" t-esc="task.stage_name or 'New'"/>
+                                        </div>
+
+                                        <!-- Assignee -->
+                                        <div class="card-prop-row">
+                                            <span class="prop-icon"><i class="fa fa-user-o"></i></span>
+                                            <t t-if="task.assignees &amp;&amp; task.assignees.length > 0">
+                                                <span class="prop-text font-medium" t-esc="task.assignees[0].name"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="prop-text text-muted">-</span>
+                                            </t>
+                                        </div>
+
+                                         <!-- Date -->
+                                         <div class="card-prop-row">
+                                             <span class="prop-icon"><i class="fa fa-calendar"></i></span>
+                                             <t t-if="task.date_start">
+                                                 <span class="prop-text prop-date">
+                                                     <t t-esc="task.date_start.substring(0, 10)"/>
+                                                     <t t-if="task.date_end">
+                                                         to <t t-esc="task.date_end.substring(0, 10)"/>
+                                                     </t>
+                                                 </span>
+                                             </t>
+                                             <t t-elif="task.date_end">
+                                                 <span class="prop-text prop-date" t-esc="task.date_end.substring(0, 10)"/>
+                                             </t>
+                                             <t t-else="">
+                                                 <span class="prop-text text-muted">-</span>
+                                             </t>
+                                         </div>
+
+                                        <!-- Priority -->
+                                        <div class="card-prop-row">
+                                            <span class="prop-icon" t-att-style="task.priority === '3' ? 'color: #ef4444' : task.priority === '2' ? 'color: #f97316' : task.priority === '1' ? 'color: #3b82f6' : 'color: #94a3b8'"><i class="fa fa-flag"></i></span>
+                                            <span class="prop-text" t-esc="getPriorityLabel(task.priority)"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                            <button t-if="col.hiddenCount > 0"
+                                    class="board-show-more-btn"
+                                    t-on-click="() => this.showMoreCards(col.id)">
+                                Show <t t-esc="col.hiddenCount"/> more
+                            </button>
+                        </div>
+
+                        <!-- Footer "+ Add task" Action -->
+                        <div class="column-footer">
+                            <div t-if="state.newTaskNames[col.id] !== undefined" class="quick-add-input-box">
+                                <input type="text" 
+                                       class="planage-input-xs" 
+                                       placeholder="Task name..."
+                                       t-model="state.newTaskNames[col.id]"
+                                       t-on-keydown="(ev) => this.onQuickAddKeydown(ev, col.id)"/>
+                            </div>
+                            <div t-else="" class="add-task-btn" t-on-click="() => this.state.newTaskNames[col.id] = ''">
+                                <i class="fa fa-plus" style="margin-right: 4px;"></i>Add task
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+</templates>

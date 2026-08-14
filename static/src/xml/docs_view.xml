@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.DocsView">
+        <div class="docs-page-container">
+
+            <!-- Docs Header & Filters -->
+            <div class="docs-page-header">
+                <div class="docs-header-left">
+                    <span class="docs-title"><i class="fa fa-folder-open-o" style="margin-right: 6px;"></i>Workspace Documents</span>
+                    <span class="docs-subtitle">All files and sheets compiled across active chat channels.</span>
+                </div>
+
+                <div class="docs-header-actions">
+                    <!-- Search Bar input -->
+                    <div class="docs-search-wrapper">
+                        <span class="search-lens-icon"><i class="fa fa-search"></i></span>
+                        <input type="text"
+                               placeholder="Search documents by name..."
+                               t-model="state.searchQuery"
+                               t-on-input="onSearchChange"
+                               class="docs-search-input"/>
+                    </div>
+
+                    <!-- Date Filter switch pills -->
+                    <div class="docs-date-switcher">
+                        <button class="date-filter-btn" t-att-class="{ active: state.dateFilter === 'all' }" t-on-click="() => this.setDateFilter('all')">All time</button>
+                        <button class="date-filter-btn" t-att-class="{ active: state.dateFilter === 'today' }" t-on-click="() => this.setDateFilter('today')">Today</button>
+                        <button class="date-filter-btn" t-att-class="{ active: state.dateFilter === 'week' }" t-on-click="() => this.setDateFilter('week')">This week</button>
+                        <button class="date-filter-btn" t-att-class="{ active: state.dateFilter === 'month' }" t-on-click="() => this.setDateFilter('month')">This month</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Grid Cards display -->
+            <div class="docs-grid-viewport">
+                <t t-if="filteredDocuments.length">
+                    <div class="docs-cards-grid">
+                        <t t-foreach="paginatedDocuments" t-as="doc" t-key="doc.id">
+                             <div class="doc-premium-card">
+                                
+                                <!-- Card top preview badge -->
+                                <div class="doc-card-banner">
+                                    <t t-if="doc.mimetype and doc.mimetype.startsWith('image/') and doc.download_url">
+                                        <img t-att-src="doc.download_url" class="doc-card-thumbnail" style="width: 100%; height: 100%; object-fit: cover;" alt="Thumbnail" />
+                                    </t>
+                                    <t t-else="">
+                                        <span class="banner-file-icon"><i class="fa fa-file-text-o"></i></span>
+                                    </t>
+                                </div>
+
+                                <!-- Card metadata & details -->
+                                <div class="doc-card-details">
+                                    <h4 class="doc-card-title" t-att-title="doc.name" t-esc="doc.name"/>
+                                    
+                                    <div class="doc-card-meta-row" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; width: 100%;">
+                                        <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
+                                            <span class="meta-project-badge" t-esc="doc.project_name || 'No Project'"/>
+                                            <t t-if="doc.task_id">
+                                                <span class="meta-task-badge" style="background: rgba(79, 70, 229, 0.08); color: #4f46e5; border: 1px solid rgba(79, 70, 229, 0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 600;" t-att-title="doc.task_name">
+                                                    <i class="fa fa-tasks" style="margin-right: 4px;"></i>Task: <t t-esc="doc.task_name"/>
+                                                </span>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="meta-chat-badge" style="background: rgba(16, 185, 129, 0.08); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 600;" title="Sprint Chat Message Attachment">
+                                                    <i class="fa fa-comments" style="margin-right: 4px;"></i>Sprint Chat
+                                                </span>
+                                            </t>
+                                        </div>
+                                        <span class="meta-date-stamp" t-esc="doc.create_date || 'N/A'"/>
+                                    </div>
+
+                                    <!-- Tags list row -->
+                                    <div class="doc-card-tags-row">
+                                        <t t-foreach="doc.tags" t-as="tag" t-key="tag.id">
+                                            <span class="doc-pill-tag" t-att-style="`background: ${tag.color}`" t-esc="tag.name"/>
+                                        </t>
+                                    </div>
+                                </div>
+
+                                <!-- Card footer with download button -->
+                                <div class="doc-card-footer" t-if="doc.download_url">
+                                    <a t-att-href="doc.download_url" class="btn-doc-download" t-att-download="doc.name" title="Download Document">
+                                        <i class="fa fa-download"></i>Download
+                                    </a>
+                                </div>
+
+                            </div>
+                        </t>
+                    </div>
+
+                    <!-- Docs Pagination Controls -->
+                    <div class="docs-pagination" t-if="totalPages > 1">
+                        <button class="pag-btn" t-att-disabled="state.currentPage === 1" t-on-click="prevPage"><i class="fa fa-chevron-left" style="margin-right: 4px;"></i>Prev</button>
+                        <span class="pag-info">Page <t t-esc="state.currentPage"/> of <t t-esc="totalPages"/></span>
+                        <button class="pag-btn" t-att-disabled="state.currentPage === totalPages" t-on-click="nextPage">Next <i class="fa fa-chevron-right" style="margin-left: 4px;"></i></button>
+                    </div>
+                </t>
+                <t t-else="">
+                    <!-- Empty State -->
+                    <div class="docs-empty-state">
+                        <div class="empty-glass-icon"><i class="fa fa-folder-open-o"></i></div>
+                        <h3>No documents found</h3>
+                        <p>Refine your search query or adjust the date filter pills.</p>
+                    </div>
+                </t>
+            </div>
+
+        </div>
+    </t>
+
+</templates>

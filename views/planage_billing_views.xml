@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View for Billing -->
+    <record id="view_planage_project_billing_tree" model="ir.ui.view">
+        <field name="name">planage.project.billing.tree</field>
+        <field name="model">planage.project</field>
+        <field name="arch" type="xml">
+            <list string="Planage Billing" create="false" delete="false">
+                <field name="name" />
+                <field name="space_id" />
+                <field name="partner_id" />
+                <field name="is_billable" />
+                <field name="hourly_rate" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View for Billing -->
+    <record id="view_planage_project_billing_form" model="ir.ui.view">
+        <field name="name">planage.project.billing.form</field>
+        <field name="model">planage.project</field>
+        <field name="arch" type="xml">
+            <form string="Planage Billing" create="false" delete="false">
+                <header>
+                    <button name="action_create_invoice" string="Create Invoice" type="object" class="oe_highlight" invisible="is_billable == False or has_draft_invoice == True"/>
+                    <button name="action_update_invoice" string="Update Invoice" type="object" class="oe_highlight" invisible="is_billable == False or has_draft_invoice == False"/>
+                </header>
+                <sheet>
+                    <field name="has_draft_invoice" invisible="1" />
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="action" name="%(account.action_move_out_invoice_type)d" icon="fa-pencil-square-o" context="{'search_default_planage_project_id': id}">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Invoices</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="alert alert-info" role="alert" invisible="has_draft_invoice == False">
+                        This project has an unposted invoice. Use "Update Invoice" to sync it with the latest logged hours — a new invoice cannot be created until it is posted.
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" required="1" />
+                            <field name="is_billable" />
+                            <field name="hourly_rate" invisible="is_billable == False" required="is_billable == True"/>
+                        </group>
+                        <group>
+                            <field name="space_id" readonly="1" />
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Tasks &amp; Hours" name="tasks">
+                            <field name="task_ids" readonly="1">
+                                <list no_open="True">
+                                    <field name="name" />
+                                    <field name="stage_id" />
+                                    <field name="total_hours" sum="Total" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Timesheets" name="timesheets">
+                            <field name="timesheet_ids" readonly="1">
+                                <list no_open="True">
+                                    <field name="task_id" />
+                                    <field name="user_id" />
+                                    <field name="date" />
+                                    <field name="name" />
+                                    <field name="duration" sum="Total Hours" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Billing -->
+    <record id="action_planage_billing" model="ir.actions.act_window">
+        <field name="name">Planage Billing</field>
+        <field name="res_model">planage.project</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_billable', '=', True)]</field>
+        <field name="context">{'search_default_is_billable': 1}</field>
+        <field name="view_id" ref="view_planage_project_billing_tree" />
+    </record>
+
+    <!-- Main Menu Item (Standard Backend) -->
+    <menuitem id="menu_planage_billing_root" name="Planage Billing" web_icon="planage,static/description/icon.png" sequence="60" groups="planage.group_planage_manager" />
+    <menuitem id="menu_planage_billing_projects" name="Billable Projects" parent="menu_planage_billing_root" action="action_planage_billing" sequence="10" groups="planage.group_planage_manager" />
+
+</odoo>

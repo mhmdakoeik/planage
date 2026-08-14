@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.CalendarView">
+        <div class="calendar-view">
+
+            <!-- Calendar Controls -->
+            <div class="calendar-controls">
+                <button class="btn-icon btn-prev" t-on-click="prevMonth" aria-label="Previous Month">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="nav-arrow-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+                <h3 class="calendar-month-title" t-esc="monthName"/>
+                <button class="btn-icon btn-next" t-on-click="nextMonth" aria-label="Next Month">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="nav-arrow-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+                <button class="btn-secondary btn-sm today-btn" t-on-click="goToday">Today</button>
+            </div>
+
+            <!-- Day of Week Headers -->
+            <div class="calendar-grid">
+                <div class="calendar-dow-header">
+                    <t t-foreach="['Sun','Mon','Tue','Wed','Thu','Fri','Sat']" t-as="dow" t-key="dow">
+                        <div class="dow-cell" t-esc="dow"/>
+                    </t>
+                </div>
+
+                <!-- Calendar Days Grid -->
+                <div class="calendar-days">
+                    <t t-foreach="calendarDays" t-as="day" t-key="day_index">
+                        <div class="calendar-day"
+                             t-att-class="{ 'is-today': isToday(day), 'is-empty': !day }">
+                            <div t-if="day" class="day-number" t-esc="day.getDate()"/>
+                            <div t-if="day" class="day-tasks">
+                                <t t-foreach="getTasksForDate(day)" t-as="task" t-key="task.id">
+                                    <div class="calendar-task-chip"
+                                         t-att-style="task.color ? `background: ${task.color}30; border-left: 3px solid ${task.color}` : ''"
+                                         t-on-click="() => this.openTask(task.id)"
+                                         t-esc="task.name"/>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

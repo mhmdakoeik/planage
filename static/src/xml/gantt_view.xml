@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.GanttView">
+        <div class="gantt-view">
+
+            <!-- Gantt Controls -->
+            <div class="gantt-controls">
+                <button class="btn-icon btn-prev" t-on-click="prevPeriod" aria-label="Previous Period">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="nav-arrow-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+                <button class="btn-secondary btn-sm today-btn" t-on-click="goToday">Today</button>
+                <span class="gantt-period-label">
+                    <t t-esc="state.timelineStart.toLocaleDateString('default', { month: 'short', day: 'numeric' })"/>
+                    ➔
+                    <t t-esc="timelineEnd.toLocaleDateString('default', { month: 'short', day: 'numeric', year: 'numeric' })"/>
+                </span>
+                <button class="btn-icon btn-next" t-on-click="nextPeriod" aria-label="Next Period">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="nav-arrow-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="gantt-wrapper" t-if="tasksWithBars.length > 0 || sprintBar">
+                
+                <!-- 2D Scrollable Timeline Sheet -->
+                <div class="gantt-sheet">
+                    
+                    <!-- Time scale headers -->
+                    <div class="gantt-header-weeks">
+                        <t t-foreach="weekHeaders" t-as="week" t-key="week_index">
+                            <div class="gantt-week-header" t-att-style="`left: ${week.left}%; width: ${week.width}%`" t-esc="week.label"/>
+                        </t>
+                    </div>
+
+                    <div class="gantt-header-days">
+                        <t t-foreach="dayHeaders" t-as="day" t-key="day_index">
+                            <div class="gantt-day-header"
+                                 t-att-class="{ 'is-weekend': day.dayOfWeek === 0 || day.dayOfWeek === 6, 'is-today': day.isToday }"
+                                 t-att-style="`left: ${day.left}%; width: ${day.width}%`">
+                                <span class="day-num" t-esc="day.number"/>
+                                <span t-if="day.isToday" class="day-today-tag">TODAY</span>
+                            </div>
+                        </t>
+                    </div>
+
+                    <!-- Gantt Body Area with overlay grids -->
+                    <div class="gantt-body">
+                        
+                        <!-- Grid overlay lines under tasks -->
+                        <div class="gantt-grid-overlay">
+                            <t t-foreach="dayHeaders" t-as="day" t-key="day_index">
+                                <div class="gantt-grid-col"
+                                     t-att-class="{ 'is-weekend': day.dayOfWeek === 0 || day.dayOfWeek === 6, 'is-today': day.isToday }"
+                                     t-att-style="`left: ${day.left}%; width: ${day.width}%`"/>
+                            </t>
+                            
+                            <!-- Today Blue Line -->
+                            <div t-if="todayMarkerLeft !== null" class="gantt-today-line" t-att-style="`left: ${todayMarkerLeft}%`"/>
+                        </div>
+
+                        <!-- Rows of floating tasks -->
+                        <div class="gantt-rows">
+                            <!-- Master Sprint Bar Bracket Row -->
+                            <t t-if="sprintBar">
+                                <div class="gantt-row sprint-master-row">
+                                    <div class="gantt-bar-pill sprint-bar-pill"
+                                         t-att-style="`left: ${sprintBar.barLeft}%; width: ${sprintBar.barWidth}%; --sprint-color: ${sprintBar.color || '#10b981'}`"
+                                         title="Sprint Duration Bracket">
+                                        <!-- Sprint Bracket Visual Left -->
+                                        <span class="sprint-bracket left-bracket"/>
+                                        <!-- Sprint Name & Label -->
+                                        <span class="pill-sprint-name">
+                                            <i class="fa fa-bolt" style="margin-right: 6px;"></i>
+                                            <t t-esc="sprintBar.name"/> 
+                                        </span>
+                                        <!-- Sprint Bracket Visual Right -->
+                                        <span class="sprint-bracket right-bracket"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <t t-foreach="tasksWithBars" t-as="task" t-key="task.id">
+                                <div class="gantt-row">
+                                    <div class="gantt-bar-pill"
+                                         t-att-style="`left: ${task.barLeft}%; width: ${task.barWidth}%; background: ${getPriorityColor(task.priority)}`"
+                                         t-on-click="() => this.openTask(task.id)">
+                                        
+                                        <!-- Left drag dot handle -->
+                                        <span class="pill-drag-dot left-dot"/>
+                                        
+                                        <!-- Assignee avatar inside bar -->
+                                        <t t-if="task.assignees &amp;&amp; task.assignees.length > 0">
+                                            <img class="pill-assignee-avatar" t-att-src="task.assignees[0].avatar"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div class="pill-assignee-avatar placeholder">👤</div>
+                                        </t>
+                                        
+                                        <!-- Task Name -->
+                                        <span class="pill-task-name" t-esc="task.name"/>
+                                        
+                                        <!-- Right drag dot handle -->
+                                        <span class="pill-drag-dot right-dot"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <button t-if="hiddenTaskCount > 0"
+                    class="board-show-more-btn gantt-show-more-btn"
+                    t-on-click="showMoreTasks">
+                Show <t t-esc="hiddenTaskCount"/> more tasks
+            </button>
+
+            <!-- Empty state -->
+            <div t-if="tasksWithBars.length === 0 &amp;&amp; !sprintBar" class="gantt-empty">
+                <p>No tasks with start or due dates. Assign dates to see the Gantt timeline.</p>
+            </div>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.NotificationsView">
+        <div class="notifications-page-container">
+
+            <!-- Notifications Header -->
+            <div class="notifications-page-header">
+                <div class="notifications-header-left">
+                    <span class="notifications-title"><i class="fa fa-bell-o" style="margin-right: 6px;"></i>Workspace Notifications</span>
+                </div>
+                <div class="notifications-header-actions" t-if="props.state.unreadNotificationsCount > 0">
+                    <button class="mark-all-read-btn" t-on-click="markAllAsRead">
+                        <i class="fa fa-check" style="margin-right: 4px;"></i>Mark all as read
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notifications Main Content -->
+            <div class="notifications-grid-viewport">
+                
+                <t t-if="notifications.length">
+                    <div class="notifications-list-wrapper">
+                        <t t-foreach="paginatedNotifications" t-as="n" t-key="n.id">
+                            <div class="notification-premium-card" t-att-class="{ unread: !n.read }" t-on-click="() => this.markAsRead(n.id)">
+                                
+                                <!-- Indicator Dot for Unread -->
+                                <div class="unread-pulse-dot" t-if="!n.read"/>
+
+                                <!-- Details Column -->
+                                <div class="notification-details-col">
+                                    <div class="notif-header-row">
+                                        <h4 class="notif-title-text" t-esc="n.title"/>
+                                        <span class="notif-time-stamp" t-esc="n.time"/>
+                                    </div>
+                                    <p class="notif-message-text" t-esc="n.message"/>
+                                </div>
+
+                                <!-- Action Column (Mark single as read on hover) -->
+                                <div class="notification-action-col" t-if="!n.read">
+                                    <button class="notif-single-read-btn" title="Mark as read" t-on-click.stop="() => this.markAsRead(n.id)">
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </t>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                     <div class="notifications-pagination" t-if="totalPages > 1">
+                        <button class="pag-btn" t-att-disabled="state.currentPage === 1" t-on-click="prevPage"><i class="fa fa-chevron-left" style="margin-right: 4px;"></i>Prev</button>
+                        <span class="pag-info">Page <t t-esc="state.currentPage"/> of <t t-esc="totalPages"/></span>
+                        <button class="pag-btn" t-att-disabled="state.currentPage === totalPages" t-on-click="nextPage">Next <i class="fa fa-chevron-right" style="margin-left: 4px;"></i></button>
+                    </div>
+                </t>
+                <t t-else="">
+                     <div class="notifications-empty-state">
+                        <div class="all-caught-up-badge"><i class="fa fa-check-circle"></i></div>
+                        <h3>You're all caught up!</h3>
+                        <p>No notifications active in your workspace right now.</p>
+                    </div>
+                </t>
+
+            </div>
+
+        </div>
+    </t>
+
+</templates>

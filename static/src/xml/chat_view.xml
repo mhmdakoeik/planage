@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.ChatView">
+        <div class="chat-view-container">
+
+            <!-- Chat Sub-Header -->
+            <div class="chat-subheader">
+                <span class="chat-view-title"><i class="fa fa-comments" style="margin-right: 8px; color: var(--planage-primary);"></i>Sprint Discussion</span>
+                <span style="font-size: 0.78rem; color: var(--planage-text-muted); font-weight: 500;">Discussion with project team members</span>
+            </div>
+
+            <!-- Messages Stream Area -->
+            <div class="chat-messages-stream">
+                <t t-if="!messages.length">
+                    <div class="chat-empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: var(--planage-text-muted); padding: 40px 20px;">
+                        <i class="fa fa-comments-o" style="font-size: 3rem; margin-bottom: 12px; opacity: 0.5;"></i>
+                        <h4 style="font-weight: 600; margin-bottom: 4px;">No discussion yet</h4>
+                        <p style="font-size: 0.8rem; max-width: 320px; margin: 0;">Start the conversation with your team members in this sprint.</p>
+                    </div>
+                </t>
+                <t t-else="">
+                    <t t-foreach="messages" t-as="msg" t-key="msg.id">
+                        <div class="chat-message-row">
+                            
+                            <!-- Author Avatar -->
+                            <div class="message-author-avatar-col">
+                                <img class="chat-user-avatar" t-att-src="msg.author_avatar"/>
+                            </div>
+
+                            <!-- Chat Message Card -->
+                            <div class="chat-message-card">
+                                
+                                <!-- Header meta info -->
+                                <div class="card-message-meta">
+                                    <span class="meta-author" t-esc="msg.author_name"/>
+                                    <span class="meta-time">on <t t-esc="msg.create_date"/></span>
+                                </div>
+
+                                <!-- Message Content Body -->
+                                <div class="card-message-body">
+                                    <p t-esc="msg.body"/>
+                                </div>
+
+                                <!-- Optional Attachment box -->
+                                <t t-if="msg.attachment_name">
+                                    <div class="planage-attachment-box">
+                                        <div class="attachment-clip-icon"><i class="fa fa-paperclip"></i></div>
+                                        <div class="attachment-details">
+                                            <span class="attachment-name" t-esc="msg.attachment_name"/>
+                                            <span class="attachment-subtitle">Document • Attached</span>
+                                        </div>
+                                    </div>
+                                </t>
+
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </div>
+
+            <!-- Chat Bottom Form Control -->
+            <div class="chat-footer-composer">
+                
+                <!-- Mentions Autocomplete Dropdown overlay -->
+                <t t-if="state.showMentionsDropdown &amp;&amp; matchingMembers.length">
+                    <div class="mentions-autocomplete-dropdown">
+                        <t t-foreach="matchingMembers" t-as="u" t-key="u.id">
+                            <div class="mention-autocomplete-item" 
+                                 t-att-class="{ active: state.mentionSelectedIndex === u_index }"
+                                 t-on-click="() => this.insertMention(u)">
+                                <img class="mention-avatar" t-att-src="u.avatar"/>
+                                <span class="mention-name" t-esc="u.name"/>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+                
+                <div class="composer-input-wrapper">
+                    <textarea class="composer-textarea"
+                              placeholder="Message teammates (type @ to mention)..."
+                              t-model="state.newMessage"
+                              t-on-input="onInput"
+                              t-on-keydown="onKeyDown"/>
+                    
+                    <button class="composer-submit-btn" t-on-click="postMessage">
+                        <span class="submit-bubble-icon"><i class="fa fa-paper-plane-o"></i></span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </t>
+
+</templates>

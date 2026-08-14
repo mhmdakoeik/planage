@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top-level Planage menu item in the app switcher -->
+    <menuitem
+        id="menu_planage_root"
+        name="Planage"
+        action="action_planage_app"
+        sequence="90"
+        web_icon="planage,static/description/icon.png"
+    />
+</odoo>

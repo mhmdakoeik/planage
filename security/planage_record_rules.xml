@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!--
+            Membership isolation: a Space is visible to everyone when it has no
+            explicit user_ids (public workspace), otherwise only to its members.
+            Every other model below is scoped transitively through its Space.
+            Managers/Admins get an unrestricted rule that ORs with the
+            restrictive one (both are group-scoped), so they always see everything.
+        -->
+
+        <record id="rule_planage_space_member" model="ir.rule">
+            <field name="name">Planage Space: member or public only</field>
+            <field name="model_id" ref="model_planage_space"/>
+            <field name="groups" eval="[(4, ref('group_planage_user'))]"/>
+            <field name="domain_force">['|', ('user_ids', '=', False), ('user_ids', 'in', [user.id])]</field>
+        </record>
+        <record id="rule_planage_space_manager" model="ir.rule">
+            <field name="name">Planage Space: manager full access</field>
+            <field name="model_id" ref="model_planage_space"/>
+            <field name="groups" eval="[(4, ref('group_planage_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_planage_folder_member" model="ir.rule">
+            <field name="name">Planage Folder: member or public only</field>
+            <field name="model_id" ref="model_planage_folder"/>
+            <field name="groups" eval="[(4, ref('group_planage_user'))]"/>
+            <field name="domain_force">['|', ('space_id.user_ids', '=', False), ('space_id.user_ids', 'in', [user.id])]</field>
+        </record>
+        <record id="rule_planage_folder_manager" model="ir.rule">
+            <field name="name">Planage Folder: manager full access</field>
+            <field name="model_id" ref="model_planage_folder"/>
+            <field name="groups" eval="[(4, ref('group_planage_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_planage_project_member" model="ir.rule">
+            <field name="name">Planage Project: member or public only</field>
+            <field name="model_id" ref="model_planage_project"/>
+            <field name="groups" eval="[(4, ref('group_planage_user'))]"/>
+            <field name="domain_force">['|', ('space_id.user_ids', '=', False), ('space_id.user_ids', 'in', [user.id])]</field>
+        </record>
+        <record id="rule_planage_project_manager" model="ir.rule">
+            <field name="name">Planage Project: manager full access</field>
+            <field name="model_id" ref="model_planage_project"/>
+            <field name="groups" eval="[(4, ref('group_planage_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_planage_sprint_member" model="ir.rule">
+            <field name="name">Planage Sprint: member or public only</field>
+            <field name="model_id" ref="model_planage_sprint"/>
+            <field name="groups" eval="[(4, ref('group_planage_user'))]"/>
+            <field name="domain_force">['|', ('project_id.space_id.user_ids', '=', False), ('project_id.space_id.user_ids', 'in', [user.id])]</field>
+        </record>
+        <record id="rule_planage_sprint_manager" model="ir.rule">
+            <field name="name">Planage Sprint: manager full access</field>
+            <field name="model_id" ref="model_planage_sprint"/>
+            <field name="groups" eval="[(4, ref('group_planage_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_planage_stage_member" model="ir.rule">
+            <field name="name">Planage Stage: member, global, or public only</field>
+            <field name="model_id" ref="model_planage_stage"/>
+            <field name="groups" eval="[(4, ref('group_planage_user'))]"/>
+            <field name="domain_force">['|', ('project_id', '=', False), '|', ('project_id.space_id.user_ids', '=', False), ('project_id.space_id.user_ids', 'in', [user.id])]</field>
+        </record>
+        <record id="rule_planage_stage_manager" model="ir.rule">
+            <field name="name">Planage Stage: manager full access</field>
+            <field name="model_id" ref="model_planage_stage"/>
+            <field name="groups" eval="[(4, ref('group_planage_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_planage_task_member" model="ir.rule">
+            <field name="name">Planage Task: member or public only</field>
+            <field name="model_id" ref="model_planage_task"/>
+            <field name="groups" eval="[(4, ref('group_planage_user'))]"/>
+            <field name="domain_force">['|', ('space_id.user_ids', '=', False), ('space_id.user_ids', 'in', [user.id])]</field>
+        </record>
+        <record id="rule_planage_task_manager" model="ir.rule">
+            <field name="name">Planage Task: manager full access</field>
+            <field name="model_id" ref="model_planage_task"/>
+            <field name="groups" eval="[(4, ref('group_planage_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_planage_timesheet_member" model="ir.rule">
+            <field name="name">Planage Timesheet: member or public only</field>
+            <field name="model_id" ref="model_planage_timesheet"/>
+            <field name="groups" eval="[(4, ref('group_planage_user'))]"/>
+            <field name="domain_force">['|', ('task_id.space_id.user_ids', '=', False), ('task_id.space_id.user_ids', 'in', [user.id])]</field>
+        </record>
+        <record id="rule_planage_timesheet_manager" model="ir.rule">
+            <field name="name">Planage Timesheet: manager full access</field>
+            <field name="model_id" ref="model_planage_timesheet"/>
+            <field name="groups" eval="[(4, ref('group_planage_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_planage_chat_message_member" model="ir.rule">
+            <field name="name">Planage Chat Message: member or public only</field>
+            <field name="model_id" ref="model_planage_chat_message"/>
+            <field name="groups" eval="[(4, ref('group_planage_user'))]"/>
+            <field name="domain_force">['|', ('project_id.space_id.user_ids', '=', False), ('project_id.space_id.user_ids', 'in', [user.id])]</field>
+        </record>
+        <record id="rule_planage_chat_message_manager" model="ir.rule">
+            <field name="name">Planage Chat Message: manager full access</field>
+            <field name="model_id" ref="model_planage_chat_message"/>
+            <field name="groups" eval="[(4, ref('group_planage_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_planage_document_member" model="ir.rule">
+            <field name="name">Planage Document: member or public only</field>
+            <field name="model_id" ref="model_planage_document"/>
+            <field name="groups" eval="[(4, ref('group_planage_user'))]"/>
+            <field name="domain_force">['|', ('project_id.space_id.user_ids', '=', False), ('project_id.space_id.user_ids', 'in', [user.id])]</field>
+        </record>
+        <record id="rule_planage_document_manager" model="ir.rule">
+            <field name="name">Planage Document: manager full access</field>
+            <field name="model_id" ref="model_planage_document"/>
+            <field name="groups" eval="[(4, ref('group_planage_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+    </data>
+</odoo>

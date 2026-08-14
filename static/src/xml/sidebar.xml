@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.Sidebar">
+        <aside class="planage-sidebar" t-att-class="{ collapsed: sidebarCollapsed }">
+
+            <!-- Premium Style Header -->
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <!-- Planage checkmark-trend logomark -->
+                    <svg class="planage-logo-svg" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polyline points="5,16 12,23 23,8" stroke="#6366f1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="23" cy="8" r="2.8" fill="#f59e0b"/>
+                    </svg>
+                    <span class="logo-text" t-if="!sidebarCollapsed">Planage</span>
+                </div>
+                <div class="sidebar-header-actions" style="display: flex; align-items: center; gap: 4px;">
+                    <button class="btn-icon sidebar-toggle" t-on-click="() => this.props.state.sidebarCollapsed = !this.props.state.sidebarCollapsed">
+                        <t t-if="sidebarCollapsed"><i class="fa fa-chevron-right"></i></t>
+                        <t t-else=""><i class="fa fa-chevron-left"></i></t>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Top Navigation Links -->
+            <div class="sidebar-top-links">
+                <div class="sidebar-top-link-item" t-att-class="{ active: props.state.activeView === 'dashboard' }" t-on-click="openDashboard" title="Dashboard">
+                    <span class="top-link-icon"><i class="fa fa-line-chart"></i></span>
+                    <span class="top-link-text">Dashboard</span>
+                </div>
+                <div class="sidebar-top-link-item" t-att-class="{ active: props.state.activeView === 'my_tasks' }" t-on-click="openMyTasks" title="My Tasks">
+                    <span class="top-link-icon"><i class="fa fa-check-square-o"></i></span>
+                    <span class="top-link-text">My Tasks</span>
+                </div>
+                <div class="sidebar-top-link-item" t-att-class="{ active: props.state.activeView === 'notifications' }" t-on-click="openNotifications" title="Notifications">
+                    <span class="top-link-icon"><i class="fa fa-bell-o"></i></span>
+                    <span class="top-link-text">Notifications</span>
+                    <span class="notifications-badge" t-if="props.state.unreadNotificationsCount" t-esc="props.state.unreadNotificationsCount"/>
+                </div>
+                <div class="sidebar-top-link-item" t-att-class="{ active: props.state.activeView === 'docs' }" t-on-click="openDocsPage" title="Docs">
+                    <span class="top-link-icon"><i class="fa fa-file-text-o"></i></span>
+                    <span class="top-link-text">Docs</span>
+                </div>
+                <div class="sidebar-top-link-item" t-att-class="{ active: props.state.activeView === 'inbox' }" t-on-click="openInbox" title="Inbox">
+                    <span class="top-link-icon"><i class="fa fa-inbox"></i></span>
+                    <span class="top-link-text">Inbox</span>
+                    <span class="notifications-badge" t-if="props.state.unreadInboxNotificationsCount" t-esc="props.state.unreadInboxNotificationsCount"/>
+                </div>
+                <div class="sidebar-top-link-item" t-if="props.state.isManager" t-att-class="{ active: props.state.activeView === 'reporting' }" t-on-click="openReportingPage" title="Reporting">
+                    <span class="top-link-icon"><i class="fa fa-bar-chart"></i></span>
+                    <span class="top-link-text">Reporting</span>
+                </div>
+                <div class="sidebar-top-link-item" t-if="props.state.isAdmin" t-att-class="{ active: props.state.activeView === 'config' }" t-on-click="openConfigPage" title="Configuration">
+                    <span class="top-link-icon"><i class="fa fa-cogs"></i></span>
+                    <span class="top-link-text">Configuration</span>
+                </div>
+            </div>
+
+            <!-- Scrollable Navigation Body -->
+            <nav class="sidebar-nav">
+
+                <!-- Spaces Accordion Section -->
+                <div class="sidebar-accordion-section">
+                    <div class="accordion-header active" t-if="!sidebarCollapsed">
+                        <span class="accordion-title">Spaces</span>
+                        <span class="accordion-chevron"><i class="fa fa-caret-down"></i></span>
+                    </div>
+
+                    <div class="accordion-content">
+                        <!-- Everything View option -->
+                        <div class="nav-space-item everything-item" t-on-click="() => this.selectProject(null)" title="Everything">
+                            <span class="space-badge-icon everything-badge"><i class="fa fa-th-large"></i></span>
+                            <span class="space-name">Everything</span>
+                        </div>
+
+                        <!-- Render dynamic Spaces -->
+                        <t t-foreach="spaces" t-as="space" t-key="space.id">
+                            <div class="nav-space-group">
+                                <!-- Space Header Item -->
+                                <div class="nav-space-item"
+                                     t-att-class="{ active: activeSpaceId === space.id }"
+                                     t-on-click="() => this.toggleSpace(space.id)"
+                                     t-att-title="space.name">
+                                    
+                                    <!-- Dynamic colorful square/circle badge with space's first letter -->
+                                    <span class="space-badge-icon" t-att-style="space.color ? `background: ${space.color}` : 'background: #7c3aed'">
+                                        <t t-esc="space.name.substring(0, 1).toUpperCase()"/>
+                                    </span>
+                                    
+                                    <span class="space-name" t-esc="space.name"/>
+                                    <span class="space-chevron">
+                                        <t t-if="isSpaceExpanded(space.id)"><i class="fa fa-caret-down"></i></t>
+                                        <t t-else=""><i class="fa fa-caret-right"></i></t>
+                                    </span>
+                                </div>
+
+                                <!-- Space projects if expanded -->
+                                <div t-if="!sidebarCollapsed">
+                                    <div t-if="isSpaceExpanded(space.id)" class="nav-space-children">
+                                        <!-- Projects directly under Space -->
+                                        <t t-if="space.projects">
+                                            <div t-foreach="space.projects" t-as="project" t-key="project.id" class="nav-project-group">
+                                                <!-- Project Header Item -->
+                                                <div class="nav-project-item"
+                                                     t-att-class="{ active: activeProjectId === project.id }"
+                                                     t-on-click="() => this.selectProject(project.id)"
+                                                     t-att-title="project.name"
+                                                     t-on-dragover="(ev) => this.onDragOverProject(ev, project.id)"
+                                                     t-on-dragenter="(ev) => this.onDragEnterProject(ev, project.id)"
+                                                     t-on-dragleave="(ev) => this.onDragLeaveProject(ev, project.id)"
+                                                     t-on-drop="(ev) => this.onDropOnProject(ev, project.id)">
+                                                    <span class="project-chevron" t-on-click.stop="() => this.toggleProject(project.id)">
+                                                        <t t-if="isProjectExpanded(project.id)"><i class="fa fa-caret-down"></i></t>
+                                                        <t t-else=""><i class="fa fa-caret-right"></i></t>
+                                                    </span>
+                                                    <span class="project-icon" t-att-style="`color: ${project.color || '#3b82f6'}`"><i class="fa fa-cube"></i></span>
+                                                    <span class="project-name" t-esc="project.name"/>
+                                                </div>
+
+                                                <!-- Folders and direct Sprints under Project if expanded -->
+                                                <div t-if="isProjectExpanded(project.id)" class="nav-project-children" style="padding-left: 12px; border-left: 1px dashed var(--planage-border-color); margin-left: 8px;">
+                                                    
+                                                    <!-- Folders in this Project -->
+                                                    <t t-if="project.folders">
+                                                        <div t-foreach="project.folders" t-as="folder" t-key="folder.id" class="nav-folder-group">
+                                                            <!-- Folder Header Item -->
+                                                            <div class="nav-folder-item"
+                                                                 t-on-click="() => this.toggleFolder(folder.id)"
+                                                                 t-att-title="folder.name"
+                                                                 t-on-dragover="(ev) => this.onDragOverFolder(ev, project.id)"
+                                                                 t-on-dragenter="(ev) => this.onDragEnterFolder(ev, project.id)"
+                                                                 t-on-dragleave="(ev) => this.onDragLeaveFolder(ev, project.id)"
+                                                                 t-on-drop="(ev) => this.onDropOnFolder(ev, folder.id, project.id)">
+                                                                <span class="folder-chevron">
+                                                                    <t t-if="isFolderExpanded(folder.id)"><i class="fa fa-caret-down"></i></t>
+                                                                    <t t-else=""><i class="fa fa-caret-right"></i></t>
+                                                                </span>
+                                                                <span class="folder-icon" t-att-style="`color: ${folder.color || '#8b5cf6'}`">
+                                                                    <t t-if="isFolderExpanded(folder.id)"><i class="fa fa-folder-open"></i></t>
+                                                                    <t t-else=""><i class="fa fa-folder"></i></t>
+                                                                </span>
+                                                                <span class="folder-name" t-esc="folder.name"/>
+                                                            </div>
+
+                                                            <!-- Sprints nested under Folder -->
+                                                            <div t-if="isFolderExpanded(folder.id)" class="nav-folder-children" style="padding-left: 12px; border-left: 1px dashed var(--planage-border-color); margin-left: 8px;">
+                                                                <t t-if="folder.sprints">
+                                                                    <div t-foreach="folder.sprints" t-as="sprint" t-key="sprint.id"
+                                                                         class="nav-sprint-item"
+                                                                         t-att-class="{ active: activeSprintId === sprint.id }"
+                                                                         t-on-click="() => this.selectSprint(project.id, sprint.id)"
+                                                                         draggable="true"
+                                                                         t-on-dragstart="(ev) => this.onDragStart(ev, sprint.id, project.id)"
+                                                                         t-on-dragend="(ev) => this.onDragEnd(ev)">
+                                                                        <span class="sprint-icon" t-att-style="`color: ${sprint.color || '#10b981'}`"><i class="fa fa-bolt"></i></span>
+                                                                        <div class="sprint-details">
+                                                                            <span class="sprint-name" t-esc="sprint.name"/>
+                                                                        </div>
+                                                                        <span class="sprint-edit-btn" t-if="props.state.isManager" t-on-click.stop="() => this.openEditSprintModal(sprint, project.id)" title="Edit Sprint">
+                                                                            <i class="fa fa-pencil"></i>
+                                                                        </span>
+                                                                        <span class="sprint-count" t-esc="sprint.task_count"/>
+                                                                    </div>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </t>
+
+                                                    <!-- Sprints directly in Project (without Folder) -->
+                                                    <t t-if="project.sprints">
+                                                        <div t-foreach="project.sprints" t-as="sprint" t-key="sprint.id"
+                                                             class="nav-sprint-item"
+                                                             t-att-class="{ active: activeSprintId === sprint.id }"
+                                                             t-on-click="() => this.selectSprint(project.id, sprint.id)"
+                                                             draggable="true"
+                                                             t-on-dragstart="(ev) => this.onDragStart(ev, sprint.id, project.id)"
+                                                             t-on-dragend="(ev) => this.onDragEnd(ev)">
+                                                            <span class="sprint-icon" t-att-style="`color: ${sprint.color || '#10b981'}`"><i class="fa fa-bolt"></i></span>
+                                                            <div class="sprint-details">
+                                                                <span class="sprint-name" t-esc="sprint.name"/>
+                                                            </div>
+                                                            <span class="sprint-edit-btn" t-if="props.state.isManager" t-on-click.stop="() => this.openEditSprintModal(sprint, project.id)" title="Edit Sprint">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </span>
+                                                            <span class="sprint-count" t-esc="sprint.task_count"/>
+                                                        </div>
+                                                    </t>
+
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+
+
+                    </div>
+                </div>
+
+            </nav>
+
+            <!-- Bottom User Profile Section -->
+            <div class="sidebar-footer-profile" t-if="!sidebarCollapsed">
+                <div class="footer-profile-left">
+                    <img class="profile-avatar-circle" src="/web/image/res.users/1/avatar_128"/>
+                    <div class="profile-details-text">
+                        <span class="profile-username">Administrator</span>
+                        <span class="profile-subtext">Active workspace</span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <button class="theme-quick-toggle-footer" t-on-click="refreshSystem" title="Refresh System" style="background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 4px; display: flex; align-items: center; justify-content: center; color: var(--planage-text-muted); transition: color var(--planage-transition-fast);">
+                        <i class="fa fa-refresh"></i>
+                    </button>
+                    <button class="theme-quick-toggle-footer" t-on-click="toggleTheme" title="Toggle Light/Dark Theme" style="background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 4px; display: flex; align-items: center; justify-content: center; color: var(--planage-text-muted); transition: color var(--planage-transition-fast);">
+                        <t t-if="props.state.isDark"><i class="fa fa-sun-o"></i></t>
+                        <t t-else=""><i class="fa fa-moon-o"></i></t>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Collapsed Sidebar Theme Toggle & Profile Footer -->
+            <div class="sidebar-collapsed-footer" t-if="sidebarCollapsed" style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--planage-border-color); margin-top: auto; flex-shrink: 0;">
+                <button class="theme-quick-toggle-collapsed" t-on-click="refreshSystem" title="Refresh System" style="background: none; border: none; cursor: pointer; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; color: var(--planage-text-muted); transition: background var(--planage-transition-fast);">
+                    <i class="fa fa-refresh"></i>
+                </button>
+                <button class="theme-quick-toggle-collapsed" t-on-click="toggleTheme" title="Toggle Light/Dark Theme" style="background: none; border: none; cursor: pointer; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; color: var(--planage-text-muted); transition: background var(--planage-transition-fast);">
+                    <t t-if="props.state.isDark"><i class="fa fa-sun-o"></i></t>
+                    <t t-else=""><i class="fa fa-moon-o"></i></t>
+                </button>
+                <img class="profile-avatar-circle" src="/web/image/res.users/1/avatar_128" style="width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--planage-border-color);"/>
+            </div>
+
+        </aside>
+    </t>
+
+</templates>

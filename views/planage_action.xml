@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Planage Client Action — Registers the OWL SPA as an Odoo Client Action.
+        This completely bypasses the standard Odoo backend and opens the
+        custom OWL component as a full-page action.
+    -->
+    <record id="action_planage_app" model="ir.actions.client">
+        <field name="name">Planage</field>
+        <field name="tag">planage_app</field>
+        <field name="target">main</field>
+    </record>
+</odoo>

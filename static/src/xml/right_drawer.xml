@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.RightDrawer">
+        <aside class="planage-right-drawer" t-att-class="{ open: isOpen }">
+            <t t-if="isOpen and task">
+                <!-- Drawer Header -->
+                <div class="drawer-header">
+                    <div class="drawer-breadcrumb">
+                        <span class="drawer-breadcrumb-icon"><i class="fa fa-tasks"></i></span>
+                        <span class="drawer-project-name" t-esc="task.project_name or 'Project'"/>
+                        <span class="drawer-breadcrumb-sep"><i class="fa fa-angle-right"></i></span>
+                        <span class="drawer-breadcrumb-task">Task</span>
+                    </div>
+                    <button class="btn-icon drawer-close" t-on-click="close"><i class="fa fa-times"></i></button>
+                </div>
+
+                <div class="drawer-scrollable-body">
+
+                    <!-- Task Title (inline editable) -->
+                    <div class="drawer-task-title">
+                    <t t-if="state.editingTitle">
+                        <input type="text" class="title-input"
+                               t-att-value="task.name"
+                               t-on-blur="commitTitle"
+                               t-on-keydown="onTitleKeydown"
+                               t-ref="titleInput"
+                               autofocus="1"/>
+                    </t>
+                    <t t-else="">
+                        <h2 t-on-click="startEditTitle" t-esc="task.name"/>
+                    </t>
+                </div>
+
+                <!-- Task Meta Properties -->
+                <div class="drawer-properties">
+
+                    <!-- Status -->
+                    <div class="prop-row">
+                        <span class="prop-label">Status</span>
+                        <div class="stage-picker-wrapper">
+                            <span class="prop-value status-badge interactive"
+                                  t-att-style="task.stage_color ? `background: ${task.stage_color}20; color: ${task.stage_color}; border-color: ${task.stage_color}40` : ''"
+                                  t-on-click="toggleStageDropdown">
+                                <t t-esc="task.stage_name or 'New'"/>
+                                <span class="chevron-icon"><i class="fa fa-caret-down"></i></span>
+                            </span>
+                            
+                            <!-- Custom Floating Stages List -->
+                            <div t-if="state.showStageDropdown" class="stages-dropdown-card">
+                                <div class="stages-dropdown-header">
+                                    <span>Set Stage</span>
+                                    <button class="btn-close-sm" t-on-click="toggleStageDropdown"><i class="fa fa-times"></i></button>
+                                </div>
+                                <div class="stages-dropdown-list">
+                                    <div class="stage-dropdown-item"
+                                         t-att-class="{ selected: !task.stage_id }"
+                                         t-on-click="() => this.setStage(null)">
+                                        <span class="stage-dot" style="background: #9ca3af;"/>
+                                        <span class="stage-name">New</span>
+                                        <span t-if="!task.stage_id" class="check-icon"><i class="fa fa-check"></i></span>
+                                    </div>
+                                    <t t-foreach="props.state.stages" t-as="stage" t-key="stage.id">
+                                        <div class="stage-dropdown-item" 
+                                             t-att-class="{ selected: task.stage_id === stage.id }"
+                                             t-on-click="() => this.setStage(stage.id)">
+                                            <span class="stage-dot" t-att-style="`background: ${stage.color}`"/>
+                                            <span class="stage-name" t-esc="stage.name"/>
+                                            <span t-if="task.stage_id === stage.id" class="check-icon"><i class="fa fa-check"></i></span>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="stages-dropdown-add">
+                                    <input type="text" class="planage-input-xs" 
+                                           placeholder="+ Create new stage..."
+                                           t-on-keydown="onQuickAddStageKeydown"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Priority -->
+                    <div class="prop-row">
+                        <span class="prop-label">Priority</span>
+                        <div class="priority-selector">
+                            <t t-foreach="[['0','Low','#22c55e'],['1','Medium','#eab308'],['2','High','#f97316'],['3','Urgent','#ef4444']]" t-as="p" t-key="p[0]">
+                                <button class="priority-chip"
+                                        t-att-class="{ selected: task.priority === p[0] }"
+                                        t-att-data-priority="p[0]"
+                                        t-on-click="() => this.setPriority(p[0])">
+                                    <t t-esc="p[1]"/>
+                                </button>
+                            </t>
+                        </div>
+                    </div>
+
+                    <!-- Assignees -->
+                    <div class="prop-row">
+                        <span class="prop-label">Assignees</span>
+                        <div class="assignee-picker-wrapper">
+                            <div class="assignee-list">
+                                <t t-foreach="task.assignees" t-as="user" t-key="user.id">
+                                    <div class="assignee-chip" t-on-click="() => this.toggleAssignee(user.id)" title="Click to remove">
+                                        <img class="assignee-avatar" t-att-src="user.avatar"/>
+                                        <span class="assignee-name" t-esc="user.name"/>
+                                        <span class="remove-icon"><i class="fa fa-times"></i></span>
+                                    </div>
+                                </t>
+                                <button class="btn-add-assignee" t-on-click="toggleUserDropdown">
+                                    <span><i class="fa fa-plus"></i></span> Add
+                                </button>
+                            </div>
+                                                        <!-- Custom Floating Users List -->
+                            <div t-if="state.showUserDropdown" class="users-dropdown-card">
+                                <div class="users-dropdown-header">
+                                    <span>Select Assignees</span>
+                                    <button class="btn-close-sm" t-on-click="toggleUserDropdown"><i class="fa fa-times"></i></button>
+                                </div>
+                                <div class="users-dropdown-list">
+                                    <t t-foreach="props.state.users" t-as="user" t-key="user.id">
+                                        <div class="user-dropdown-item" 
+                                             t-att-class="{ selected: this.isUserAssigned(user.id) }"
+                                             t-on-click="() => this.toggleAssignee(user.id)">
+                                            <img class="user-avatar-sm" t-att-src="user.avatar"/>
+                                            <span class="user-name" t-esc="user.name"/>
+                                            <span t-if="this.isUserAssigned(user.id)" class="check-icon"><i class="fa fa-check"></i></span>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Start Date -->
+                    <div class="prop-row start-date-row" style="align-items: center;">
+                        <span class="prop-label">Start Date</span>
+                        <div class="start-date-control" style="display: flex; align-items: center; gap: 12px; flex: 1; justify-content: flex-end;">
+                            <input type="date" class="planage-input-sm"
+                                   t-att-value="dateStartInputValue"
+                                   t-on-change="onDateStartChange"/>
+                        </div>
+                    </div>
+
+                    <!-- End Date -->
+                    <div class="prop-row end-date-row" style="align-items: center;">
+                        <span class="prop-label">End Date</span>
+                        <div class="end-date-control" style="display: flex; align-items: center; gap: 12px; flex: 1; justify-content: flex-end;">
+                            <input type="date" class="planage-input-sm"
+                                   t-att-value="dateEndInputValue"
+                                   t-on-change="onDateEndChange"/>
+                        </div>
+                    </div>
+
+                    <!-- Progress -->
+                    <div class="prop-row progress-prop-row">
+                        <span class="prop-label">Progress</span>
+                        <div class="progress-fancy-control">
+                            <!-- Visual bar with embedded percentage text -->
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill"
+                                     t-att-style="`width: ${task.progress || 0}%`"/>
+                                <span t-att-class="(task.progress || 0) &gt; 45 ? 'progress-bar-text high' : 'progress-bar-text low'"
+                                      title="Automatically calculated based on task stage status">
+                                    <t t-esc="Math.round(task.progress || 0)"/>%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subtasks Section -->
+                <div class="drawer-section subtasks-section">
+                    <div class="section-header">
+                        <h4>Subtasks</h4>
+                        <span class="subtask-badge" t-esc="subtasks.length"/>
+                    </div>
+                    <!-- Subtask inline creation field -->
+
+                     <div class="subtask-add-row">
+                        <input type="text" class="planage-input subtask-add-input"
+                               placeholder="+ Add new subtask inline..."
+                               t-model="state.newSubtaskName"
+                               t-on-keydown="onSubtaskKeydown"/>
+                        <button class="btn-subtask-add-action" t-on-click="addSubtask">Add</button>
+                    </div>
+                </div>
+
+                <!-- Description Section -->
+                <div class="drawer-section description-section">
+                    <div class="section-header">
+                        <h4>Description</h4>
+                        <button t-if="!state.editingDescription"
+                                class="desc-edit-trigger"
+                                t-on-click="startEditDescription">Edit</button>
+                    </div>
+                     <t t-if="state.editingDescription">
+                        <textarea class="planage-textarea"
+                                  t-ref="descTextarea"
+                                  t-esc="plainDescription"
+                                  autofocus="1"
+                                  placeholder="Describe this task in detail..."/>
+                        <div class="desc-action-row">
+                            <button class="btn-desc-save" t-on-click="saveDescription">
+                                <i class="fa fa-check" style="margin-right: 4px;"></i>Save
+                            </button>
+                            <button class="btn-desc-cancel" t-on-click="cancelDescription">
+                                Cancel
+                            </button>
+                        </div>
+                    </t>
+                     <t t-else="">
+                        <div class="description-area"
+                             t-on-click="startEditDescription">
+                             <i class="fa fa-pencil-square-o" style="margin-right: 6px; color: var(--planage-text-muted);"></i>
+                             <t t-if="plainDescription">
+                                 <span t-out="descriptionMarkup"/>
+                             </t>
+                             <t t-else="">Click to write a detailed description...</t>
+                        </div>
+                    </t>
+                </div>
+
+                <!-- Timesheets Section -->
+                <div class="drawer-section timesheets-section">
+                    <div class="section-header">
+                        <h4>Timesheets (Hours: <span t-esc="task.total_hours || 0"/>)</h4>
+                    </div>
+                    <div class="timesheet-list" style="margin-bottom: 8px;">
+                        <t t-if="task.timesheets and task.timesheets.length > 0">
+                            <t t-foreach="task.timesheets" t-as="ts" t-key="ts.id">
+                                <t t-if="state.editingTimesheetId === ts.id">
+                                    <div class="timesheet-item timesheet-item-editing" style="display: flex; align-items: center; gap: 6px; padding: 4px 0; border-bottom: 1px solid var(--planage-border);">
+                                        <input type="text" class="planage-input-sm" style="flex: 1;" t-model="state.editTimesheetName" />
+                                        <input type="number" class="planage-input-sm" style="width: 70px;" step="0.5" t-model="state.editTimesheetDuration" />
+                                        <i class="fa fa-check timesheet-edit-icon" style="cursor: pointer; color: var(--planage-success, #10b981);" title="Save" t-on-click="() => this.saveEditTimesheet(ts)"></i>
+                                        <i class="fa fa-times timesheet-edit-icon" style="cursor: pointer; color: var(--planage-text-muted);" title="Cancel" t-on-click="cancelEditTimesheet"></i>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="timesheet-item" style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; padding: 4px 0; border-bottom: 1px solid var(--planage-border);">
+                                        <span style="font-weight: 500;"><t t-esc="ts.date"/> - <t t-esc="ts.user_name"/></span>
+                                        <span style="flex: 1; margin: 0 10px; color: var(--planage-text-muted);"><t t-esc="ts.name"/></span>
+                                        <span style="font-weight: 600;"><t t-esc="ts.duration"/> h</span>
+                                        <i class="fa fa-pencil timesheet-edit-icon" style="margin-left: 8px; cursor: pointer; color: var(--planage-text-muted);" title="Edit" t-on-click="() => this.startEditTimesheet(ts)"></i>
+                                    </div>
+                                </t>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <div style="font-size: 0.85rem; color: var(--planage-text-muted); font-style: italic;">No time logged yet.</div>
+                        </t>
+                    </div>
+                    <div class="timesheet-add-row" style="display: flex; gap: 8px; margin-top: 8px;">
+                        <input type="text" class="planage-input-sm" style="flex: 1;" placeholder="What did you do?" t-model="state.newTimesheetName" />
+                        <input type="number" class="planage-input-sm" style="width: 80px;" placeholder="Hours" step="0.5" t-model="state.newTimesheetDuration" />
+                        <button class="btn-primary-sm" style="padding: 4px 12px; border-radius: 4px; border: none; background: var(--planage-primary); color: white; cursor: pointer;" t-on-click="logTime">Log</button>
+                    </div>
+                </div>
+
+                <!-- Attachments & Photos Section -->
+                <div class="drawer-section attachments-section">
+                    <div class="section-header">
+                        <h4>Attachments &amp; Photos</h4>
+                        <div class="attachment-actions">
+                            <label class="btn-attachment-upload" style="cursor: pointer; margin: 0;">
+                                <i class="fa fa-paperclip" style="margin-right: 4px;"></i>Upload
+                                <input type="file" t-on-change="onUploadFile" style="display: none;" />
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="attachments-list-container">
+                        <t t-set="taskDocs" t-value="this.getTaskDocuments()"/>
+                        <t t-if="taskDocs.length === 0">
+                            <div class="no-attachments-placeholder">
+                                <i class="fa fa-files-o" style="display: block; font-size: 24px; margin-bottom: 8px; color: var(--planage-text-muted);"></i>
+                                <span>No attachments uploaded yet.</span>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="attachments-grid">
+                                <t t-foreach="taskDocs" t-as="doc" t-key="doc.id">
+                                    <div class="attachment-card">
+                                        <!-- Thumbnail / Icon wrapper -->
+                                        <div class="attachment-preview-wrapper">
+                                            <t t-if="doc.mimetype and doc.mimetype.startsWith('image/')">
+                                                <img t-att-src="doc.download_url" class="attachment-thumbnail" alt="Image preview" />
+                                            </t>
+                                            <t t-else="">
+                                                <div class="attachment-icon-wrapper">
+                                                    <i class="fa fa-file-text-o attachment-file-icon"></i>
+                                                </div>
+                                            </t>
+                                        </div>
+                                        
+                                        <!-- Metadata and controls -->
+                                        <div class="attachment-details">
+                                            <span class="attachment-name" t-att-title="doc.name" t-esc="doc.name" />
+                                            <div class="attachment-actions-row">
+                                                <a t-att-href="doc.download_url" class="btn-attachment-action" t-att-download="doc.name" title="Download">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                                <button class="btn-attachment-action delete" t-on-click="() => this.deleteDocument(doc.id)" title="Delete">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                </div> <!-- drawer-scrollable-body -->
+            </t>
+        </aside>
+    </t>
+
+</templates>

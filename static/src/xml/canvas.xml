@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="planage.Canvas">
+        <main class="planage-canvas" t-att-class="{ 'drawer-open': props.state.drawerOpen }">
+
+            <!-- View Toolbar -->
+            <div class="canvas-toolbar" t-if="hasActiveProject &amp;&amp; props.state.activeSprintId &amp;&amp; ['tasks', 'board', 'calendar', 'gantt', 'chat'].includes(activeView)">
+                <!-- View Mode Switcher -->
+                <div class="view-switcher">
+                    <button class="view-btn" t-att-class="{ active: activeView === 'tasks' }"
+                            t-on-click="() => this.setView('tasks')" title="Tasks View">
+                        <span><i class="fa fa-list-ul"></i></span> Tasks
+                    </button>
+                    <button class="view-btn" t-att-class="{ active: activeView === 'chat' }"
+                            t-on-click="() => this.setView('chat')" title="Chat View">
+                        <span><i class="fa fa-comments-o"></i></span> Chat
+                    </button>
+                    <button class="view-btn" t-att-class="{ active: activeView === 'board' }"
+                            t-on-click="() => this.setView('board')" title="Board View">
+                        <span><i class="fa fa-columns"></i></span> Board
+                    </button>
+                    <button class="view-btn" t-att-class="{ active: activeView === 'calendar' }"
+                            t-on-click="() => this.setView('calendar')" title="Calendar View">
+                        <span><i class="fa fa-calendar"></i></span> Calendar
+                    </button>
+                    <button class="view-btn" t-att-class="{ active: activeView === 'gantt' }"
+                            t-on-click="() => this.setView('gantt')" title="Gantt View">
+                        <span><i class="fa fa-tasks"></i></span> Gantt
+                    </button>
+                </div>
+            </div>
+
+            <!-- Active View Content -->
+            <div class="canvas-content">
+                <t t-if="!hasActiveProject &amp;&amp; ['tasks', 'board', 'calendar', 'gantt', 'chat'].includes(activeView)">
+                    <t t-if="props.state.activeSpaceId &amp;&amp; activeSpace">
+                        <!-- Space Overview Dashboard (Show all projects as cards with filter/search/sort) -->
+                            <!-- Directory View Toolbar -->
+                            <div class="space-directory-toolbar">
+                                <div class="directory-title-area">
+                                    <span class="directory-title-icon" t-att-style="`color: ${activeSpace.color || '#6366f1'}`">
+                                        <i class="fa fa-th-large"></i>
+                                    </span>
+                                    <div>
+                                        <h2 class="directory-title-text"><t t-esc="activeSpace.name"/> Projects</h2>
+                                        <span class="directory-count-badge"><t t-esc="spaceProjects.length"/> Projects Available</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="directory-filters-area">
+                                    <div class="directory-search-wrapper">
+                                        <i class="fa fa-search search-icon"></i>
+                                        <input type="text" placeholder="Search projects..." 
+                                               t-att-value="state.searchQuery"
+                                               t-on-input="updateSearchQuery"
+                                               class="directory-search-input"/>
+                                    </div>
+                                    
+                                    <div class="directory-filter-wrapper">
+                                        <i class="fa fa-filter filter-icon"></i>
+                                        <select t-on-change="updateAccessFilter" class="directory-select">
+                                            <option value="all">Access: All</option>
+                                            <option value="public">Access: Public</option>
+                                            <option value="restricted">Access: Restricted</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="directory-filter-wrapper">
+                                        <i class="fa fa-sort filter-icon"></i>
+                                        <select t-on-change="updateSortBy" class="directory-select">
+                                            <option value="name">Sort: Alphabetical</option>
+                                            <option value="projects">Sort: Most Tasks</option>
+                                            <option value="members">Sort: Most Members</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Projects Card Grid -->
+                            <div class="sprints-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+                                <t t-if="!spaceProjects.length">
+                                    <div class="sprints-empty-state" style="grid-column: 1 / -1;">
+                                        <div class="empty-icon"><i class="fa fa-folder-open-o"></i></div>
+                                        <h3>No Projects Found</h3>
+                                        <p>Create a project or adjust your search filters to get started.</p>
+                                        <button class="btn-primary" t-if="props.state.isManager" t-on-click="() => props.state.openProjectModal()" style="margin-top: 12px;">
+                                            <i class="fa fa-plus"></i> Create Project
+                                        </button>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <t t-foreach="pagedSpaceProjects" t-as="project" t-key="project.id">
+                                        <div class="sprint-card" t-on-click="() => this.selectProjectAndOpen(project.id, activeSpace.id)" t-att-style="`--sprint-color: ${project.color || '#3b82f6'}`">
+                                            <div class="sprint-card-badge" t-att-style="`background: ${project.color || '#3b82f6'}`"/>
+                                            
+                                            <div class="sprint-card-header">
+                                                <div class="sprint-card-title-group">
+                                                    <h3 class="sprint-card-title"><t t-esc="project.name"/></h3>
+                                                </div>
+                                                <span class="sprint-card-icon" t-att-style="`color: ${project.color || '#3b82f6'}`"><i class="fa fa-folder"></i></span>
+                                            </div>
+                                            
+                                            <div class="sprint-card-body" style="padding-top: 10px;">
+                                                <div class="sprint-card-dates-empty" style="color: var(--planage-text-secondary);">
+                                                    <i class="fa fa-check-square-o"></i>
+                                                    <span style="margin-left: 6px;"><t t-esc="project.task_count || 0"/> Tasks</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="sprint-card-footer" style="margin-top: 12px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--planage-border-color); padding-top: 10px; height: 32px;">
+                                                <div class="space-directory-members-overlap" style="display: flex; gap: -4px;">
+                                                    <t t-if="project.user_ids &amp;&amp; project.user_ids.length">
+                                                        <t t-foreach="getSpaceUsers(project.user_ids)" t-as="u" t-key="u.id">
+                                                            <img class="overlap-avatar" t-att-src="u.avatar" t-att-title="u.name" style="width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--planage-bg-surface); margin-right: -4px; object-fit: cover;"/>
+                                                        </t>
+                                                        <span class="overlap-more" t-if="project.user_ids.length > 4" style="font-size: 0.7rem; color: var(--planage-text-muted); font-weight: 600; margin-left: 6px; align-self: center;">
+                                                            +<t t-esc="project.user_ids.length - 4"/>
+                                                        </span>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span style="font-size: 0.75rem; color: var(--planage-text-muted); font-style: italic;">No members</span>
+                                                    </t>
+                                                </div>
+                                                <span class="sprint-open-action">Open Project <i class="fa fa-arrow-right"></i></span>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+
+                            <!-- Projects Pagination Controls -->
+                            <t t-set="totalSpProjPages" t-value="totalSpaceProjectsPages"/>
+                            <div t-if="totalSpProjPages > 1" class="spaces-pagination-container" style="display: flex; justify-content: center; align-items: center; padding: 24px 0; gap: 16px; width: 100%;">
+                                <button class="pagination-btn"
+                                        t-att-disabled="state.spaceProjectsPage === 1"
+                                        t-on-click="() => this.changeSpaceProjectsPage(-1)"
+                                        aria-label="Previous Page">
+                                    <i class="fa fa-chevron-left" style="font-size: 0.75rem;"></i> Prev
+                                </button>
+                                <span style="font-size: 0.85rem; color: var(--planage-text-secondary); font-weight: 600;">
+                                    Page <t t-esc="state.spaceProjectsPage"/> of <t t-esc="totalSpProjPages"/>
+                                    <span style="color: #94a3b8; font-size: 0.75rem; margin-left: 4px; font-weight: 500;">(<t t-esc="spaceProjects.length"/> projects)</span>
+                                </span>
+                                <button class="pagination-btn"
+                                        t-att-disabled="state.spaceProjectsPage >= totalSpProjPages"
+                                        t-on-click="() => this.changeSpaceProjectsPage(1)"
+                                        aria-label="Next Page">
+                                    Next <i class="fa fa-chevron-right" style="font-size: 0.75rem;"></i>
+                                </button>
+                            </div>
+                    </t>
+                    <t t-else="">
+                        <!-- Original Select Project Empty State -->
+                        <div class="canvas-empty-state">
+                            <div class="fancy-empty-card">
+                                <div class="floating-sheets-graphic">
+                                    <svg class="fancy-empty-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="25" y="15" width="50" height="60" rx="8" fill="#e2e8f0" transform="rotate(-6 50 45)" />
+                                        <rect x="25" y="15" width="50" height="60" rx="8" fill="#cbd5e1" transform="rotate(3 50 45)" />
+                                        <rect x="25" y="15" width="50" height="60" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />
+                                        <rect x="33" y="27" width="34" height="6" rx="3" fill="#818cf8" />
+                                        <rect x="33" y="39" width="24" height="5" rx="2.5" fill="#cbd5e1" />
+                                        <rect x="33" y="49" width="30" height="5" rx="2.5" fill="#cbd5e1" />
+                                        <rect x="33" y="59" width="16" height="5" rx="2.5" fill="#cbd5e1" />
+                                        <path d="M78 28L80 33L85 34L80 35L78 40L76 35L71 34L76 33L78 28Z" fill="#fbbf24" />
+                                        <path d="M22 62L23.5 65.5L27 66L23.5 66.5L22 70L20.5 66.5L17 66L20.5 65.5L22 62Z" fill="#a78bfa" />
+                                    </svg>
+                                </div>
+                                
+                                <h3 class="fancy-empty-title">Select a project to get started</h3>
+                                <p class="fancy-empty-text">Choose a project from the sidebar to view and manage tasks, chats, and timelined milestones.</p>
+                                
+                                <div class="fancy-empty-hint">
+                                    <span class="hint-arrow"><i class="fa fa-arrow-left"></i></span> Select a space or project on the left menu
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+
+                <t t-elif="hasActiveProject &amp;&amp; !props.state.activeSprintId &amp;&amp; ['tasks', 'board', 'calendar', 'gantt', 'chat'].includes(activeView)">
+                    <!-- Sprints Overview Dashboard -->
+                    <div class="sprints-overview-container">
+                        <div class="sprints-overview-header">
+                            <div class="sprints-title-area">
+                                <span class="project-indicator" t-att-style="`background: ${activeProject.color || '#3b82f6'}`"/>
+                                <div>
+                                    <h2 class="sprints-project-name"><t t-esc="activeProject.name"/></h2>
+                                    <span class="sprints-subtitle">Sprints Overview</span>
+                                </div>
+                            </div>
+                            <button class="btn-primary btn-create-sprint-stats" t-if="props.state.isManager" t-on-click="() => props.state.openSprintModal()" title="Create New Sprint">
+                                <i class="fa fa-plus"></i> Create Sprint
+                            </button>
+                        </div>
+
+                        <!-- Sprints Card Grid -->
+                        <div class="sprints-grid">
+                            <t t-if="!activeProjectSprints.length">
+                                <div class="sprints-empty-state">
+                                    <div class="empty-icon"><i class="fa fa-bolt"></i></div>
+                                    <h3>No Sprints Created</h3>
+                                    <p>Create your first timed sprint to organize and schedule your project tasks.</p>
+                                    <button class="btn-primary" t-if="props.state.isManager" t-on-click="() => props.state.openSprintModal()" style="margin-top: 12px;">
+                                        <i class="fa fa-plus"></i> Create Sprint
+                                    </button>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <t t-foreach="activeProjectSprints" t-as="sprint" t-key="sprint.id">
+                                    <div class="sprint-card" t-on-click="() => this.selectSprint(sprint.id)" t-att-style="`--sprint-color: ${sprint.color || '#10b981'}`">
+                                        <div class="sprint-card-badge" t-att-style="`background: ${sprint.color || '#10b981'}`"/>
+                                        <div class="sprint-card-header">
+                                            <div class="sprint-card-title-group">
+                                                <h3 class="sprint-card-title"><t t-esc="sprint.name"/></h3>
+                                                <span class="sprint-card-folder" t-if="sprint.folderName">
+                                                    <i class="fa fa-folder-o"></i> <t t-esc="sprint.folderName"/>
+                                                </span>
+                                            </div>
+                                            <span class="sprint-card-icon"><i class="fa fa-bolt"></i></span>
+                                        </div>
+                                        <div class="sprint-card-body">
+                                            <div class="sprint-card-dates" t-if="sprint.date_from">
+                                                <i class="fa fa-calendar-o"></i>
+                                                <span><t t-esc="sprint.date_from.split(' ')[0]"/></span>
+                                                <span class="date-arrow"><i class="fa fa-long-arrow-right"></i></span>
+                                                <span><t t-esc="sprint.date_to.split(' ')[0]"/></span>
+                                            </div>
+                                            <div class="sprint-card-dates-empty" t-else="">
+                                                <i class="fa fa-calendar-o"></i> No dates defined
+                                            </div>
+                                        </div>
+                                        <div class="sprint-card-footer">
+                                            <span class="sprint-tasks-count">
+                                                <i class="fa fa-check-square-o"></i> <t t-esc="sprint.task_count"/> Tasks
+                                            </span>
+                                            <span class="sprint-open-action">Open view <i class="fa fa-arrow-right"></i></span>
+                                        </div>
+                                    </div>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+
+                <t t-elif="activeView === 'everything'">
+                    <!-- Directory View Toolbar -->
+                    <div class="space-directory-toolbar">
+                        <div class="directory-title-area">
+                            <span class="directory-title-icon"><i class="fa fa-th-large"></i></span>
+                            <div>
+                                <h2 class="directory-title-text">All Spaces</h2>
+                                <span class="directory-count-badge"><t t-esc="filteredSpaces.length"/> Spaces Available</span>
+                            </div>
+                        </div>
+                        
+                        <div class="directory-filters-area">
+                            <!-- Premium Search Box -->
+                            <div class="directory-search-wrapper">
+                                <i class="fa fa-search search-icon"></i>
+                                <input type="text" placeholder="Search spaces..." 
+                                       t-att-value="state.searchQuery"
+                                       t-on-input="updateSearchQuery"
+                                       class="directory-search-input"/>
+                            </div>
+                            
+                            <!-- Access filter dropdown -->
+                            <div class="directory-filter-wrapper">
+                                <i class="fa fa-filter filter-icon"></i>
+                                <select t-on-change="updateAccessFilter" class="directory-select">
+                                    <option value="all">Access: All</option>
+                                    <option value="public">Access: Public</option>
+                                    <option value="restricted">Access: Restricted</option>
+                                </select>
+                            </div>
+
+                            <!-- Sort dropdown -->
+                            <div class="directory-filter-wrapper">
+                                <i class="fa fa-sort filter-icon"></i>
+                                <select t-on-change="updateSortBy" class="directory-select">
+                                    <option value="name">Sort: Alphabetical</option>
+                                    <option value="projects">Sort: Most Projects</option>
+                                    <option value="members">Sort: Most Members</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spaces Grid -->
+                    <div class="space-directory-grid">
+                        <t t-if="!filteredSpaces.length">
+                            <div class="directory-empty-search-state">
+                                <i class="fa fa-search empty-icon" style="font-size: 2.5rem; color: var(--planage-text-muted); margin-bottom: 12px; display: block;"></i>
+                                <h3>No Spaces Found</h3>
+                                <p>Try adjusting your search query or filters to discover other spaces.</p>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <t t-foreach="pagedSpaces" t-as="space" t-key="space.id">
+                                <div class="space-directory-card" t-att-style="`--space-color: ${space.color || '#6366f1'}`">
+                                    
+                                    <!-- Card Header -->
+                                    <div class="space-directory-card-header" t-on-click="() => this.selectSpaceAndOpen(space.id)">
+                                        <span class="space-directory-badge-icon" t-att-style="space.color ? `background: ${space.color}` : 'background: #6366f1'">
+                                            <t t-esc="space.name.substring(0, 1).toUpperCase()"/>
+                                        </span>
+                                        <div class="space-directory-header-text">
+                                            <h3 class="space-directory-card-title" t-esc="space.name"/>
+                                            <span class="space-directory-badge-type" t-att-class="space.user_ids &amp;&amp; space.user_ids.length ? 'restricted' : 'public'">
+                                                <t t-if="space.user_ids &amp;&amp; space.user_ids.length">
+                                                    <i class="fa fa-lock"></i> Restricted
+                                                </t>
+                                                <t t-else="">
+                                                    <i class="fa fa-globe"></i> Public
+                                                </t>
+                                            </span>
+                                        </div>
+                                        <span class="space-directory-open-btn"><i class="fa fa-chevron-right"></i></span>
+                                    </div>
+
+                                     <!-- Card Body (Projects list) -->
+                                     <div class="space-directory-card-body">
+                                         <h4 class="space-directory-section-label">Projects</h4>
+                                         <div class="space-directory-lists-stack">
+                                             <!-- Render projects directly under this space -->
+                                             <t t-if="space.projects &amp;&amp; space.projects.length">
+                                                 <t t-foreach="space.projects" t-as="project" t-key="project.id">
+                                                     <div class="directory-project-item-wrapper" style="margin-bottom: 8px; padding: 8px; background: rgba(0,0,0,0.015); border-radius: 6px;">
+                                                         <div class="space-directory-list-item" t-on-click="() => this.selectProjectAndOpen(project.id, space.id)" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+                                                             <div style="display: flex; align-items: center; gap: 6px;">
+                                                                 <span class="list-dot" t-att-style="`background: ${project.color || '#3b82f6'}; width: 8px; height: 8px; border-radius: 50%; display: inline-block;`"/>
+                                                                 <span class="list-item-name" style="font-size: 0.8rem; font-weight: 600;" t-esc="project.name"/>
+                                                             </div>
+                                                             <span class="list-item-count-badge" style="font-size: 0.75rem; background: rgba(0,0,0,0.05); padding: 1px 6px; border-radius: 10px;">
+                                                                 <t t-esc="project.task_count || 0"/>
+                                                             </span>
+                                                         </div>
+                                                     </div>
+                                                 </t>
+                                             </t>
+                                             <!-- Empty state inside card if no projects -->
+                                             <t t-if="!space.projects || !space.projects.length">
+                                                 <div class="space-directory-empty-lists" style="font-size: 0.75rem; color: var(--planage-text-muted); text-align: center; padding: 12px 0;">
+                                                     <span>No projects created yet</span>
+                                                 </div>
+                                             </t>
+                                         </div>
+                                     </div>
+
+                                    <!-- Card Footer -->
+                                    <div class="space-directory-card-footer">
+                                        <!-- Dynamic circular avatars overlap -->
+                                        <div class="space-directory-members-overlap">
+                                            <t t-if="space.user_ids &amp;&amp; space.user_ids.length">
+                                                <t t-foreach="getSpaceUsers(space.user_ids)" t-as="u" t-key="u.id">
+                                                    <img class="overlap-avatar" t-att-src="u.avatar" t-att-title="u.name"/>
+                                                </t>
+                                                <span class="overlap-more" t-if="space.user_ids.length > 4">
+                                                    +<t t-esc="space.user_ids.length - 4"/>
+                                                </span>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="public-access-row" title="Visible to everyone">
+                                                    <i class="fa fa-users public-access-icon"></i>
+                                                    <span class="public-access-text">Shared with All</span>
+                                                </div>
+                                            </t>
+                                        </div>
+
+                                        <!-- Overall statistics/lists count -->
+                                        <div class="space-directory-stats">
+                                            <span class="space-tasks-metric"><i class="fa fa-tasks"></i> <t t-esc="space.task_count || 0"/> tasks</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+
+                    <!-- Spaces Grid Pagination -->
+                    <t t-set="totalEvPages" t-value="totalEverythingPages"/>
+                    <div t-if="totalEvPages > 1" class="spaces-pagination-container" style="display: flex; justify-content: center; align-items: center; padding: 24px 0; gap: 16px;">
+                        <button class="pagination-btn"
+                                t-att-disabled="state.everythingPage === 1"
+                                t-on-click="() => this.changeEverythingPage(-1)"
+                                aria-label="Previous Page">
+                            <i class="fa fa-chevron-left" style="font-size: 0.75rem;"></i> Prev
+                        </button>
+                        <span style="font-size: 0.85rem; color: var(--planage-text-secondary); font-weight: 600;">
+                            Page <t t-esc="state.everythingPage"/> of <t t-esc="totalEvPages"/>
+                            <span style="color: #94a3b8; font-size: 0.75rem; margin-left: 4px; font-weight: 500;">(<t t-esc="filteredSpaces.length"/> spaces)</span>
+                        </span>
+                        <button class="pagination-btn"
+                                t-att-disabled="state.everythingPage >= totalEvPages"
+                                t-on-click="() => this.changeEverythingPage(1)"
+                                aria-label="Next Page">
+                            Next <i class="fa fa-chevron-right" style="font-size: 0.75rem;"></i>
+                        </button>
+                    </div>
+                </t>
+
+                <t t-elif="activeView === 'my_tasks'">
+                    <!-- Personal tasks toolbar -->
+                    <div class="canvas-toolbar personal-tasks-toolbar" style="border-bottom: 1px solid var(--planage-border-color); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.25rem; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(99, 102, 241, 0.1); color: #6366f1;">
+                                <i class="fa fa-check-square-o"></i>
+                            </span>
+                            <div>
+                                <h2 style="font-size: 1.15rem; font-weight: 700; margin: 0; color: var(--planage-text-primary);">My Tasks</h2>
+                                <span class="badge" style="font-size: 0.75rem; background: var(--planage-primary-light, rgba(99, 102, 241, 0.1)); color: #6366f1; padding: 2px 8px; border-radius: 9999px; font-weight: 500; margin-top: 2px; display: inline-block;">Assigned to Me</span>
+                            </div>
+                        </div>
+                    </div>
+                    <ListView
+                        tasks="tasks"
+                        stages="stages"
+                        activeView="activeView"
+                        onOpenTask="props.onOpenTask"
+                        onCreateTask="props.onCreateTask"
+                        onWriteTask="props.onWriteTask"
+                    />
+                </t>
+
+                <t t-elif="activeView === 'tasks'">
+                    <ListView
+                        tasks="tasks"
+                        stages="stages"
+                        onOpenTask="props.onOpenTask"
+                        onCreateTask="props.onCreateTask"
+                        onWriteTask="props.onWriteTask"
+                    />
+                </t>
+                <t t-elif="activeView === 'board'">
+                    <BoardView
+                        tasks="tasks"
+                        stages="stages"
+                        onOpenTask="props.onOpenTask"
+                        onCreateTask="props.onCreateTask"
+                        onWriteTask="props.onWriteTask"
+                    />
+                </t>
+                <t t-elif="activeView === 'calendar'">
+                    <CalendarView
+                        tasks="tasks"
+                        onOpenTask="props.onOpenTask"
+                    />
+                </t>
+                <t t-elif="activeView === 'gantt'">
+                    <GanttView
+                        tasks="tasks"
+                        state="props.state"
+                        onOpenTask="props.onOpenTask"
+                        onWriteTask="props.onWriteTask"
+                    />
+                </t>
+                <t t-elif="activeView === 'chat'">
+                    <ChatView
+                        state="props.state"
+                        messages="chatMessages"
+                        project="activeProject"
+                        users="props.state.users"
+                        onPostChatMessage="props.onPostChatMessage"
+                    />
+                </t>
+                <t t-elif="activeView === 'docs'">
+                    <DocsView
+                        documents="props.state.documents"
+                    />
+                </t>
+                <t t-elif="activeView === 'dashboard'">
+                    <DashboardView
+                        state="props.state"
+                    />
+                </t>
+                <t t-elif="activeView === 'notifications'">
+                    <NotificationsView
+                        state="props.state"
+                    />
+                </t>
+                <t t-elif="activeView === 'config'">
+                    <ConfigView
+                        state="props.state"
+                    />
+                </t>
+                <t t-elif="activeView === 'reporting'">
+                    <ReportingView
+                        state="props.state"
+                    />
+                </t>
+                <t t-elif="activeView === 'inbox'">
+                    <InboxView
+                        state="props.state"
+                        channels="props.state.inboxChannels"
+                        messages="props.state.inboxMessages"
+                        activeChannelId="props.state.activeInboxChannelId"
+                        users="props.state.users"
+                        onSelectInboxChannel="props.state.selectInboxChannel"
+                        onCreateInboxChannel="props.state.createInboxChannel"
+                        onPostInboxMessage="props.state.postInboxMessage"
+                        onLeaveInboxChannel="props.state.leaveInboxChannel"
+                        onDeleteInboxChannel="props.state.deleteInboxChannel"
+                    />
+                </t>
+            </div>
+        </main>
+    </t>
+
+</templates>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Module Category -->
+        <record id="module_category_planage" model="ir.module.category">
+            <field name="name">Planage</field>
+            <field name="description">Helps you manage your projects and workspaces.</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Module Privilege (Replaces direct category assignment in Odoo 19) -->
+        <record id="privilege_planage_roles" model="res.groups.privilege">
+            <field name="name">Role</field>
+            <field name="category_id" ref="module_category_planage"/>
+        </record>
+
+        <!-- Employee / Base User -->
+        <record id="group_planage_user" model="res.groups">
+            <field name="name">Employee (User)</field>
+            <field name="privilege_id" ref="privilege_planage_roles"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">Can view projects and work on tasks.</field>
+        </record>
+
+        <!-- Manager -->
+        <record id="group_planage_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="privilege_id" ref="privilege_planage_roles"/>
+            <field name="implied_ids" eval="[(4, ref('group_planage_user'))]"/>
+            <field name="comment">Can create and manage spaces, projects, and sprints.</field>
+        </record>
+
+        <!-- Administrator -->
+        <record id="group_planage_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="privilege_id" ref="privilege_planage_roles"/>
+            <field name="implied_ids" eval="[(4, ref('group_planage_manager'))]"/>
+            <field name="comment">Full access to Planage configuration and all records.</field>
+            <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+    </data>
+</odoo>

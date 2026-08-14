@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         ROOT APP SHELL
+    ═══════════════════════════════════════════════════════════ -->
+    <t t-name="planage.PlanageApp">
+        <div class="planage-app" t-att-class="{ 'sidebar-collapsed': state.sidebarCollapsed }">
+
+            <!-- Loading Overlay -->
+            <div t-if="state.loading" class="planage-loading-overlay">
+                <div class="planage-spinner">
+                    <div class="spinner-ring"/>
+                    <span>Loading Planage...</span>
+                </div>
+            </div>
+
+            <!-- Toast Notification -->
+            <div t-if="state.toastMessage" class="planage-toast"
+                 t-att-class="`toast-${state.toastType}`">
+                <span class="toast-icon">
+                    <t t-if="state.toastType === 'success'"><i class="fa fa-check"></i></t>
+                    <t t-elif="state.toastType === 'error'"><i class="fa fa-times"></i></t>
+                    <t t-elif="state.toastType === 'warning'"><i class="fa fa-exclamation-triangle"></i></t>
+                    <t t-else=""><i class="fa fa-info-circle"></i></t>
+                </span>
+                <span t-esc="state.toastMessage"/>
+            </div>
+
+            <!-- Three-Column Layout -->
+            <div class="planage-layout" t-if="!state.loading">
+
+                <!-- Left Sidebar -->
+                <Sidebar
+                    state="state"
+                    onSelectSpace.bind="selectSpace"
+                    onCreateSpace.bind="createSpace"
+                    onCreateProject.bind="createProject"
+                    onCreateSprint.bind="createSprint"
+                    onSetView.bind="setView"
+                    onReloadSpaces.bind="_loadSpaces"
+                />
+
+                <!-- Central Canvas -->
+                <Canvas
+                    state="state"
+                    onSetView.bind="setView"
+                    onOpenTask.bind="openTask"
+                    onCreateTask.bind="createTask"
+                    onWriteTask.bind="writeTask"
+                    onPostChatMessage.bind="postChatMessage"
+                    onSelectSpace.bind="selectSpace"
+                    onPostInboxMessage.bind="postInboxMessage"
+                />
+
+                <!-- Right Drawer -->
+                <RightDrawer
+                    state="state"
+                    activeTask="activeTask"
+                    onClose.bind="closeDrawer"
+                    onWriteTask.bind="writeTask"
+                    onTaskUpdated.bind="updateTaskInState"
+                    onLoadDocuments.bind="loadDocuments"
+                />
+
+                <!-- Universal Floating Action Button (FAB) -->
+                <div class="planage-fab-container">
+                    <button class="planage-fab" t-on-click.stop="() => state.showFabMenu = !state.showFabMenu" t-att-class="{ active: state.showFabMenu }" title="Universal Creation Menu">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <div t-if="state.showFabMenu" class="planage-fab-menu">
+                        <div class="planage-fab-menu-header">
+                            <span>Quick Create</span>
+                        </div>
+                        <div class="planage-fab-item" t-if="state.isManager" t-on-click="() => this.openSpaceModal()">
+                            <span class="fab-item-icon color-space"><i class="fa fa-th-large"></i></span>
+                            <span class="fab-item-text">Create Space</span>
+                        </div>
+                        <div class="planage-fab-item" t-if="state.isManager" t-on-click="() => this.openProjectModal()">
+                            <span class="fab-item-icon color-project"><i class="fa fa-cube"></i></span>
+                            <span class="fab-item-text">Create Project</span>
+                        </div>
+                        <div class="planage-fab-item" t-if="state.isManager" t-on-click="() => this.openSprintModal()">
+                            <span class="fab-item-icon color-sprint"><i class="fa fa-bolt"></i></span>
+                            <span class="fab-item-text">Create Sprint</span>
+                        </div>
+                          <div class="planage-fab-item" t-if="state.isManager" t-on-click="() => this.openFolderModal()">
+                            <span class="fab-item-icon color-folder"><i class="fa fa-folder"></i></span>
+                            <span class="fab-item-text">Create Folder</span>
+                        </div>
+                        <div class="planage-fab-item" t-on-click="() => this.openTaskModal()">
+                            <span class="fab-item-icon color-task"><i class="fa fa-check-square-o"></i></span>
+                            <span class="fab-item-text">Create Task</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unified Global Modals -->
+                <!-- New Space Modal -->
+                <div t-if="state.showNewSpaceModal" class="planage-modal-overlay" t-on-click.self="() => this.closeSpaceModal()">
+                    <div class="planage-modal">
+                        <h3>New Space</h3>
+                        <div class="modal-field">
+                            <label>Name</label>
+                            <input type="text" placeholder="e.g. Development"
+                                   t-model="state.newSpaceName"
+                                   class="planage-input"/>
+                        </div>
+                        <div class="modal-field">
+                            <label>Color</label>
+                            <input type="color" t-model="state.newSpaceColor" class="planage-color-input"/>
+                        </div>
+                        <div class="modal-field">
+                            <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.85rem; color: var(--planage-text-muted);">Assign Members</label>
+                            <div class="modal-users-list" style="display: flex; flex-wrap: wrap; gap: 8px; max-height: 120px; overflow-y: auto; padding: 6px; border: 1px solid var(--planage-border-color); border-radius: 6px; background: rgba(0, 0, 0, 0.02);">
+                                <t t-foreach="state.users || []" t-as="user" t-key="user.id">
+                                    <div class="user-assignee-bubble"
+                                         t-on-click="() => this.toggleNewSpaceUser(user.id)"
+                                         t-att-style="state.selectedUserIds[user.id] ? 'background: rgba(99, 102, 241, 0.15); border-color: #6366f1; display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 16px; border: 1px solid; cursor: pointer; transition: all 0.2s ease;' : 'border-color: var(--planage-border-color); background: var(--planage-card-bg, #fff); display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 16px; border: 1px solid; cursor: pointer; transition: all 0.2s ease;'">
+                                        <img t-att-src="user.avatar" style="width: 20px; height: 20px; border-radius: 50%; object-fit: cover;"/>
+                                        <span style="font-size: 0.8rem; font-weight: 500; color: var(--planage-text, #333);"><t t-esc="user.name"/></span>
+                                        <span t-if="state.selectedUserIds[user.id]" style="color: #6366f1; font-size: 0.85rem; display: flex; align-items: center;"><i class="fa fa-check-circle"></i></span>
+                                    </div>
+                                </t>
+                            </div>
+                            <p style="font-size: 0.75rem; color: var(--planage-text-muted); margin-top: 4px;">If no members are assigned, the space will be visible to everyone.</p>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn-secondary" t-on-click="() => this.closeSpaceModal()">Cancel</button>
+                            <button class="btn-primary" t-on-click="() => this.confirmCreateSpace()">Create Space</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Folder Modal -->
+                <div t-if="state.showNewFolderModal" class="planage-modal-overlay" t-on-click.self="() => this.closeFolderModal()">
+                    <div class="planage-modal">
+                        <h3>New Folder</h3>
+                        <div class="modal-field">
+                            <label>Folder Name</label>
+                            <input type="text" placeholder="e.g. Phase 1 Releases" t-model="state.newFolderName" class="planage-input"/>
+                        </div>
+                        <div class="modal-field">
+                            <label>Select Space</label>
+                            <select t-model="state.newFolderSpaceId" class="planage-input select-styled">
+                                <t t-foreach="state.spaces || []" t-as="sp" t-key="sp.id">
+                                    <option t-att-value="sp.id" t-esc="sp.name"/>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="modal-field" t-if="state.newFolderSpaceId">
+                            <label>Select Project</label>
+                            <select t-model="state.newFolderProjectId" class="planage-input select-styled">
+                                <option value="">-- Choose Project --</option>
+                                <t t-foreach="state.spaces || []" t-as="sp" t-key="sp.id">
+                                    <t t-if="state.newFolderSpaceId == sp.id">
+                                        <t t-foreach="sp.projects || []" t-as="proj" t-key="proj.id">
+                                            <option t-att-value="proj.id" t-esc="proj.name"/>
+                                        </t>
+                                    </t>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="modal-field">
+                            <label>Color</label>
+                            <input type="color" t-model="state.newFolderColor" class="planage-color-input"/>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn-secondary" t-on-click="() => this.closeFolderModal()">Cancel</button>
+                            <button class="btn-primary" t-on-click="() => this.confirmCreateFolder()">Create Folder</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Project Modal -->
+                <div t-if="state.showNewProjectModal" class="planage-modal-overlay" t-on-click.self="() => this.closeProjectModal()">
+                    <div class="planage-modal">
+                        <h3>New Project</h3>
+                        <div class="modal-field">
+                            <label>Project Name</label>
+                            <input type="text" placeholder="e.g. Backend Engine" t-model="state.newProjectName" class="planage-input"/>
+                        </div>
+                        <div class="modal-field">
+                            <label>Select Space</label>
+                            <select t-model="state.newProjectSpaceId" class="planage-input select-styled">
+                                <t t-foreach="state.spaces || []" t-as="sp" t-key="sp.id">
+                                    <option t-att-value="sp.id" t-esc="sp.name"/>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="modal-field">
+                            <label>Color</label>
+                            <input type="color" t-model="state.newProjectColor" class="planage-color-input"/>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn-secondary" t-on-click="() => this.closeProjectModal()">Cancel</button>
+                            <button class="btn-primary" t-on-click="() => this.confirmCreateProject()">Create Project</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Sprint Modal -->
+                <div t-if="state.showNewSprintModal" class="planage-modal-overlay" t-on-click.self="() => this.closeSprintModal()">
+                    <div class="planage-modal">
+                        <h3>New Sprint</h3>
+                        <div class="modal-field">
+                            <label>Sprint Name</label>
+                            <input type="text" placeholder="e.g. Sprint 1" t-model="state.newSprintName" class="planage-input"/>
+                        </div>
+                        <div class="modal-field">
+                            <label>Select Project</label>
+                            <select t-model="state.newSprintProjectId" class="planage-input select-styled">
+                                <option value="">-- Choose Project --</option>
+                                <t t-foreach="state.spaces || []" t-as="sp" t-key="sp.id">
+                                    <optgroup t-att-label="sp.name">
+                                        <t t-foreach="sp.projects || []" t-as="proj" t-key="proj.id">
+                                            <option t-att-value="proj.id" t-esc="proj.name"/>
+                                        </t>
+                                    </optgroup>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="modal-field" t-if="state.newSprintProjectId">
+                            <label>Folder (Optional)</label>
+                            <select t-model="state.newSprintFolderId" class="planage-input select-styled">
+                                <option value="">No Folder (Direct Project Sprint)</option>
+                                <t t-foreach="state.spaces || []" t-as="sp" t-key="sp.id">
+                                    <t t-foreach="sp.projects || []" t-as="proj" t-key="proj.id">
+                                        <t t-if="state.newSprintProjectId == proj.id">
+                                            <t t-foreach="proj.folders || []" t-as="fold" t-key="fold.id">
+                                                <option t-att-value="fold.id" t-esc="fold.name"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="modal-field">
+                            <label>Start Date *</label>
+                            <input type="datetime-local" t-model="state.newSprintDateFrom" class="planage-input" required="1"/>
+                        </div>
+                        <div class="modal-field">
+                            <label>End Date *</label>
+                            <input type="datetime-local" t-model="state.newSprintDateTo" class="planage-input" required="1"/>
+                        </div>
+                        <div class="modal-field">
+                            <label>Color</label>
+                            <input type="color" t-model="state.newSprintColor" class="planage-color-input"/>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn-secondary" t-on-click="() => this.closeSprintModal()">Cancel</button>
+                            <button class="btn-primary" t-on-click="() => this.confirmCreateSprint()">Create Sprint</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Sprint Modal -->
+                <div t-if="state.showEditSprintModal" class="planage-modal-overlay" t-on-click.self="() => this.closeEditSprintModal()">
+                    <div class="planage-modal">
+                        <h3>Edit Sprint</h3>
+                        <div class="modal-field">
+                            <label>Sprint Name</label>
+                            <input type="text" placeholder="e.g. Sprint 1" t-model="state.editingSprintName" class="planage-input"/>
+                        </div>
+                        <div class="modal-field">
+                            <label>Start Date</label>
+                            <input type="datetime-local" t-model="state.editingSprintDateFrom" class="planage-input"/>
+                        </div>
+                        <div class="modal-field">
+                            <label>End Date</label>
+                            <input type="datetime-local" t-model="state.editingSprintDateTo" class="planage-input"/>
+                        </div>
+                        <div class="modal-field">
+                            <label>Color</label>
+                            <input type="color" t-model="state.editingSprintColor" class="planage-color-input"/>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn-secondary" t-on-click="() => this.closeEditSprintModal()">Cancel</button>
+                            <button class="btn-primary" t-on-click="() => this.confirmEditSprint()">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Task Modal -->
+                <div t-if="state.showNewTaskModal" class="planage-modal-overlay" t-on-click.self="() => this.closeTaskModal()">
+                    <div class="planage-modal">
+                        <h3>New Task</h3>
+                        <div class="modal-field">
+                            <label>Task Title</label>
+                            <input type="text" placeholder="e.g. Fix navbar responsive spacing" t-model="state.newTaskName" class="planage-input"/>
+                        </div>
+                        <div class="modal-field">
+                            <label>Select Project</label>
+                            <select t-model="state.newTaskProjectId" class="planage-input select-styled">
+                                <option value="">-- Choose Project --</option>
+                                <t t-foreach="state.spaces || []" t-as="sp" t-key="sp.id">
+                                    <optgroup t-att-label="sp.name">
+                                        <t t-foreach="sp.projects || []" t-as="proj" t-key="proj.id">
+                                            <option t-att-value="proj.id" t-esc="proj.name"/>
+                                        </t>
+                                    </optgroup>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="modal-field" t-if="state.newTaskProjectId">
+                            <label>Sprint (Optional)</label>
+                            <select t-model="state.newTaskSprintId" class="planage-input select-styled">
+                                <option value="">No Sprint (Direct Project Task)</option>
+                                <t t-foreach="state.spaces || []" t-as="sp" t-key="sp.id">
+                                    <t t-foreach="sp.projects || []" t-as="proj" t-key="proj.id">
+                                        <t t-if="state.newTaskProjectId == proj.id">
+                                            <t t-foreach="proj.sprints || []" t-as="sprint" t-key="sprint.id">
+                                                <option t-att-value="sprint.id" t-esc="sprint.name"/>
+                                            </t>
+                                            <t t-foreach="proj.folders || []" t-as="fold" t-key="fold.id">
+                                                <t t-foreach="fold.sprints || []" t-as="sprint" t-key="sprint.id">
+                                                    <option t-att-value="sprint.id" t-esc="`${fold.name} / ${sprint.name}`"/>
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="modal-field-row" style="display: flex; gap: 12px;">
+                            <div class="modal-field" style="flex: 1;">
+                                <label>Start Date (Optional)</label>
+                                <input type="date" t-model="state.newTaskStartDate" class="planage-input"/>
+                            </div>
+                            <div class="modal-field" style="flex: 1;">
+                                <label>End Date (Optional)</label>
+                                <input type="date" t-model="state.newTaskEndDate" class="planage-input"/>
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn-secondary" t-on-click="() => this.closeTaskModal()">Cancel</button>
+                            <button class="btn-primary" t-on-click="() => this.confirmCreateTask()">Create Task</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>
