@@ -2337,7 +2337,7 @@ msgstr "حدد مشروعاً للبدء"
 #. odoo-javascript
 #: code:addons/planage/static/src/xml/canvas.xml:0
 msgid "Select a space or project on the left menu"
-msgstr "حدد مساحة أو مشروع من القائمة اليسرى"
+msgstr "حدد مساحة أو مشروع من القائمة اليمنى"
 
 #. module: planage
 #: model:ir.model.fields,field_description:planage.field_planage_folder__sequence
