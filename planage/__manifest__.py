@@ -14,11 +14,12 @@ core layout, enabling:
 - Hierarchical Workspace > Space > Folder > List > Task organization
 - Zero-page-reload SPA experience with offline-safe sync resiliency
     """,
-    "category": "Productivity",
+    "category": "Project",
     "author": "Mohammad A. Koeik",
     "license": "LGPL-3",
     "sequence": 5,
     'support': 'mkoeik.support@gmail.com',
+    'images': ['static/description/banner.png'],
     "icon": "/planage/static/description/icon.png",
     "depends": [
         "base",
